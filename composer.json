@@ -1,0 +1,48 @@
+{
+    "name": "cardano-php/transaction",
+    "description": "Cardano transaction serialization, addresses, native scripts, slot arithmetic, fees, minimum UTxO and coin selection.",
+    "type": "library",
+    "license": "Apache-2.0",
+    "version": "0.1.0",
+    "keywords": [
+        "cardano",
+        "transaction",
+        "cbor",
+        "coin-selection"
+    ],
+    "authors": [
+        {
+            "name": "Adam Dean",
+            "email": "adam@crypto2099.io"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "ext-bcmath": "*",
+        "ext-sodium": "*",
+        "brick/math": "^0.11 || ^0.12 || ^0.13 || ^0.14",
+        "cardano-php/bech32": "^1.1",
+        "spomky-labs/cbor-php": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cardano\\Transaction\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cardano\\Transaction\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

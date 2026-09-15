@@ -1,0 +1,18 @@
+cardano-php/transaction
+Copyright 2026 Adam Dean
+
+This product includes software for reading, building and costing Cardano
+transactions: transaction serialization, addresses, native scripts, slot
+arithmetic, fees, minimum UTxO and coin selection.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this software except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+This product depends on software developed by third parties, each under its
+own license:
+
+  - spomky-labs/cbor-php, licensed under the MIT License.
+  - cardano-php/bech32, licensed under the Apache License, Version 2.0.

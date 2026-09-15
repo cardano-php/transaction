@@ -1,0 +1,205 @@
+{
+    "source": {
+        "document": "CIP-19, Cardano Addresses",
+        "url": "https://raw.githubusercontent.com/cardano-foundation/CIPs/master/CIP-0019/README.md",
+        "fetched_at": "2026-09-15",
+        "note": "The bech32 strings below are copied verbatim from the Test Vectors section of CIP-19. Every header and payload beside them was produced by the BIP-173 reference bech32 implementation and Python's hashlib blake2b, not by the code under test."
+    },
+    "keys": {
+        "payment_verification_key": "addr_vk1w0l2sr2zgfm26ztc6nl9xy8ghsk5sh6ldwemlpmp9xylzy4dtf7st80zhd",
+        "payment_verification_key_hex": "73fea80d424276ad0978d4fe5310e8bc2d485f5f6bb3bf87612989f112ad5a7d",
+        "payment_key_hash": "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e",
+        "stake_verification_key": "stake_vk1px4j0r2fk7ux5p23shz8f3y5y2qam7s954rgf3lg5merqcj6aetsft99wu",
+        "stake_verification_key_hex": "09ab278d49b7b86a055185c474c4942281ddfa05a54684c7e8a6f230625aee57",
+        "stake_key_hash": "337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+        "script": "script1cda3khwqv60360rp5m7akt50m6ttapacs8rqhn5w342z7r35m37",
+        "script_hash": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f",
+        "pointer": {
+            "slot": 2498243,
+            "tx_index": 27,
+            "cert_index": 3
+        }
+    },
+    "addresses": [
+        {
+            "network": "mainnet",
+            "address_type": 0,
+            "bech32": "addr1qx2fxv2umyhttkxyxp8x0dlpdt3k6cwng5pxj3jhsydzer3n0d3vllmyqwsx5wktcd8cc3sq835lu7drv2xwl2wywfgse35a3x",
+            "hrp": "addr",
+            "header": "01",
+            "payload": "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "bytes": "019493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251"
+        },
+        {
+            "network": "mainnet",
+            "address_type": 1,
+            "bech32": "addr1z8phkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gten0d3vllmyqwsx5wktcd8cc3sq835lu7drv2xwl2wywfgs9yc0hh",
+            "hrp": "addr",
+            "header": "11",
+            "payload": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "bytes": "11c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251"
+        },
+        {
+            "network": "mainnet",
+            "address_type": 2,
+            "bech32": "addr1yx2fxv2umyhttkxyxp8x0dlpdt3k6cwng5pxj3jhsydzerkr0vd4msrxnuwnccdxlhdjar77j6lg0wypcc9uar5d2shs2z78ve",
+            "hrp": "addr",
+            "header": "21",
+            "payload": "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8ec37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f",
+            "bytes": "219493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8ec37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+        },
+        {
+            "network": "mainnet",
+            "address_type": 3,
+            "bech32": "addr1x8phkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gt7r0vd4msrxnuwnccdxlhdjar77j6lg0wypcc9uar5d2shskhj42g",
+            "hrp": "addr",
+            "header": "31",
+            "payload": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f",
+            "bytes": "31c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+        },
+        {
+            "network": "mainnet",
+            "address_type": 4,
+            "bech32": "addr1gx2fxv2umyhttkxyxp8x0dlpdt3k6cwng5pxj3jhsydzer5pnz75xxcrzqf96k",
+            "hrp": "addr",
+            "header": "41",
+            "payload": "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e8198bd431b03",
+            "bytes": "419493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e8198bd431b03"
+        },
+        {
+            "network": "mainnet",
+            "address_type": 5,
+            "bech32": "addr128phkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gtupnz75xxcrtw79hu",
+            "hrp": "addr",
+            "header": "51",
+            "payload": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f8198bd431b03",
+            "bytes": "51c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f8198bd431b03"
+        },
+        {
+            "network": "mainnet",
+            "address_type": 6,
+            "bech32": "addr1vx2fxv2umyhttkxyxp8x0dlpdt3k6cwng5pxj3jhsydzers66hrl8",
+            "hrp": "addr",
+            "header": "61",
+            "payload": "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e",
+            "bytes": "619493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e"
+        },
+        {
+            "network": "mainnet",
+            "address_type": 7,
+            "bech32": "addr1w8phkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gtcyjy7wx",
+            "hrp": "addr",
+            "header": "71",
+            "payload": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f",
+            "bytes": "71c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+        },
+        {
+            "network": "mainnet",
+            "address_type": 14,
+            "bech32": "stake1uyehkck0lajq8gr28t9uxnuvgcqrc6070x3k9r8048z8y5gh6ffgw",
+            "hrp": "stake",
+            "header": "e1",
+            "payload": "337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "bytes": "e1337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251"
+        },
+        {
+            "network": "mainnet",
+            "address_type": 15,
+            "bech32": "stake178phkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gtcccycj5",
+            "hrp": "stake",
+            "header": "f1",
+            "payload": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f",
+            "bytes": "f1c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+        },
+        {
+            "network": "testnet",
+            "address_type": 0,
+            "bech32": "addr_test1qz2fxv2umyhttkxyxp8x0dlpdt3k6cwng5pxj3jhsydzer3n0d3vllmyqwsx5wktcd8cc3sq835lu7drv2xwl2wywfgs68faae",
+            "hrp": "addr_test",
+            "header": "00",
+            "payload": "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "bytes": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251"
+        },
+        {
+            "network": "testnet",
+            "address_type": 1,
+            "bech32": "addr_test1zrphkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gten0d3vllmyqwsx5wktcd8cc3sq835lu7drv2xwl2wywfgsxj90mg",
+            "hrp": "addr_test",
+            "header": "10",
+            "payload": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "bytes": "10c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251"
+        },
+        {
+            "network": "testnet",
+            "address_type": 2,
+            "bech32": "addr_test1yz2fxv2umyhttkxyxp8x0dlpdt3k6cwng5pxj3jhsydzerkr0vd4msrxnuwnccdxlhdjar77j6lg0wypcc9uar5d2shsf5r8qx",
+            "hrp": "addr_test",
+            "header": "20",
+            "payload": "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8ec37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f",
+            "bytes": "209493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8ec37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+        },
+        {
+            "network": "testnet",
+            "address_type": 3,
+            "bech32": "addr_test1xrphkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gt7r0vd4msrxnuwnccdxlhdjar77j6lg0wypcc9uar5d2shs4p04xh",
+            "hrp": "addr_test",
+            "header": "30",
+            "payload": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f",
+            "bytes": "30c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+        },
+        {
+            "network": "testnet",
+            "address_type": 4,
+            "bech32": "addr_test1gz2fxv2umyhttkxyxp8x0dlpdt3k6cwng5pxj3jhsydzer5pnz75xxcrdw5vky",
+            "hrp": "addr_test",
+            "header": "40",
+            "payload": "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e8198bd431b03",
+            "bytes": "409493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e8198bd431b03"
+        },
+        {
+            "network": "testnet",
+            "address_type": 5,
+            "bech32": "addr_test12rphkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gtupnz75xxcryqrvmw",
+            "hrp": "addr_test",
+            "header": "50",
+            "payload": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f8198bd431b03",
+            "bytes": "50c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f8198bd431b03"
+        },
+        {
+            "network": "testnet",
+            "address_type": 6,
+            "bech32": "addr_test1vz2fxv2umyhttkxyxp8x0dlpdt3k6cwng5pxj3jhsydzerspjrlsz",
+            "hrp": "addr_test",
+            "header": "60",
+            "payload": "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e",
+            "bytes": "609493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e"
+        },
+        {
+            "network": "testnet",
+            "address_type": 7,
+            "bech32": "addr_test1wrphkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gtcl6szpr",
+            "hrp": "addr_test",
+            "header": "70",
+            "payload": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f",
+            "bytes": "70c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+        },
+        {
+            "network": "testnet",
+            "address_type": 14,
+            "bech32": "stake_test1uqehkck0lajq8gr28t9uxnuvgcqrc6070x3k9r8048z8y5gssrtvn",
+            "hrp": "stake_test",
+            "header": "e0",
+            "payload": "337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "bytes": "e0337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251"
+        },
+        {
+            "network": "testnet",
+            "address_type": 15,
+            "bech32": "stake_test17rphkx6acpnf78fuvxn0mkew3l0fd058hzquvz7w36x4gtcljw6kf",
+            "hrp": "stake_test",
+            "header": "f0",
+            "payload": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f",
+            "bytes": "f0c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+        }
+    ]
+}

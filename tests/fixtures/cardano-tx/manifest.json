@@ -1,0 +1,491 @@
+{
+    "network": "mainnet",
+    "fetched_at": "2026-09-15",
+    "provider": {
+        "name": "Koios",
+        "base_url": "https://eu-api.koios.rest/api/v1",
+        "note": "eu-api.koios.rest is a mainnet Koios instance. api.koios.rest is the documented name and resolves to the same service; it was unreachable from the machine the corpus was fetched on."
+    },
+    "pool": {
+        "transactions_scanned": 1616,
+        "note": "Every fixture was picked by decoding the pool and matching on shape, not by hand. All 1616 decode, round trip byte for byte, hash to the value they were fetched by, verify every vkey witness and match every auxiliary data hash."
+    },
+    "shapes": [
+        {
+            "id": "plain-ada-payment",
+            "plan_item": 1,
+            "description": "Lovelace only: no assets in any output, no mint, no certificates, no withdrawals, no script witnesses."
+        },
+        {
+            "id": "single-multi-asset-output",
+            "plan_item": 2,
+            "description": "Exactly one output carries a multiasset map."
+        },
+        {
+            "id": "many-multi-asset-outputs",
+            "plan_item": 3,
+            "description": "Two or more outputs carry a multiasset map."
+        },
+        {
+            "id": "native-script-spend",
+            "plan_item": 4,
+            "description": "An input at a script address, witnessed by a native script in the witness set."
+        },
+        {
+            "id": "cip25-mint",
+            "plan_item": 5,
+            "description": "A mint field together with metadata label 721."
+        },
+        {
+            "id": "cip20-message",
+            "plan_item": 6,
+            "description": "Metadata label 674."
+        },
+        {
+            "id": "both-validity-bounds",
+            "plan_item": 7,
+            "description": "Body fields 3 and 8 both present."
+        },
+        {
+            "id": "upper-bound-only",
+            "plan_item": 8,
+            "description": "Body field 3 present, field 8 absent."
+        },
+        {
+            "id": "lower-bound-only",
+            "plan_item": 9,
+            "description": "Body field 8 present, field 3 absent."
+        },
+        {
+            "id": "collateral",
+            "plan_item": 10,
+            "description": "Body field 13 present."
+        },
+        {
+            "id": "required-signers",
+            "plan_item": 11,
+            "description": "Body field 14 present. The plan pairs this with the network id; no transaction in the scanned pool carried both, so the two halves are held by separate fixtures."
+        },
+        {
+            "id": "network-id",
+            "plan_item": 11,
+            "description": "Body field 15 present. The other half of the plan's eleventh shape."
+        },
+        {
+            "id": "reference-inputs",
+            "plan_item": 12,
+            "description": "Body field 18 present."
+        },
+        {
+            "id": "exact-value-spend-no-change",
+            "plan_item": 13,
+            "description": "A single output, so the transaction cannot hold both a payment and a change output. Whether that one output is a payment or is change back to the sender cannot be told from the transaction alone."
+        },
+        {
+            "id": "legacy-array-output",
+            "plan_item": 14,
+            "description": "At least one output in the positional array form."
+        },
+        {
+            "id": "map-output",
+            "plan_item": 15,
+            "description": "At least one output in the Babbage map form."
+        },
+        {
+            "id": "set-tag-258-inputs",
+            "plan_item": null,
+            "description": "The input set wrapped in CBOR tag 258. Not one of the plan's fifteen; kept because the tag is part of the hashed bytes and a decoder that dropped it would move the hash."
+        },
+        {
+            "id": "pre-alonzo-three-item",
+            "plan_item": null,
+            "description": "Three top level items rather than four: an era before the script validity flag. Not one of the plan's fifteen; it is what \"decoder tolerance for eras before Conway\" comes down to in the serialization layer."
+        },
+        {
+            "id": "shelley-map-auxiliary-data",
+            "plan_item": null,
+            "description": "Auxiliary data as a bare metadata map, the Shelley form, still being written on Conway transactions."
+        }
+    ],
+    "chain": [
+        {
+            "id": "plain-ada-payment",
+            "file": "chain/plain-ada-payment.hex",
+            "tx_hash": "917b34247b18b94ed80afba9aec55750a78de52bfc8e4ee4d8f53f549041a5ad",
+            "bytes": 193,
+            "epoch_no": 655,
+            "block_height": 13944916,
+            "shapes": [
+                "plain-ada-payment",
+                "exact-value-spend-no-change",
+                "legacy-array-output"
+            ],
+            "notes": "One input, one output, a fee and nothing else. The body carries no validity bound of any kind, which the ledger allows and which the invariant gate will later refuse for a transaction we build. Its value is written as a coin paired with an empty policy map rather than as a bare coin, which the grammar's one-or-more marker says should not happen and which the ledger accepted anyway.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "917b34247b18b94ed80afba9aec55750a78de52bfc8e4ee4d8f53f549041a5ad"
+                ]
+            },
+            "found_by": "GET /blocks then POST /block_txs over the returned block hashes."
+        },
+        {
+            "id": "plain-ada-payment-set-tagged-inputs",
+            "file": "chain/plain-ada-payment-set-tagged-inputs.hex",
+            "tx_hash": "992046e0fc29d5fa584a6f29a313c0c8744d6d4b8cf968f8e54a5ea976608e34",
+            "bytes": 203,
+            "epoch_no": 655,
+            "block_height": 13944909,
+            "shapes": [
+                "plain-ada-payment",
+                "upper-bound-only",
+                "legacy-array-output",
+                "set-tag-258-inputs"
+            ],
+            "notes": "The input set is wrapped in CBOR tag 258, which Conway introduced for sets. The tag is part of the hashed bytes, so it has to survive the round trip.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "992046e0fc29d5fa584a6f29a313c0c8744d6d4b8cf968f8e54a5ea976608e34"
+                ]
+            },
+            "found_by": "GET /blocks then POST /block_txs over the returned block hashes."
+        },
+        {
+            "id": "map-form-output",
+            "file": "chain/map-form-output.hex",
+            "tx_hash": "351a5278945cc079725708c04a7bdfff8f269572a34fbe8f6ee4c49947f354a5",
+            "bytes": 199,
+            "epoch_no": 655,
+            "block_height": 13944977,
+            "shapes": [
+                "map-output",
+                "upper-bound-only"
+            ],
+            "notes": "The Babbage map output form, keyed by small integers rather than positional.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "351a5278945cc079725708c04a7bdfff8f269572a34fbe8f6ee4c49947f354a5"
+                ]
+            },
+            "found_by": "GET /blocks then POST /block_txs over the returned block hashes."
+        },
+        {
+            "id": "single-multi-asset-output",
+            "file": "chain/single-multi-asset-output.hex",
+            "tx_hash": "6c682a10e21eda9eff96bc18eebf4c75f2f35f3e1749dc483e9d6b2c40c33e31",
+            "bytes": 279,
+            "epoch_no": 655,
+            "block_height": 13944982,
+            "shapes": [
+                "single-multi-asset-output",
+                "exact-value-spend-no-change",
+                "legacy-array-output"
+            ],
+            "notes": "One output holding lovelace and one asset of one policy.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "6c682a10e21eda9eff96bc18eebf4c75f2f35f3e1749dc483e9d6b2c40c33e31"
+                ]
+            },
+            "found_by": "GET /blocks then POST /block_txs over the returned block hashes."
+        },
+        {
+            "id": "many-multi-asset-outputs",
+            "file": "chain/many-multi-asset-outputs.hex",
+            "tx_hash": "773fb772f4364a45bf3814279b86fd0a6b7891780bf9ba0fff9c6add1c623e66",
+            "bytes": 340,
+            "epoch_no": 655,
+            "block_height": 13945000,
+            "shapes": [
+                "many-multi-asset-outputs",
+                "upper-bound-only",
+                "legacy-array-output",
+                "set-tag-258-inputs"
+            ],
+            "notes": "Two outputs, each carrying assets.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "773fb772f4364a45bf3814279b86fd0a6b7891780bf9ba0fff9c6add1c623e66"
+                ]
+            },
+            "found_by": "GET /blocks then POST /block_txs over the returned block hashes."
+        },
+        {
+            "id": "native-script-spend",
+            "file": "chain/native-script-spend.hex",
+            "tx_hash": "1a78f2ce08772fca99ad7cf1d59008e0d1c9f43362d43640c2cf886107b265ca",
+            "bytes": 1633,
+            "epoch_no": 655,
+            "block_height": 13944892,
+            "shapes": [
+                "native-script-spend",
+                "many-multi-asset-outputs",
+                "upper-bound-only",
+                "legacy-array-output"
+            ],
+            "notes": "Six inputs, three of them at script addresses, and three native scripts in the witness set. The transaction mints nothing, so none of those scripts can be a minting policy: each is witnessing a spend. Koios tx_info shows the three script inputs at addr1w835n68..., addr1wx2f9f0... and addr1wy6e939....",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "1a78f2ce08772fca99ad7cf1d59008e0d1c9f43362d43640c2cf886107b265ca"
+                ]
+            },
+            "found_by": "GET /blocks then POST /block_txs over the returned block hashes."
+        },
+        {
+            "id": "cip25-mint",
+            "file": "chain/cip25-mint.hex",
+            "tx_hash": "0b702e0c44412072c81f44bf1d5ff692ce3ad9d0140f3b0933f89de8dd66ce31",
+            "bytes": 693,
+            "epoch_no": 257,
+            "block_height": 5552143,
+            "shapes": [
+                "cip25-mint",
+                "single-multi-asset-output",
+                "legacy-array-output",
+                "pre-alonzo-three-item"
+            ],
+            "notes": "A Mary era mint carrying label 721. Three top level items rather than four, because the script validity flag arrived with Alonzo, and the auxiliary data is the Allegra pair of metadata and scripts.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "0b702e0c44412072c81f44bf1d5ff692ce3ad9d0140f3b0933f89de8dd66ce31"
+                ]
+            },
+            "found_by": "GET /tx_by_metalabel?_label=721."
+        },
+        {
+            "id": "cip20-message-array-auxiliary-data",
+            "file": "chain/cip20-message-array-auxiliary-data.hex",
+            "tx_hash": "a3c21ae429f2efde197060c49ec1c825f02911a8a14e591466964fa5e3334c31",
+            "bytes": 281,
+            "epoch_no": 274,
+            "block_height": 5900862,
+            "shapes": [
+                "cip20-message",
+                "upper-bound-only",
+                "legacy-array-output",
+                "pre-alonzo-three-item"
+            ],
+            "notes": "A Mary era transaction message, label 674, in the Allegra pair form of auxiliary data.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "a3c21ae429f2efde197060c49ec1c825f02911a8a14e591466964fa5e3334c31"
+                ]
+            },
+            "found_by": "GET /tx_by_metalabel?_label=674."
+        },
+        {
+            "id": "cip20-message-tagged-auxiliary-data",
+            "file": "chain/cip20-message-tagged-auxiliary-data.hex",
+            "tx_hash": "195b52ae7157267c423b4f8e8bcc2fd58408088bc36dd5c6a6c2f2f909882ff8",
+            "bytes": 296,
+            "epoch_no": 655,
+            "block_height": 13944856,
+            "shapes": [
+                "cip20-message",
+                "map-output",
+                "upper-bound-only"
+            ],
+            "notes": "A recent transaction message in the Alonzo form: auxiliary data wrapped in CBOR tag 259 with the metadata under field 0.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "195b52ae7157267c423b4f8e8bcc2fd58408088bc36dd5c6a6c2f2f909882ff8"
+                ]
+            },
+            "found_by": "GET /blocks then POST /block_txs over the returned block hashes."
+        },
+        {
+            "id": "both-validity-bounds",
+            "file": "chain/both-validity-bounds.hex",
+            "tx_hash": "449ba9c16159114bdc285a75fb6926c385327945ba05ed5e05fd992d4b6ab3b7",
+            "bytes": 231,
+            "epoch_no": 655,
+            "block_height": 13944985,
+            "shapes": [
+                "both-validity-bounds",
+                "legacy-array-output",
+                "exact-value-spend-no-change"
+            ],
+            "notes": "Body fields 3 and 8 both present: an interval with a lower and an upper bound.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "449ba9c16159114bdc285a75fb6926c385327945ba05ed5e05fd992d4b6ab3b7"
+                ]
+            },
+            "found_by": "GET /blocks then POST /block_txs over the returned block hashes."
+        },
+        {
+            "id": "lower-bound-only-with-collateral-return",
+            "file": "chain/lower-bound-only-with-collateral-return.hex",
+            "tx_hash": "7bf0968c3079c90f3f9e13b2c5100b973aa49a4fe3af451452e4c61f3f72446d",
+            "bytes": 585,
+            "epoch_no": 655,
+            "block_height": 13944796,
+            "shapes": [
+                "lower-bound-only",
+                "collateral",
+                "reference-inputs",
+                "legacy-array-output",
+                "set-tag-258-inputs"
+            ],
+            "notes": "Field 8 without field 3, which is the shape the invariant gate will refuse for a transaction we build and which the ledger accepts here. Also carries collateral, a collateral return output and a total collateral amount.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "7bf0968c3079c90f3f9e13b2c5100b973aa49a4fe3af451452e4c61f3f72446d"
+                ]
+            },
+            "found_by": "GET /blocks then POST /block_txs over the returned block hashes."
+        },
+        {
+            "id": "collateral-and-required-signers",
+            "file": "chain/collateral-and-required-signers.hex",
+            "tx_hash": "9e36dfc4b6b488b70d4d8cf7097e4dbaed6697965141d73ef35dcd8000f0e3a7",
+            "bytes": 581,
+            "epoch_no": 655,
+            "block_height": 13944893,
+            "shapes": [
+                "collateral",
+                "required-signers",
+                "reference-inputs",
+                "cip20-message",
+                "shelley-map-auxiliary-data",
+                "upper-bound-only"
+            ],
+            "notes": "A Plutus spend through a reference script: collateral, a required signer, a reference input and a script data hash. Its auxiliary data is a bare metadata map, the Shelley form, on a Conway transaction.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "9e36dfc4b6b488b70d4d8cf7097e4dbaed6697965141d73ef35dcd8000f0e3a7"
+                ]
+            },
+            "found_by": "GET /blocks then POST /block_txs over the returned block hashes."
+        },
+        {
+            "id": "network-id",
+            "file": "chain/network-id.hex",
+            "tx_hash": "6d012170a4a2d9b4c19bfc7bb0b604c4b4d9f0deb8037aa2f93431578fa0b70a",
+            "bytes": 268,
+            "epoch_no": 655,
+            "block_height": 13944887,
+            "shapes": [
+                "network-id",
+                "upper-bound-only",
+                "legacy-array-output"
+            ],
+            "notes": "Body field 15 present and set to 1, the mainnet tag. No transaction in the scanned pool carried both field 14 and field 15, so the plan's eleventh shape is held by this fixture and by collateral-and-required-signers together.",
+            "source_url": "https://eu-api.koios.rest/api/v1/tx_cbor",
+            "source_request": {
+                "_tx_hashes": [
+                    "6d012170a4a2d9b4c19bfc7bb0b604c4b4d9f0deb8037aa2f93431578fa0b70a"
+                ]
+            },
+            "found_by": "GET /blocks then POST /block_txs over the returned block hashes."
+        }
+    ],
+    "negative": [
+        {
+            "id": "trailing-byte",
+            "file": "negative/trailing-byte.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "One 0x00 byte appended after the complete transaction.",
+            "must_be_refused_because": "A decoder that reads the first item and stops accepts any number of bytes after it. The input has to be exactly one transaction."
+        },
+        {
+            "id": "truncated",
+            "file": "negative/truncated.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "The last eight bytes removed.",
+            "must_be_refused_because": "The signature in the witness set is now short. A decoder that reads what is there and returns rather than refusing produces a transaction whose witnesses are not the ones that were written."
+        },
+        {
+            "id": "two-item-top-level",
+            "file": "negative/two-item-top-level.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "The top level array rebuilt with only the body and the witness set.",
+            "must_be_refused_because": "Shelley wrote three items and Alonzo four. Two is neither, and the auxiliary data slot is where a transaction says it has no metadata."
+        },
+        {
+            "id": "body-not-a-map",
+            "file": "negative/body-not-a-map.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "The body replaced with an empty CBOR array.",
+            "must_be_refused_because": "The body is a keyed map. An array in its place has no fields at all, and a decoder that returned an empty body would hash the wrong bytes without complaining."
+        },
+        {
+            "id": "unknown-body-field",
+            "file": "negative/unknown-body-field.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "Body field 10, which the ledger never assigned, added with the value 0.",
+            "must_be_refused_because": "A field this decoder has not been told about is a transaction shape it cannot claim to have read. Ignoring it would mean hashing bytes whose meaning is unknown."
+        },
+        {
+            "id": "duplicate-body-field",
+            "file": "negative/duplicate-body-field.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "The fee entry written a second time, and the body map head raised by one.",
+            "must_be_refused_because": "Two values for one field. Whichever a permissive decoder kept, the other was in the bytes that were hashed."
+        },
+        {
+            "id": "missing-fee",
+            "file": "negative/missing-fee.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "The fee entry removed from the body.",
+            "must_be_refused_because": "Inputs, outputs and fee are the three fields every transaction has. A decoder that let the fee default would compute a balance that never existed."
+        },
+        {
+            "id": "auxiliary-hash-without-auxiliary-data",
+            "file": "negative/auxiliary-hash-without-auxiliary-data.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "Body field 7 added, holding thirty-two zero bytes, with the auxiliary data slot left null.",
+            "must_be_refused_because": "The body promises metadata that is not attached. Assertion four has nothing to hash, and a decoder that shrugged would hand the gate a transaction whose hash commits to data nobody holds."
+        },
+        {
+            "id": "network-id-out-of-range",
+            "file": "negative/network-id-out-of-range.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "Body field 15 added with the value 2.",
+            "must_be_refused_because": "There are two networks and their tags are 0 and 1. A third value is not a network, and the gate that checks every output address against the configured network would be comparing against nothing."
+        },
+        {
+            "id": "short-public-key",
+            "file": "negative/short-public-key.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "The vkey witness public key cut from thirty-two bytes to thirty-one, header and payload together.",
+            "must_be_refused_because": "sodium throws on a key of the wrong length rather than returning false, so a decoder that let this through turns assertion three from a failed check into a crash."
+        },
+        {
+            "id": "negative-input-index",
+            "file": "negative/negative-input-index.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "The output index of the single input replaced with the CBOR negative integer -1.",
+            "must_be_refused_because": "An output index counts from zero. A decoder that read a signed integer here would build a reference to an output that cannot exist."
+        },
+        {
+            "id": "policy-with-no-assets",
+            "file": "negative/policy-with-no-assets.hex",
+            "derived_from": "single-multi-asset-output",
+            "mutation": "The asset map of the output's single policy replaced with an empty map.",
+            "must_be_refused_because": "A policy with no assets under it is a policy that is not there. The grammar writes the inner level with a one-or-more marker and no transaction in the scanned pool breaks it."
+        }
+    ],
+    "perturbed": [
+        {
+            "id": "plain-ada-payment-fee-raised-by-one",
+            "file": "perturbed/plain-ada-payment-fee-raised-by-one.hex",
+            "derived_from": "plain-ada-payment",
+            "mutation": "The fee field re-encoded from 1a000aae60 to 1a000aae61, raising 700000 lovelace to 700001. Nothing else changed.",
+            "expected_hash": "0523e81dc80c46a50b3fa2227bc9c8d6acda092e659becd6b58050a8750a2219",
+            "original_hash": "917b34247b18b94ed80afba9aec55750a78de52bfc8e4ee4d8f53f549041a5ad",
+            "purpose": "This transaction was never on chain and is not meant to be. It is what says the hash is computed rather than remembered: the decoder has never seen this body, and the value it returns has to be the blake2b-256 of the bytes it writes back. The witness is the one that signed the original body, so it must also fail to verify. Assertion three is only worth running if it can fail, and this is the fixture that shows it can."
+        }
+    ]
+}

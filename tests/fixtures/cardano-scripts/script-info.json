@@ -1,0 +1,478 @@
+{
+    "network": "mainnet",
+    "fetched_at": "2026-09-15",
+    "provider": {
+        "name": "Koios",
+        "base_url": "https://eu-api.koios.rest/api/v1",
+        "endpoint": "POST /script_info",
+        "request": {
+            "_script_hashes": [
+                "0898aca23cdf56cafd3dae6c5dff8bf235e23d38038ba94c6b663f45",
+                "9492a5e0f1483345395cf63e27db3de89e836f8044cbafd3ca37de66",
+                "3592c4bd2d940848cdad409723ff76a16d19bf2dae839f9a8d4ad212",
+                "e349e8e0cf4cf54781c8dc877c7cb45a724bf5b14e3ac633bba8ee81",
+                "00c8fe88693510627465f11908d49564ec21d6c1b64fe4c302c87370",
+                "276df9cb8b315aa0a13d99d01f28179f76706c222523fb03f9fae464",
+                "00000002df633853f6a47465c9496721d2d5b1291b8398016c0e87ae",
+                "26958193370c7c03056e2502325a9a824c62d67d7723aa15c24536a1",
+                "23c4a26e2a3db0f900a4c58ce94294276c8a71be235466c7e5ee3510",
+                "4c8473f24edb4f07edccd234e63238e22e7d630319f6f329ac4fecc3"
+            ]
+        },
+        "note": "eu-api.koios.rest is a mainnet Koios instance. api.koios.rest is the documented name and resolves to the same service; it was unreachable from the machine this was fetched on."
+    },
+    "derivation": {
+        "note": "script_hash and script are the provider's own fields, unmodified. cbor was produced by a stand-alone CBOR encoder written for this fixture, and every entry was checked by hashing it with Python's hashlib blake2b and comparing against the provider's script_hash before the file was written. The two addresses come from the BIP-173 reference bech32 implementation."
+    },
+    "scripts": [
+        {
+            "script_hash": "0898aca23cdf56cafd3dae6c5dff8bf235e23d38038ba94c6b663f45",
+            "creation_tx_hash": "0b702e0c44412072c81f44bf1d5ff692ce3ad9d0140f3b0933f89de8dd66ce31",
+            "constructors": [
+                "sig"
+            ],
+            "depth": 0,
+            "script": {
+                "type": "sig",
+                "keyHash": "c27d6f5bf238ad3289322aacabac5336b0bde65b9e37eb1131b5345f"
+            },
+            "cbor": "8200581cc27d6f5bf238ad3289322aacabac5336b0bde65b9e37eb1131b5345f",
+            "enterprise_address_mainnet": "addr1wyyf3t9z8n04djha8khxch0l30ertc3a8qpch22vddnr73gqz3sve",
+            "enterprise_address_preprod": "addr_test1wqyf3t9z8n04djha8khxch0l30ertc3a8qpch22vddnr73gm29vru"
+        },
+        {
+            "script_hash": "9492a5e0f1483345395cf63e27db3de89e836f8044cbafd3ca37de66",
+            "creation_tx_hash": "26d6e9a2de5743118ca8310c63353198cdd9428ca5e49cc8c8cfdb7676437902",
+            "constructors": [
+                "all",
+                "sig"
+            ],
+            "depth": 1,
+            "script": {
+                "type": "all",
+                "scripts": [
+                    {
+                        "type": "sig",
+                        "keyHash": "220099e5e430475c219518179efc7e6c8289db028904834025d5b086"
+                    },
+                    {
+                        "type": "sig",
+                        "keyHash": "ca73cc6f476af692a66e4d447bfc9c0c91e99582ced173875f19add6"
+                    }
+                ]
+            },
+            "cbor": "8201828200581c220099e5e430475c219518179efc7e6c8289db028904834025d5b0868200581cca73cc6f476af692a66e4d447bfc9c0c91e99582ced173875f19add6",
+            "enterprise_address_mainnet": "addr1wx2f9f0q79yrx3fetnmruf7m8h5faqm0spzvht7negmauesy9dqnl",
+            "enterprise_address_preprod": "addr_test1wz2f9f0q79yrx3fetnmruf7m8h5faqm0spzvht7negmauesldeuu6"
+        },
+        {
+            "script_hash": "3592c4bd2d940848cdad409723ff76a16d19bf2dae839f9a8d4ad212",
+            "creation_tx_hash": "76c48ddc0dc288286b5a6d92fdce2411d33fb872fa7e715ebe7658e31ff78f14",
+            "constructors": [
+                "all",
+                "sig"
+            ],
+            "depth": 1,
+            "script": {
+                "type": "all",
+                "scripts": [
+                    {
+                        "type": "sig",
+                        "keyHash": "220099e5e430475c219518179efc7e6c8289db028904834025d5b086"
+                    },
+                    {
+                        "type": "sig",
+                        "keyHash": "28e637463d173e692db41d2f22babc54d9ae1d0cf473ee2edfee5878"
+                    }
+                ]
+            },
+            "cbor": "8201828200581c220099e5e430475c219518179efc7e6c8289db028904834025d5b0868200581c28e637463d173e692db41d2f22babc54d9ae1d0cf473ee2edfee5878",
+            "enterprise_address_mainnet": "addr1wy6e939a9k2qsjxd44qfwgllw6sk6xdl9khg88u6349dyyshjh8fl",
+            "enterprise_address_preprod": "addr_test1wq6e939a9k2qsjxd44qfwgllw6sk6xdl9khg88u6349dyysv6rmx6"
+        },
+        {
+            "script_hash": "e349e8e0cf4cf54781c8dc877c7cb45a724bf5b14e3ac633bba8ee81",
+            "creation_tx_hash": "d047130087d6bf1bf820c3c4bf8a3a8eea123492d787ba4a4ede034ef82c0bee",
+            "constructors": [
+                "all",
+                "sig"
+            ],
+            "depth": 1,
+            "script": {
+                "type": "all",
+                "scripts": [
+                    {
+                        "type": "sig",
+                        "keyHash": "220099e5e430475c219518179efc7e6c8289db028904834025d5b086"
+                    },
+                    {
+                        "type": "sig",
+                        "keyHash": "5ce8bdfb98e00d0b01b1c7040e2a3faf2115c34aa2742eb2a640aee5"
+                    }
+                ]
+            },
+            "cbor": "8201828200581c220099e5e430475c219518179efc7e6c8289db028904834025d5b0868200581c5ce8bdfb98e00d0b01b1c7040e2a3faf2115c34aa2742eb2a640aee5",
+            "enterprise_address_mainnet": "addr1w835n68qeax023uperwgwlruk3d8yjl4k98r433nhw5waqgkx8prf",
+            "enterprise_address_preprod": "addr_test1wr35n68qeax023uperwgwlruk3d8yjl4k98r433nhw5waqgdwnavv"
+        },
+        {
+            "script_hash": "00c8fe88693510627465f11908d49564ec21d6c1b64fe4c302c87370",
+            "creation_tx_hash": "02825cbc9517ecb3f774d270f66a28426e89e043de9b12d447e61a71d10007cf",
+            "constructors": [
+                "sig"
+            ],
+            "depth": 0,
+            "script": {
+                "type": "sig",
+                "keyHash": "daea68e349bef16357521ea3a2fa958b1e682b3e9096b4b8fdda9b46"
+            },
+            "cbor": "8200581cdaea68e349bef16357521ea3a2fa958b1e682b3e9096b4b8fdda9b46",
+            "enterprise_address_mainnet": "addr1wyqv3l5gdy63qcn5vhc3jzx5j4jwcgwkcxmylexrqty8xuq2yenjm",
+            "enterprise_address_preprod": "addr_test1wqqv3l5gdy63qcn5vhc3jzx5j4jwcgwkcxmylexrqty8xuq3vd0a7"
+        },
+        {
+            "script_hash": "276df9cb8b315aa0a13d99d01f28179f76706c222523fb03f9fae464",
+            "creation_tx_hash": "08e911d0568600911797dd27d77676370784b347ef35b7c4582c8f0a09a69df3",
+            "constructors": [
+                "before"
+            ],
+            "depth": 0,
+            "script": {
+                "slot": 26982646,
+                "type": "before"
+            },
+            "cbor": "82051a019bb8f6",
+            "enterprise_address_mainnet": "addr1wynkm7wt3vc44g9p8kvaq8egz70hvurvygjj87crl8awgeqyzcnhl",
+            "enterprise_address_preprod": "addr_test1wqnkm7wt3vc44g9p8kvaq8egz70hvurvygjj87crl8awgeql2v0c6"
+        },
+        {
+            "script_hash": "00000002df633853f6a47465c9496721d2d5b1291b8398016c0e87ae",
+            "creation_tx_hash": "e252be4c7e40d35919f741c9649ff207c3e49d53bb819e5c1cb458055fd363ed",
+            "constructors": [
+                "all",
+                "before",
+                "sig"
+            ],
+            "depth": 1,
+            "script": {
+                "type": "all",
+                "scripts": [
+                    {
+                        "slot": 24285375,
+                        "type": "before"
+                    },
+                    {
+                        "type": "sig",
+                        "keyHash": "e97316c52c85eab276fd40feacf78bc5eff74e225e744567140070c3"
+                    }
+                ]
+            },
+            "cbor": "82018282051a017290bf8200581ce97316c52c85eab276fd40feacf78bc5eff74e225e744567140070c3",
+            "enterprise_address_mainnet": "addr1wyqqqqqzma3ns5lk536xtj2fvusa94d39ydc8xqpds8g0tszz5eru",
+            "enterprise_address_preprod": "addr_test1wqqqqqqzma3ns5lk536xtj2fvusa94d39ydc8xqpds8g0tse2q9ve"
+        },
+        {
+            "script_hash": "26958193370c7c03056e2502325a9a824c62d67d7723aa15c24536a1",
+            "creation_tx_hash": "2305653c3c37d1ab2e94a3c0b06ddaaf32db589e726bbde070dcbb1e764506d5",
+            "constructors": [
+                "after",
+                "all",
+                "any",
+                "before",
+                "sig"
+            ],
+            "depth": 2,
+            "script": {
+                "type": "all",
+                "scripts": [
+                    {
+                        "type": "sig",
+                        "keyHash": "b395c1a9464d419c69d05c148a19d44130c249abfb990c6a3fcd0b07"
+                    },
+                    {
+                        "type": "any",
+                        "scripts": [
+                            {
+                                "slot": 23164614,
+                                "type": "before"
+                            },
+                            {
+                                "slot": 57638214,
+                                "type": "after"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "cbor": "8201828200581cb395c1a9464d419c69d05c148a19d44130c249abfb990c6a3fcd0b0782028282051a016176c682041a036f7d46",
+            "enterprise_address_mainnet": "addr1wynftqvnxux8cqc9dcjsyvj6n2pycckk04mj82s4cfzndgg9xth4j",
+            "enterprise_address_preprod": "addr_test1wqnftqvnxux8cqc9dcjsyvj6n2pycckk04mj82s4cfzndgg7wlt6h"
+        },
+        {
+            "script_hash": "23c4a26e2a3db0f900a4c58ce94294276c8a71be235466c7e5ee3510",
+            "creation_tx_hash": "9202067ec4587c376fb8614fa41bf11a3469635fab1eb9e9e8ec5be073724127",
+            "constructors": [
+                "after",
+                "all",
+                "any",
+                "atLeast",
+                "sig"
+            ],
+            "depth": 3,
+            "script": {
+                "type": "any",
+                "scripts": [
+                    {
+                        "type": "all",
+                        "scripts": [
+                            {
+                                "type": "atLeast",
+                                "scripts": [
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "eaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb8"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "ea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec76"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b7"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d33"
+                                    }
+                                ],
+                                "required": 4
+                            }
+                        ]
+                    },
+                    {
+                        "type": "all",
+                        "scripts": [
+                            {
+                                "slot": 25732159,
+                                "type": "after"
+                            },
+                            {
+                                "type": "atLeast",
+                                "scripts": [
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "eaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb8"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "ea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec76"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b7"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d33"
+                                    }
+                                ],
+                                "required": 2
+                            }
+                        ]
+                    },
+                    {
+                        "type": "all",
+                        "scripts": [
+                            {
+                                "slot": 25732159,
+                                "type": "after"
+                            },
+                            {
+                                "type": "atLeast",
+                                "scripts": [
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "eaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb8"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "ea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec76"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b7"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d33"
+                                    }
+                                ],
+                                "required": 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            "cbor": "820283820181830304868200581ceaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb88200581cea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec768200581c24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b78200581c4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e38200581c81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd38200581c1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d3382018282041a0188a43f830302868200581ceaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb88200581cea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec768200581c24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b78200581c4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e38200581c81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd38200581c1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d3382018282041a0188a43f830301868200581ceaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb88200581cea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec768200581c24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b78200581c4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e38200581c81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd38200581c1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d33",
+            "enterprise_address_mainnet": "addr1wy3ufgnw9g7mp7gq5nzce62zjsnkezn3hc34gek8uhhr2yq5mtvvg",
+            "enterprise_address_preprod": "addr_test1wq3ufgnw9g7mp7gq5nzce62zjsnkezn3hc34gek8uhhr2yq0nlsrd"
+        },
+        {
+            "script_hash": "4c8473f24edb4f07edccd234e63238e22e7d630319f6f329ac4fecc3",
+            "creation_tx_hash": "555ba813e18da08177cad5a35f7f4723a2052be204306603ce0b6e2f9c2d1032",
+            "constructors": [
+                "after",
+                "all",
+                "any",
+                "atLeast",
+                "sig"
+            ],
+            "depth": 3,
+            "script": {
+                "type": "any",
+                "scripts": [
+                    {
+                        "type": "all",
+                        "scripts": [
+                            {
+                                "type": "atLeast",
+                                "scripts": [
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "eaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb8"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "ea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec76"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b7"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d33"
+                                    }
+                                ],
+                                "required": 4
+                            }
+                        ]
+                    },
+                    {
+                        "type": "all",
+                        "scripts": [
+                            {
+                                "slot": 25735440,
+                                "type": "after"
+                            },
+                            {
+                                "type": "atLeast",
+                                "scripts": [
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "eaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb8"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "ea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec76"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b7"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d33"
+                                    }
+                                ],
+                                "required": 2
+                            }
+                        ]
+                    },
+                    {
+                        "type": "all",
+                        "scripts": [
+                            {
+                                "slot": 25735440,
+                                "type": "after"
+                            },
+                            {
+                                "type": "atLeast",
+                                "scripts": [
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "eaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb8"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "ea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec76"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b7"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd3"
+                                    },
+                                    {
+                                        "type": "sig",
+                                        "keyHash": "1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d33"
+                                    }
+                                ],
+                                "required": 1
+                            }
+                        ]
+                    }
+                ]
+            },
+            "cbor": "820283820181830304868200581ceaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb88200581cea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec768200581c24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b78200581c4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e38200581c81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd38200581c1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d3382018282041a0188b110830302868200581ceaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb88200581cea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec768200581c24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b78200581c4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e38200581c81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd38200581c1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d3382018282041a0188b110830301868200581ceaeb848139b224cd0c2eaba28ef17d788989d2ec4da3cda54281bbb88200581cea907a248ecb583061e02970e546772c12d05b12f12f8a4ac3e2ec768200581c24c53409dce7186fa414d6bffb0d97002e7ceb1ead6f5ca7241488b78200581c4c0b87c21190ad6f6144d0609761a8af515efd3fabcc8d929d63e9e38200581c81c8c1aac5630911f570cb3c2222d16ee38d3501727507f67bb15dd38200581c1423d22ea96d09b88162b1b7a9a88df1bfc2aec37cd805428d6a0d33",
+            "enterprise_address_mainnet": "addr1w9xgguljfmd57pldenfrfe3j8r3zultrqvvlduef4387escvar4fz",
+            "enterprise_address_preprod": "addr_test1wpxgguljfmd57pldenfrfe3j8r3zultrqvvlduef4387esch4hfx8"
+        }
+    ]
+}

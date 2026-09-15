@@ -1,0 +1,436 @@
+{
+    "fetched_at": "2026-09-15",
+    "provider": {
+        "name": "Koios",
+        "hosts": {
+            "mainnet": "eu-api.koios.rest",
+            "preprod": "preprod.koios.rest"
+        },
+        "endpoints": [
+            "POST /ogmios queryLedgerState/eraSummaries",
+            "POST /ogmios queryNetwork/startTime",
+            "GET /blocks?block_height=eq.<height>"
+        ],
+        "note": "eu-api.koios.rest is a mainnet Koios instance. api.koios.rest is the documented name and resolves to the same service; it was unreachable from the machine this was fetched on. Koios's own GET /era_summaries is a list of hard forks and protocol versions and carries neither slot lengths nor era start slots, so the era summaries here come from the Ogmios endpoint, where they are the ledger's own."
+    },
+    "networks": {
+        "mainnet": {
+            "system_start": "2017-09-23T21:44:51Z",
+            "system_start_unix": 1506203091,
+            "era_summaries": [
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 0
+                        },
+                        "slot": 0,
+                        "epoch": 0
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 89856000
+                        },
+                        "slot": 4492800,
+                        "epoch": 208
+                    },
+                    "parameters": {
+                        "epochLength": 21600,
+                        "slotLength": {
+                            "milliseconds": 20000
+                        },
+                        "safeZone": 4320
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 89856000
+                        },
+                        "slot": 4492800,
+                        "epoch": 208
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 101952000
+                        },
+                        "slot": 16588800,
+                        "epoch": 236
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 101952000
+                        },
+                        "slot": 16588800,
+                        "epoch": 236
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 108432000
+                        },
+                        "slot": 23068800,
+                        "epoch": 251
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 108432000
+                        },
+                        "slot": 23068800,
+                        "epoch": 251
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 125280000
+                        },
+                        "slot": 39916800,
+                        "epoch": 290
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 125280000
+                        },
+                        "slot": 39916800,
+                        "epoch": 290
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 157680000
+                        },
+                        "slot": 72316800,
+                        "epoch": 365
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 157680000
+                        },
+                        "slot": 72316800,
+                        "epoch": 365
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 219024000
+                        },
+                        "slot": 133660800,
+                        "epoch": 507
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 219024000
+                        },
+                        "slot": 133660800,
+                        "epoch": 507
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 283824000
+                        },
+                        "slot": 198460800,
+                        "epoch": 657
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                }
+            ],
+            "blocks": [
+                {
+                    "hash": "a52cca923a67326ea9c409e958a17a77990be72f3607625ec5b3d456202e223e",
+                    "epoch_no": 0,
+                    "abs_slot": 99,
+                    "block_height": 100,
+                    "block_time": 1506205071,
+                    "proto_major": 0
+                },
+                {
+                    "hash": "aa83acbf5904c0edfe4d79b3689d3d00fcfc553cf360fd2229b98d464c28e9de",
+                    "epoch_no": 208,
+                    "abs_slot": 4492800,
+                    "block_height": 4490511,
+                    "block_time": 1596059091,
+                    "proto_major": 2
+                },
+                {
+                    "hash": "97e160fc41b9cd751270100dd639202c1b8ae81932f20340bd6dd9f44e429a1d",
+                    "epoch_no": 231,
+                    "abs_slot": 14818038,
+                    "block_height": 5000000,
+                    "block_time": 1606384329,
+                    "proto_major": 2
+                },
+                {
+                    "hash": "0f6b0a59809fac077c9b3ece924b6777468d7edcc8b1ba03d89d70a15ccce6df",
+                    "epoch_no": 326,
+                    "abs_slot": 55787592,
+                    "block_height": 7000000,
+                    "block_time": 1647353883,
+                    "proto_major": 6
+                },
+                {
+                    "hash": "2f4a9a66a51f928d7c1743241aeb1142370c2ca3b6593306fb329b37c8d2f32f",
+                    "epoch_no": 422,
+                    "abs_slot": 97190884,
+                    "block_height": 9000000,
+                    "block_time": 1688757175,
+                    "proto_major": 8
+                },
+                {
+                    "hash": "f59d53cf1c5f1391e205cffb747126b781b6594a92bd60fd41d9cd3a20d7b2e1",
+                    "epoch_no": 564,
+                    "abs_slot": 158424916,
+                    "block_height": 12000000,
+                    "block_time": 1749991207,
+                    "proto_major": 10
+                }
+            ]
+        },
+        "preprod": {
+            "system_start": "2022-06-01T00:00:00Z",
+            "system_start_unix": 1654041600,
+            "era_summaries": [
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 0
+                        },
+                        "slot": 0,
+                        "epoch": 0
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 1728000
+                        },
+                        "slot": 86400,
+                        "epoch": 4
+                    },
+                    "parameters": {
+                        "epochLength": 21600,
+                        "slotLength": {
+                            "milliseconds": 20000
+                        },
+                        "safeZone": 4320
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 1728000
+                        },
+                        "slot": 86400,
+                        "epoch": 4
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 2160000
+                        },
+                        "slot": 518400,
+                        "epoch": 5
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 2160000
+                        },
+                        "slot": 518400,
+                        "epoch": 5
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 2592000
+                        },
+                        "slot": 950400,
+                        "epoch": 6
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 2592000
+                        },
+                        "slot": 950400,
+                        "epoch": 6
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 3024000
+                        },
+                        "slot": 1382400,
+                        "epoch": 7
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 3024000
+                        },
+                        "slot": 1382400,
+                        "epoch": 7
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 5184000
+                        },
+                        "slot": 3542400,
+                        "epoch": 12
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 5184000
+                        },
+                        "slot": 3542400,
+                        "epoch": 12
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 70416000
+                        },
+                        "slot": 68774400,
+                        "epoch": 163
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                },
+                {
+                    "start": {
+                        "time": {
+                            "seconds": 70416000
+                        },
+                        "slot": 68774400,
+                        "epoch": 163
+                    },
+                    "end": {
+                        "time": {
+                            "seconds": 135648000
+                        },
+                        "slot": 134006400,
+                        "epoch": 314
+                    },
+                    "parameters": {
+                        "epochLength": 432000,
+                        "slotLength": {
+                            "milliseconds": 1000
+                        },
+                        "safeZone": 129600
+                    }
+                }
+            ],
+            "blocks": [
+                {
+                    "hash": "6b1c0c2ccd1fec376235c6580a667b67be92028e183dc46236eb551f1c40d621",
+                    "epoch_no": 4,
+                    "abs_slot": 86480,
+                    "block_height": 50,
+                    "block_time": 1655769680,
+                    "proto_major": 3
+                },
+                {
+                    "hash": "272193884b33dac2642c0f9d8a37303989a68f868d11227d1204380f14e264a2",
+                    "epoch_no": 8,
+                    "abs_slot": 2088544,
+                    "block_height": 100000,
+                    "block_time": 1657771744,
+                    "proto_major": 6
+                },
+                {
+                    "hash": "d79488a144367db534b68f3bdc5e4ac15a55f45c6c498a2d8319cb44673563a3",
+                    "epoch_no": 186,
+                    "abs_slot": 78851925,
+                    "block_height": 3000000,
+                    "block_time": 1734535125,
+                    "proto_major": 10
+                },
+                {
+                    "hash": "b270893027a0bf9acc0145b20883ad4bc666347938066fc66421ab04ab40ee4a",
+                    "epoch_no": 313,
+                    "abs_slot": 133796429,
+                    "block_height": 5180000,
+                    "block_time": 1789479629,
+                    "proto_major": 11
+                }
+            ]
+        }
+    }
+}
