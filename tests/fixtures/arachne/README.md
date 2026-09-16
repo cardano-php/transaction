@@ -19,9 +19,9 @@ under one threshold. Each of the 119 is proved in both of its encodings, so the 
 
 ```
 https://github.com/Crypto2099/arachne
-commit 039fd334752f44663982c9c98b852ed4c1d99178
+commit 9cdccdf8c6c2f54643d2749fd4afd6de3eb6cc61
 path   vectors/
-copied 15 September 2026
+copied 16 September 2026
 ```
 
 The files under `vectors/` are that directory, byte for byte, with nothing edited on the way in. The corpus carries a
@@ -34,16 +34,32 @@ generator      arachne@0.1.0
 digest         a6688f76c41e96e5bc1ebd45ad0bd148898d0bc8f3b5fdcca4c4059f
 vectors        126 in 11 families
 witness sets   1067
-observations   0
+observations   3
 ```
 
 The 980 key hashes in the corpus hold no key material. Each is the blake2b-224 of the UTF-8 bytes of
 `arachne/cosigner/` followed by a short label, so anyone can rebuild every one of them with no wallet and no seed, and
 nothing can sign for any of them. `ArachneCorpusTest` rebuilds all 980 from their labels.
 
-The `onchain` array of every vector is empty. Encoding and satisfaction are settled offline and completely; whether a
-node accepts a transaction carrying one of these scripts is a separate question that only submission answers, and
-neither the corpus nor this suite answers it.
+Two vectors record three submissions to preprod between them, and every other vector's `onchain` array is empty.
+Encoding and satisfaction are settled offline and completely. Whether a node accepts a transaction carrying one of
+these scripts is the separate question that only submission answers, and the corpus answers it for the two
+degenerate containers where the answer is worth having.
+
+| Vector                  | What was submitted                        | Result                                                                       |
+| ----------------------- | ----------------------------------------- | ---------------------------------------------------------------------------- |
+| `degenerate/empty-all`  | A spend carrying no vkey witness at all   | Accepted, `74aa539069a5b4c84a63649c9cf18bc71c0bd813ff1cb28b7226d431ff00a83c` |
+| `degenerate/empty-any`  | The same spend                            | Refused, `ScriptWitnessNotValidatingUTXOW`                                   |
+| `degenerate/empty-any`  | Storing the script as a reference script  | Accepted, `cf05ba2db6ca337655f94e3b081a4ca4c6682c6c5e9e5f9f6b8b0d39a2eb1989` |
+
+The first two are the ledger agreeing with this package about the two shapes it is easiest to be wrong about. An
+empty `all` is satisfied by a transaction carrying nothing, so anyone who finds the address can spend what it
+guards. An empty `any` is satisfied by nothing, so its funds are locked for good. `ArachneCorpusTest` evaluates both
+cases here and compares its own answer with the node's, and the refusal names the script hash this package computes
+for that vector.
+
+The third is how an unsatisfiable script reaches the chain at all. Nothing executes a reference script, so its
+satisfiability never comes up, and an indexer now reports that one permanently.
 
 ## What the suite checks
 

@@ -1,6 +1,6 @@
 {
   "formatVersion": 2,
-  "generatedAt": "2026-09-15T22:32:47.924Z",
+  "generatedAt": "2026-09-16T07:04:21.033Z",
   "generator": "arachne@0.1.0",
   "families": [
     {
@@ -61,7 +61,7 @@
   ],
   "vectorCount": 126,
   "satisfactionCaseCount": 1067,
-  "observationCount": 0,
+  "observationCount": 3,
   "encodingSensitiveCount": 15,
   "digest": "a6688f76c41e96e5bc1ebd45ad0bd148898d0bc8f3b5fdcca4c4059f",
   "vectors": [

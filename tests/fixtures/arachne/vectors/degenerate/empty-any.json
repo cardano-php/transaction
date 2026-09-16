@@ -117,5 +117,23 @@
       "expectedReason": "empty \"any\" can never be satisfied"
     }
   ],
-  "onchain": []
+  "onchain": [
+    {
+      "network": "preprod",
+      "role": "paymentEnterprise",
+      "action": "spend",
+      "caseId": "none@unbounded",
+      "accepted": false,
+      "error": "ConwayUtxowFailure (ScriptWitnessNotValidatingUTXOW (fromList [ScriptHash \"52dc3d43b6d2465e96109ce75ab61abe5e9c1d8a3c9ce6ff8a3af528\"]))",
+      "observedAt": "2026-09-15T18:20:00.000Z"
+    },
+    {
+      "network": "preprod",
+      "role": "paymentEnterprise",
+      "action": "store-reference-script",
+      "accepted": true,
+      "txHash": "cf05ba2db6ca337655f94e3b081a4ca4c6682c6c5e9e5f9f6b8b0d39a2eb1989",
+      "observedAt": "2026-09-15T23:55:00.000Z"
+    }
+  ]
 }

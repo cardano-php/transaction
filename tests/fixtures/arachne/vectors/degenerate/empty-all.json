@@ -117,5 +117,15 @@
       "expectedReason": "empty \"all\" is vacuously satisfied"
     }
   ],
-  "onchain": []
+  "onchain": [
+    {
+      "network": "preprod",
+      "role": "paymentEnterprise",
+      "action": "spend",
+      "caseId": "none@unbounded",
+      "accepted": true,
+      "txHash": "74aa539069a5b4c84a63649c9cf18bc71c0bd813ff1cb28b7226d431ff00a83c",
+      "observedAt": "2026-09-15T18:20:00.000Z"
+    }
+  ]
 }

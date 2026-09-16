@@ -6,6 +6,7 @@
 namespace Cardano\Transaction\Tests;
 
 use Cardano\Transaction\Hash\Blake2b;
+use Cardano\Transaction\Script\NativeScript;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -170,19 +171,97 @@ class ArachneCorpusTest extends TestCase
     }
 
     /**
-     * The corpus records no chain observations, so nothing in this suite claims a node accepted anything.
+     * The chain observations the corpus carries, and this package's answer for each one.
      *
-     * The `onchain` array is where a submission's result would sit, and it is empty in every vector. Encoding and
-     * satisfaction are settled offline and completely; whether a node accepts a transaction carrying one of these
-     * scripts is a separate question that only submission answers, and this suite does not answer it.
+     * Encoding and satisfaction are settled offline. Whether a node accepts a transaction carrying a given script is
+     * a separate question that only submission answers, and the corpus answers it for three submissions on preprod.
+     * They are the useful ones: an `all` with no sub-scripts was spent with no vkey witness at all, which is the
+     * ledger agreeing that anyone holding the script can spend what it guards, and an `any` with no sub-scripts
+     * refused every attempt, which is the ledger agreeing that its funds are locked for good.
+     *
+     * An observation is evidence and cannot be recomputed, so what this suite can do with one is check that its own
+     * answer for the same case is the answer the node gave. A disagreement would be a defect here rather than a
+     * failing vector, which is why it is asserted rather than counted.
      */
-    public function test_the_corpus_claims_no_chain_observations(): void
+    public function test_this_package_agrees_with_every_chain_observation_the_corpus_carries(): void
     {
+        $observations = [];
+
         foreach (ArachneCorpus::ids() as $id) {
-            $this->assertSame([], ArachneCorpus::vector($id)['onchain'], $id);
+            foreach (ArachneCorpus::vector($id)['onchain'] as $observation) {
+                $observations[] = [$id, $observation];
+            }
         }
 
-        $this->assertSame(0, ArachneCorpus::index()['observationCount']);
+        $this->assertCount(
+            ArachneCorpus::index()['observationCount'],
+            $observations,
+            'The index and the vectors disagree about how many submissions the corpus records.'
+        );
+        $this->assertCount(3, $observations, 'The number of chain observations in the corpus has moved.');
+
+        $evaluated = 0;
+
+        foreach ($observations as [$id, $observation]) {
+            $vector = ArachneCorpus::vector($id);
+            $script = NativeScript::fromArray($vector['script']);
+
+            $this->assertContains($observation['network'], ['preview', 'preprod'], $id);
+
+            if ($observation['accepted'] === true) {
+                $this->assertMatchesRegularExpression('/^[0-9a-f]{64}$/', $observation['txHash'], $id.' tx hash');
+                $this->assertArrayNotHasKey('error', $observation, $id.' was accepted and carries an error.');
+            } else {
+                $this->assertNotSame('', trim($observation['error']), $id.' was refused and says nothing.');
+                $this->assertArrayNotHasKey('txHash', $observation, $id.' was refused and carries a tx hash.');
+                $this->assertStringContainsString(
+                    $script->hashHex(),
+                    $observation['error'],
+                    $id.' was refused over a script hash this package does not compute.'
+                );
+            }
+
+            // Storing a script as a reference output executes nothing, so there is no case to evaluate against it.
+            if (! isset($observation['caseId'])) {
+                $this->assertSame('store-reference-script', $observation['action'], $id);
+
+                continue;
+            }
+
+            $case = self::satisfactionCase($vector, $observation['caseId']);
+
+            $this->assertSame(
+                $observation['accepted'],
+                $script->isSatisfiedBy($case['signers'], $case['validityStart'] ?? null, $case['validityEnd'] ?? null),
+                $id.' case '.$observation['caseId'].': the node and this package disagree.'
+            );
+            $this->assertSame(
+                $observation['accepted'],
+                $case['expected'],
+                $id.' case '.$observation['caseId'].': the node and the corpus disagree.'
+            );
+
+            $evaluated++;
+        }
+
+        $this->assertSame(2, $evaluated, 'The number of observations this suite can evaluate has moved.');
+    }
+
+    /**
+     * The satisfaction case an observation names.
+     *
+     * @param  array<string, mixed>  $vector
+     * @return array<string, mixed>
+     */
+    private static function satisfactionCase(array $vector, string $caseId): array
+    {
+        foreach ($vector['satisfaction'] as $case) {
+            if ($case['id'] === $caseId) {
+                return $case;
+            }
+        }
+
+        self::fail($vector['id'].' records an observation for case '.$caseId.', which it does not carry.');
     }
 
     /**
