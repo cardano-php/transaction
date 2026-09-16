@@ -1,0 +1,448 @@
+{
+  "formatVersion": 2,
+  "id": "nested-threshold/outer3-inner3-k2",
+  "family": "nested-threshold",
+  "question": "Does a threshold nested inside another evaluate independently, or does it flatten?",
+  "params": {
+    "outer": 3,
+    "inner": 3,
+    "k": 2
+  },
+  "script": {
+    "type": "atLeast",
+    "required": 2,
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76"
+      },
+      {
+        "type": "sig",
+        "keyHash": "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b"
+      },
+      {
+        "type": "atLeast",
+        "required": 2,
+        "scripts": [
+          {
+            "type": "sig",
+            "keyHash": "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e"
+          },
+          {
+            "type": "sig",
+            "keyHash": "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+          },
+          {
+            "type": "sig",
+            "keyHash": "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98"
+          }
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "depth": 3,
+    "nodeCount": 7,
+    "sigCount": 5,
+    "keyHashes": [
+      "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+      "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+      "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+      "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b",
+      "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 3,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 2
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "830302838200581c5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e768200581ca3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b830302838200581c2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e8200581cbb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b158200581c71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+      "preimageHex": "00830302838200581c5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e768200581ca3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b830302838200581c2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e8200581cbb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b158200581c71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+      "scriptHash": "b0ea481457ba96f0c6af1b0125dae01129c32e9145da02e7c4621f94",
+      "cborBytes": 168
+    },
+    "cardanoBinary": {
+      "cborHex": "830302838200581c5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e768200581ca3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b830302838200581c2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e8200581cbb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b158200581c71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+      "preimageHex": "00830302838200581c5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e768200581ca3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b830302838200581c2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e8200581cbb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b158200581c71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+      "scriptHash": "b0ea481457ba96f0c6af1b0125dae01129c32e9145da02e7c4621f94",
+      "cborBytes": 168
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1wxcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9qu5ktmq",
+        "preview": "addr_test1wzcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9q8uzh59",
+        "preprod": "addr_test1wzcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9q8uzh59"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xxcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl99safypg4a6jmcvdtcmqyja4cq398pjay29mgpw03rzr72qkcg6l2",
+        "preview": "addr_test1xzcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl99safypg4a6jmcvdtcmqyja4cq398pjay29mgpw03rzr72q4w46n4",
+        "preprod": "addr_test1xzcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl99safypg4a6jmcvdtcmqyja4cq398pjay29mgpw03rzr72q4w46n4"
+      },
+      "reward": {
+        "mainnet": "stake17xcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9qq7kd8j",
+        "preview": "stake_test17zcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9q85u0r0",
+        "preprod": "stake_test17zcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9q85u0r0"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ywcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9qa06kj6",
+          "cip105": "drep_script1kr4ys9zhh2t0p340rvqjtkhqzy5uxt53ghdq9e7yvg0egwatnsu"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zwcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9qe8uqm7",
+          "cip105": "cc_cold_script1kr4ys9zhh2t0p340rvqjtkhqzy5uxt53ghdq9e7yvg0egs5u9qx"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qwcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9q0mguph",
+          "cip105": "cc_hot_script1kr4ys9zhh2t0p340rvqjtkhqzy5uxt53ghdq9e7yvg0eg52p6zd"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1wxcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9qu5ktmq",
+        "preview": "addr_test1wzcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9q8uzh59",
+        "preprod": "addr_test1wzcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9q8uzh59"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xxcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl99safypg4a6jmcvdtcmqyja4cq398pjay29mgpw03rzr72qkcg6l2",
+        "preview": "addr_test1xzcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl99safypg4a6jmcvdtcmqyja4cq398pjay29mgpw03rzr72q4w46n4",
+        "preprod": "addr_test1xzcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl99safypg4a6jmcvdtcmqyja4cq398pjay29mgpw03rzr72q4w46n4"
+      },
+      "reward": {
+        "mainnet": "stake17xcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9qq7kd8j",
+        "preview": "stake_test17zcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9q85u0r0",
+        "preprod": "stake_test17zcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9q85u0r0"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ywcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9qa06kj6",
+          "cip105": "drep_script1kr4ys9zhh2t0p340rvqjtkhqzy5uxt53ghdq9e7yvg0egwatnsu"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zwcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9qe8uqm7",
+          "cip105": "cc_cold_script1kr4ys9zhh2t0p340rvqjtkhqzy5uxt53ghdq9e7yvg0egs5u9qx"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qwcw5jq527afduxx4udszfw6uqgjnsewj9za5qh8c33pl9q0mguph",
+          "cip105": "cc_hot_script1kr4ys9zhh2t0p340rvqjtkhqzy5uxt53ghdq9e7yvg0eg52p6zd"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "0 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "1@unbounded",
+      "signers": [
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "2@unbounded",
+      "signers": [
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+2@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "1+2@unbounded",
+      "signers": [
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1+2@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "3@unbounded",
+      "signers": [
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+3@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "1+3@unbounded",
+      "signers": [
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1+3@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "2+3@unbounded",
+      "signers": [
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+2+3@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "1+2+3@unbounded",
+      "signers": [
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1+2+3@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b"
+      ],
+      "expected": true,
+      "expectedReason": "3 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "4@unbounded",
+      "signers": [
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+4@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "1+4@unbounded",
+      "signers": [
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1+4@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "2+4@unbounded",
+      "signers": [
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+2+4@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "1+2+4@unbounded",
+      "signers": [
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1+2+4@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "3+4@unbounded",
+      "signers": [
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+3+4@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "1+3+4@unbounded",
+      "signers": [
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1+3+4@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "3 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "2+3+4@unbounded",
+      "signers": [
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+2+3+4@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "1+2+3+4@unbounded",
+      "signers": [
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "3 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "71bf7fb181cd5e071270aab7193744845c6b0a318ee3f7e7435cea98",
+        "a3cce7ba04086a863dac2b6b7dc8010af844f779751d3f51589a395b",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "3 of 3 sub-scripts satisfied, 2 required"
+    }
+  ],
+  "onchain": []
+}

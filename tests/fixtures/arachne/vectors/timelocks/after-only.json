@@ -1,0 +1,181 @@
+{
+  "formatVersion": 2,
+  "id": "timelocks/after-only",
+  "family": "timelocks",
+  "question": "Which timelock arrangements can a transaction actually satisfy, given that an absent interval bound fails rather than passes?",
+  "params": {
+    "shape": "after-only"
+  },
+  "script": {
+    "type": "after",
+    "slot": 1000
+  },
+  "shape": {
+    "depth": 1,
+    "nodeCount": 1,
+    "sigCount": 0,
+    "keyHashes": [],
+    "timelockCount": 1,
+    "maxBreadth": 0,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "82041903e8",
+      "preimageHex": "0082041903e8",
+      "scriptHash": "592fb0f9d8ed15c06858118d134d5c4b7c77320507810fee9ac2ddf9",
+      "cborBytes": 5
+    },
+    "cardanoBinary": {
+      "cborHex": "82041903e8",
+      "preimageHex": "0082041903e8",
+      "scriptHash": "592fb0f9d8ed15c06858118d134d5c4b7c77320507810fee9ac2ddf9",
+      "cborBytes": 5
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w9vjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7g7hvdwg",
+        "preview": "addr_test1wpvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7g9lc3pd",
+        "preprod": "addr_test1wpvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7g9lc3pd"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9vjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm72e97c0nk8dzhqxskq335f56hzt03mnypg8sy87axkzmhus0qjy34",
+        "preview": "addr_test1xpvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm72e97c0nk8dzhqxskq335f56hzt03mnypg8sy87axkzmhusvk0ya2",
+        "preprod": "addr_test1xpvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm72e97c0nk8dzhqxskq335f56hzt03mnypg8sy87axkzmhusvk0ya2"
+      },
+      "reward": {
+        "mainnet": "stake179vjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7gzavtj6",
+        "preview": "stake_test17pvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7g9hxfk8",
+        "preprod": "stake_test17pvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7g9hxfk8"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7glvqs8j",
+          "cip105": "drep_script1tyhmp7wca52uq6zczxx3xn2ufd78wvs9q7qslm56ctwlj84t7ft"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7gmyxxwk",
+          "cip105": "cc_cold_script1tyhmp7wca52uq6zczxx3xn2ufd78wvs9q7qslm56ctwljeuuge3"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7gdcj65l",
+          "cip105": "cc_hot_script1tyhmp7wca52uq6zczxx3xn2ufd78wvs9q7qslm56ctwljazphm6"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w9vjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7g7hvdwg",
+        "preview": "addr_test1wpvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7g9lc3pd",
+        "preprod": "addr_test1wpvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7g9lc3pd"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9vjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm72e97c0nk8dzhqxskq335f56hzt03mnypg8sy87axkzmhus0qjy34",
+        "preview": "addr_test1xpvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm72e97c0nk8dzhqxskq335f56hzt03mnypg8sy87axkzmhusvk0ya2",
+        "preprod": "addr_test1xpvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm72e97c0nk8dzhqxskq335f56hzt03mnypg8sy87axkzmhusvk0ya2"
+      },
+      "reward": {
+        "mainnet": "stake179vjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7gzavtj6",
+        "preview": "stake_test17pvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7g9hxfk8",
+        "preprod": "stake_test17pvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7g9hxfk8"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7glvqs8j",
+          "cip105": "drep_script1tyhmp7wca52uq6zczxx3xn2ufd78wvs9q7qslm56ctwlj84t7ft"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7gmyxxwk",
+          "cip105": "cc_cold_script1tyhmp7wca52uq6zczxx3xn2ufd78wvs9q7qslm56ctwljeuuge3"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdvjlv8emrk3tsrgtqgc6y6dt39hcaejq5rczrlwntpdm7gdcj65l",
+          "cip105": "cc_hot_script1tyhmp7wca52uq6zczxx3xn2ufd78wvs9q7qslm56ctwljazphm6"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "requires slot >= 1000 but the transaction sets no validity start"
+    },
+    {
+      "id": "none@start999",
+      "signers": [],
+      "validityStart": 999,
+      "expected": false,
+      "expectedReason": "validity start 999 is before 1000"
+    },
+    {
+      "id": "none@end999",
+      "signers": [],
+      "validityEnd": 999,
+      "expected": false,
+      "expectedReason": "requires slot >= 1000 but the transaction sets no validity start"
+    },
+    {
+      "id": "none@span999",
+      "signers": [],
+      "validityStart": 999,
+      "validityEnd": 999,
+      "expected": false,
+      "expectedReason": "validity start 999 is before 1000"
+    },
+    {
+      "id": "none@start1000",
+      "signers": [],
+      "validityStart": 1000,
+      "expected": true,
+      "expectedReason": "validity start 1000 is at or after 1000"
+    },
+    {
+      "id": "none@end1000",
+      "signers": [],
+      "validityEnd": 1000,
+      "expected": false,
+      "expectedReason": "requires slot >= 1000 but the transaction sets no validity start"
+    },
+    {
+      "id": "none@span1000",
+      "signers": [],
+      "validityStart": 1000,
+      "validityEnd": 1000,
+      "expected": true,
+      "expectedReason": "validity start 1000 is at or after 1000"
+    },
+    {
+      "id": "none@start1001",
+      "signers": [],
+      "validityStart": 1001,
+      "expected": true,
+      "expectedReason": "validity start 1001 is at or after 1000"
+    },
+    {
+      "id": "none@end1001",
+      "signers": [],
+      "validityEnd": 1001,
+      "expected": false,
+      "expectedReason": "requires slot >= 1000 but the transaction sets no validity start"
+    },
+    {
+      "id": "none@span1001",
+      "signers": [],
+      "validityStart": 1001,
+      "validityEnd": 1001,
+      "expected": true,
+      "expectedReason": "validity start 1001 is at or after 1000"
+    }
+  ],
+  "onchain": []
+}

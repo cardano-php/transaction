@@ -1,0 +1,286 @@
+{
+  "formatVersion": 2,
+  "id": "nest-linear/all-d032",
+  "family": "nest-linear",
+  "question": "How deeply can one container type nest before a node rejects the script or the transaction stops fitting?",
+  "params": {
+    "tag": "all",
+    "depth": 32
+  },
+  "script": {
+    "type": "all",
+    "scripts": [
+      {
+        "type": "all",
+        "scripts": [
+          {
+            "type": "all",
+            "scripts": [
+              {
+                "type": "all",
+                "scripts": [
+                  {
+                    "type": "all",
+                    "scripts": [
+                      {
+                        "type": "all",
+                        "scripts": [
+                          {
+                            "type": "all",
+                            "scripts": [
+                              {
+                                "type": "all",
+                                "scripts": [
+                                  {
+                                    "type": "all",
+                                    "scripts": [
+                                      {
+                                        "type": "all",
+                                        "scripts": [
+                                          {
+                                            "type": "all",
+                                            "scripts": [
+                                              {
+                                                "type": "all",
+                                                "scripts": [
+                                                  {
+                                                    "type": "all",
+                                                    "scripts": [
+                                                      {
+                                                        "type": "all",
+                                                        "scripts": [
+                                                          {
+                                                            "type": "all",
+                                                            "scripts": [
+                                                              {
+                                                                "type": "all",
+                                                                "scripts": [
+                                                                  {
+                                                                    "type": "all",
+                                                                    "scripts": [
+                                                                      {
+                                                                        "type": "all",
+                                                                        "scripts": [
+                                                                          {
+                                                                            "type": "all",
+                                                                            "scripts": [
+                                                                              {
+                                                                                "type": "all",
+                                                                                "scripts": [
+                                                                                  {
+                                                                                    "type": "all",
+                                                                                    "scripts": [
+                                                                                      {
+                                                                                        "type": "all",
+                                                                                        "scripts": [
+                                                                                          {
+                                                                                            "type": "all",
+                                                                                            "scripts": [
+                                                                                              {
+                                                                                                "type": "all",
+                                                                                                "scripts": [
+                                                                                                  {
+                                                                                                    "type": "all",
+                                                                                                    "scripts": [
+                                                                                                      {
+                                                                                                        "type": "all",
+                                                                                                        "scripts": [
+                                                                                                          {
+                                                                                                            "type": "all",
+                                                                                                            "scripts": [
+                                                                                                              {
+                                                                                                                "type": "all",
+                                                                                                                "scripts": [
+                                                                                                                  {
+                                                                                                                    "type": "all",
+                                                                                                                    "scripts": [
+                                                                                                                      {
+                                                                                                                        "type": "all",
+                                                                                                                        "scripts": [
+                                                                                                                          {
+                                                                                                                            "type": "all",
+                                                                                                                            "scripts": [
+                                                                                                                              {
+                                                                                                                                "type": "all",
+                                                                                                                                "scripts": [
+                                                                                                                                  {
+                                                                                                                                    "type": "sig",
+                                                                                                                                    "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+                                                                                                                                  }
+                                                                                                                                ]
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        ]
+                                                                                                                      }
+                                                                                                                    ]
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            ]
+                                                                                                          }
+                                                                                                        ]
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                ]
+                                                                                              }
+                                                                                            ]
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    ]
+                                                                                  }
+                                                                                ]
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "depth": 33,
+    "nodeCount": 33,
+    "sigCount": 1,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 1,
+    "containerCounts": {
+      "all": 32,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "8201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "008201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "dc8c04a3cf1dc6acc7c55be3a208b2098f74d0744ca6bb8adbc896c4",
+      "cborBytes": 128
+    },
+    "cardanoBinary": {
+      "cborHex": "8201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "008201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "dc8c04a3cf1dc6acc7c55be3a208b2098f74d0744ca6bb8adbc896c4",
+      "cborBytes": 128
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w8wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qgg4jq9",
+        "preview": "addr_test1wrwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qnqpw0q",
+        "preprod": "addr_test1wrwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qnqpw0q"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3xu3sz28ncac6kv032muw3q3vsf3a6dqazv56ac4k7gjmzqkk3wxe",
+        "preview": "addr_test1xrwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3xu3sz28ncac6kv032muw3q3vsf3a6dqazv56ac4k7gjmzq4qvw2x",
+        "preprod": "addr_test1xrwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3xu3sz28ncac6kv032muw3q3vsf3a6dqazv56ac4k7gjmzq4qvw2x"
+      },
+      "reward": {
+        "mainnet": "stake178wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3q5z45uh",
+        "preview": "stake_test17rwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qnglkc2",
+        "preprod": "stake_test17rwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qnglkc2"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qfne0fl",
+          "cip105": "drep_script1mjxqfg70rhr2e379t036yz9jpx8hf5r5fjnthzkmeztvg0cm626"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qdmleqm",
+          "cip105": "cc_cold_script1mjxqfg70rhr2e379t036yz9jpx8hf5r5fjnthzkmeztvg33vv6q"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qm8t96j",
+          "cip105": "cc_hot_script1mjxqfg70rhr2e379t036yz9jpx8hf5r5fjnthzkmeztvg403nct"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w8wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qgg4jq9",
+        "preview": "addr_test1wrwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qnqpw0q",
+        "preprod": "addr_test1wrwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qnqpw0q"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3xu3sz28ncac6kv032muw3q3vsf3a6dqazv56ac4k7gjmzqkk3wxe",
+        "preview": "addr_test1xrwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3xu3sz28ncac6kv032muw3q3vsf3a6dqazv56ac4k7gjmzq4qvw2x",
+        "preprod": "addr_test1xrwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3xu3sz28ncac6kv032muw3q3vsf3a6dqazv56ac4k7gjmzq4qvw2x"
+      },
+      "reward": {
+        "mainnet": "stake178wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3q5z45uh",
+        "preview": "stake_test17rwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qnglkc2",
+        "preprod": "stake_test17rwgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qnglkc2"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qfne0fl",
+          "cip105": "drep_script1mjxqfg70rhr2e379t036yz9jpx8hf5r5fjnthzkmeztvg0cm626"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qdmleqm",
+          "cip105": "cc_cold_script1mjxqfg70rhr2e379t036yz9jpx8hf5r5fjnthzkmeztvg33vv6q"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0wgcp9reuwudtx8c4d78gsgkgyc7axsw3x2dwu2m0yfd3qm8t96j",
+          "cip105": "cc_hot_script1mjxqfg70rhr2e379t036yz9jpx8hf5r5fjnthzkmeztvg403nct"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "1 of 1 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": true,
+      "expectedReason": "all 1 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

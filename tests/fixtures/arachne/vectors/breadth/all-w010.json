@@ -1,0 +1,233 @@
+{
+  "formatVersion": 2,
+  "id": "breadth/all-w010",
+  "family": "breadth",
+  "question": "How many sub-scripts fit in one container before the transaction exceeds its size limit?",
+  "params": {
+    "tag": "all",
+    "width": 10
+  },
+  "script": {
+    "type": "all",
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      },
+      {
+        "type": "sig",
+        "keyHash": "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      },
+      {
+        "type": "sig",
+        "keyHash": "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      },
+      {
+        "type": "sig",
+        "keyHash": "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c"
+      },
+      {
+        "type": "sig",
+        "keyHash": "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f"
+      },
+      {
+        "type": "sig",
+        "keyHash": "1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f467"
+      },
+      {
+        "type": "sig",
+        "keyHash": "cb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c"
+      },
+      {
+        "type": "sig",
+        "keyHash": "9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f"
+      },
+      {
+        "type": "sig",
+        "keyHash": "e21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d7072"
+      },
+      {
+        "type": "sig",
+        "keyHash": "f36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d"
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 11,
+    "sigCount": 10,
+    "keyHashes": [
+      "1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f467",
+      "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+      "9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f",
+      "cb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c",
+      "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "e21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d7072",
+      "f36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d",
+      "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 10,
+    "containerCounts": {
+      "all": 1,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "82018a8200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f8200581c1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f4678200581ccb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c8200581c9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f8200581ce21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d70728200581cf36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d",
+      "preimageHex": "0082018a8200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f8200581c1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f4678200581ccb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c8200581c9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f8200581ce21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d70728200581cf36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d",
+      "scriptHash": "5366cc341b38df9954ad6fe7eb391f2964cd542b4f8e8d3eb938bb57",
+      "cborBytes": 323
+    },
+    "cardanoBinary": {
+      "cborHex": "82018a8200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f8200581c1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f4678200581ccb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c8200581c9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f8200581ce21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d70728200581cf36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d",
+      "preimageHex": "0082018a8200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f8200581c1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f4678200581ccb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c8200581c9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f8200581ce21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d70728200581cf36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d",
+      "scriptHash": "5366cc341b38df9954ad6fe7eb391f2964cd542b4f8e8d3eb938bb57",
+      "cborBytes": 323
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w9fkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4chzavuq",
+        "preview": "addr_test1wpfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cv2fsn9",
+        "preprod": "addr_test1wpfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cv2fsn9"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9fkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk46nvmxrgxecm7v4ftt0ul4nj8efvnx4g26036xnawfchdtsueqqx0",
+        "preview": "addr_test1xpfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk46nvmxrgxecm7v4ftt0ul4nj8efvnx4g26036xnawfchdtsl0aq2s",
+        "preprod": "addr_test1xpfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk46nvmxrgxecm7v4ftt0ul4nj8efvnx4g26036xnawfchdtsl0aq2s"
+      },
+      "reward": {
+        "mainnet": "stake179fkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4ctga2qj",
+        "preview": "stake_test17pfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cvzhgy0",
+        "preprod": "stake_test17pfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cvzhgy0"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cke3346",
+          "cip105": "drep_script12dnvcdqm8r0ej49ddln7kwgl99jv64ptf78g604e8za4wkhrg98"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cj3h8u7",
+          "cip105": "cc_cold_script12dnvcdqm8r0ej49ddln7kwgl99jv64ptf78g604e8za4wg7574a"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cydrmxh",
+          "cip105": "cc_hot_script12dnvcdqm8r0ej49ddln7kwgl99jv64ptf78g604e8za4wvqfphk"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w9fkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4chzavuq",
+        "preview": "addr_test1wpfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cv2fsn9",
+        "preprod": "addr_test1wpfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cv2fsn9"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9fkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk46nvmxrgxecm7v4ftt0ul4nj8efvnx4g26036xnawfchdtsueqqx0",
+        "preview": "addr_test1xpfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk46nvmxrgxecm7v4ftt0ul4nj8efvnx4g26036xnawfchdtsl0aq2s",
+        "preprod": "addr_test1xpfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk46nvmxrgxecm7v4ftt0ul4nj8efvnx4g26036xnawfchdtsl0aq2s"
+      },
+      "reward": {
+        "mainnet": "stake179fkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4ctga2qj",
+        "preview": "stake_test17pfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cvzhgy0",
+        "preprod": "stake_test17pfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cvzhgy0"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cke3346",
+          "cip105": "drep_script12dnvcdqm8r0ej49ddln7kwgl99jv64ptf78g604e8za4wkhrg98"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cj3h8u7",
+          "cip105": "cc_cold_script12dnvcdqm8r0ej49ddln7kwgl99jv64ptf78g604e8za4wg7574a"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdfkdnp5rvudlx2544h706eeru5kfn259d8carf7hyutk4cydrmxh",
+          "cip105": "cc_hot_script12dnvcdqm8r0ej49ddln7kwgl99jv64ptf78g604e8za4wvqfphk"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "10 of 10 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f467"
+      ],
+      "expected": false,
+      "expectedReason": "9 of 10 sub-scripts unsatisfied"
+    },
+    {
+      "id": "9@unbounded",
+      "signers": [
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "9 of 10 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+1+2+3+4+5+6+7+8@unbounded",
+      "signers": [
+        "1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f467",
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f",
+        "cb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "e21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d7072",
+        "f36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 10 sub-scripts unsatisfied"
+    },
+    {
+      "id": "1+2+3+4+5+6+7+8+9@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f",
+        "cb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "e21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d7072",
+        "f36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 10 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f467",
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f",
+        "cb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "e21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d7072",
+        "f36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": true,
+      "expectedReason": "all 10 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

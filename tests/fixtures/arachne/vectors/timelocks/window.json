@@ -1,0 +1,256 @@
+{
+  "formatVersion": 2,
+  "id": "timelocks/window",
+  "family": "timelocks",
+  "question": "Which timelock arrangements can a transaction actually satisfy, given that an absent interval bound fails rather than passes?",
+  "params": {
+    "shape": "window"
+  },
+  "script": {
+    "type": "all",
+    "scripts": [
+      {
+        "type": "after",
+        "slot": 1000
+      },
+      {
+        "type": "before",
+        "slot": 9000000
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 3,
+    "sigCount": 0,
+    "keyHashes": [],
+    "timelockCount": 2,
+    "maxBreadth": 2,
+    "containerCounts": {
+      "all": 1,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "82018282041903e882051a00895440",
+      "preimageHex": "0082018282041903e882051a00895440",
+      "scriptHash": "01d07a84cc65c3c36bcb74684cc3d4132a637c91603bbb86a81828c5",
+      "cborBytes": 15
+    },
+    "cardanoBinary": {
+      "cborHex": "82018282041903e882051a00895440",
+      "preimageHex": "0082018282041903e882051a00895440",
+      "scriptHash": "01d07a84cc65c3c36bcb74684cc3d4132a637c91603bbb86a81828c5",
+      "cborBytes": 15
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1wyqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33g9qnryv",
+        "preview": "addr_test1wqqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33g7g8ltf",
+        "preprod": "addr_test1wqqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33g7g8ltf"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xyqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gp6pagfnr9c0pkhjm5dpxv84qn9f3heytq8wacd2qc9rzsfyhd39",
+        "preview": "addr_test1xqqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gp6pagfnr9c0pkhjm5dpxv84qn9f3heytq8wacd2qc9rzs2j2da6",
+        "preprod": "addr_test1xqqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gp6pagfnr9c0pkhjm5dpxv84qn9f3heytq8wacd2qc9rzs2j2da6"
+      },
+      "reward": {
+        "mainnet": "stake17yqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33ge2n9c7",
+        "preview": "stake_test17qqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33g7qe8ur",
+        "preprod": "stake_test17qqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33g7qe8ur"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1yvqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gyml7dk",
+          "cip105": "drep_script1q8g84pxvvhpux67tw35yes75zv4xxly3vqamhp4grq5v2p3xh5e"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zvqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gqnegyj",
+          "cip105": "cc_cold_script1q8g84pxvvhpux67tw35yes75zv4xxly3vqamhp4grq5v2lc3pyr"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qvqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gk0d57m",
+          "cip105": "cc_hot_script1q8g84pxvvhpux67tw35yes75zv4xxly3vqamhp4grq5v2mxv7xg"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1wyqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33g9qnryv",
+        "preview": "addr_test1wqqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33g7g8ltf",
+        "preprod": "addr_test1wqqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33g7g8ltf"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xyqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gp6pagfnr9c0pkhjm5dpxv84qn9f3heytq8wacd2qc9rzsfyhd39",
+        "preview": "addr_test1xqqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gp6pagfnr9c0pkhjm5dpxv84qn9f3heytq8wacd2qc9rzs2j2da6",
+        "preprod": "addr_test1xqqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gp6pagfnr9c0pkhjm5dpxv84qn9f3heytq8wacd2qc9rzs2j2da6"
+      },
+      "reward": {
+        "mainnet": "stake17yqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33ge2n9c7",
+        "preview": "stake_test17qqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33g7qe8ur",
+        "preprod": "stake_test17qqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33g7qe8ur"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1yvqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gyml7dk",
+          "cip105": "drep_script1q8g84pxvvhpux67tw35yes75zv4xxly3vqamhp4grq5v2p3xh5e"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zvqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gqnegyj",
+          "cip105": "cc_cold_script1q8g84pxvvhpux67tw35yes75zv4xxly3vqamhp4grq5v2lc3pyr"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qvqaq75ye3ju8smted6xsnxr6sfj5cmuj9srhwux4qvz33gk0d57m",
+          "cip105": "cc_hot_script1q8g84pxvvhpux67tw35yes75zv4xxly3vqamhp4grq5v2mxv7xg"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "2 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@start999",
+      "signers": [],
+      "validityStart": 999,
+      "expected": false,
+      "expectedReason": "2 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@end999",
+      "signers": [],
+      "validityEnd": 999,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@span999",
+      "signers": [],
+      "validityStart": 999,
+      "validityEnd": 999,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@start1000",
+      "signers": [],
+      "validityStart": 1000,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@end1000",
+      "signers": [],
+      "validityEnd": 1000,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@span1000",
+      "signers": [],
+      "validityStart": 1000,
+      "validityEnd": 1000,
+      "expected": true,
+      "expectedReason": "all 2 sub-scripts satisfied"
+    },
+    {
+      "id": "none@start1001",
+      "signers": [],
+      "validityStart": 1001,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@end1001",
+      "signers": [],
+      "validityEnd": 1001,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@span1001",
+      "signers": [],
+      "validityStart": 1001,
+      "validityEnd": 1001,
+      "expected": true,
+      "expectedReason": "all 2 sub-scripts satisfied"
+    },
+    {
+      "id": "none@start8999999",
+      "signers": [],
+      "validityStart": 8999999,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@end8999999",
+      "signers": [],
+      "validityEnd": 8999999,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@span8999999",
+      "signers": [],
+      "validityStart": 8999999,
+      "validityEnd": 8999999,
+      "expected": true,
+      "expectedReason": "all 2 sub-scripts satisfied"
+    },
+    {
+      "id": "none@start9000000",
+      "signers": [],
+      "validityStart": 9000000,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@end9000000",
+      "signers": [],
+      "validityEnd": 9000000,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@span9000000",
+      "signers": [],
+      "validityStart": 9000000,
+      "validityEnd": 9000000,
+      "expected": true,
+      "expectedReason": "all 2 sub-scripts satisfied"
+    },
+    {
+      "id": "none@start9000001",
+      "signers": [],
+      "validityStart": 9000001,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@end9000001",
+      "signers": [],
+      "validityEnd": 9000001,
+      "expected": false,
+      "expectedReason": "2 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@span9000001",
+      "signers": [],
+      "validityStart": 9000001,
+      "validityEnd": 9000001,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    }
+  ],
+  "onchain": []
+}

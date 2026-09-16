@@ -1,0 +1,283 @@
+{
+  "formatVersion": 2,
+  "id": "federation/m3-c3-s2",
+  "family": "federation",
+  "question": "Does a threshold over member organizations, each itself a threshold, evaluate seat by seat at the sizes a real federation reaches?",
+  "params": {
+    "members": 3,
+    "cohort": 3,
+    "seats": 2
+  },
+  "script": {
+    "type": "atLeast",
+    "required": 2,
+    "scripts": [
+      {
+        "type": "atLeast",
+        "required": 2,
+        "scripts": [
+          {
+            "type": "sig",
+            "keyHash": "9bf876cd7e6974bc92b1bbf388a99b3d34a36d2aa3386ff294ae453e"
+          },
+          {
+            "type": "sig",
+            "keyHash": "d1090d3c054976f2d2bf36737bb093cff93a0b0b095b6e6f58e6697b"
+          },
+          {
+            "type": "sig",
+            "keyHash": "b2803080a966c5ec3160abb17183fd10b42a64e1268ebdea67c8aa35"
+          }
+        ]
+      },
+      {
+        "type": "atLeast",
+        "required": 2,
+        "scripts": [
+          {
+            "type": "sig",
+            "keyHash": "dd3f0fa71b3cdc729d0626d033175ae1837cf42398612358192e0aab"
+          },
+          {
+            "type": "sig",
+            "keyHash": "bacef20966224667cb15bc9398dca90fb8f243188e7709ba169e754d"
+          },
+          {
+            "type": "sig",
+            "keyHash": "a18656a2e575f90defb617c0af46d6c45f1558db6440161a8b3ce35a"
+          }
+        ]
+      },
+      {
+        "type": "atLeast",
+        "required": 2,
+        "scripts": [
+          {
+            "type": "sig",
+            "keyHash": "0c7db53c6fdfd64cc8cf37377831828f3e34c98a589dbf052d716a7c"
+          },
+          {
+            "type": "sig",
+            "keyHash": "d5b2e203cd745a0c01b0e1dd7f096d03a1550802291b713e80dc8589"
+          },
+          {
+            "type": "sig",
+            "keyHash": "53cf03a4f3c063ee7dca6f2bcff97dc189ddaad6a4fe2df5e9f0cfd4"
+          }
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "depth": 3,
+    "nodeCount": 13,
+    "sigCount": 9,
+    "keyHashes": [
+      "0c7db53c6fdfd64cc8cf37377831828f3e34c98a589dbf052d716a7c",
+      "53cf03a4f3c063ee7dca6f2bcff97dc189ddaad6a4fe2df5e9f0cfd4",
+      "9bf876cd7e6974bc92b1bbf388a99b3d34a36d2aa3386ff294ae453e",
+      "a18656a2e575f90defb617c0af46d6c45f1558db6440161a8b3ce35a",
+      "b2803080a966c5ec3160abb17183fd10b42a64e1268ebdea67c8aa35",
+      "bacef20966224667cb15bc9398dca90fb8f243188e7709ba169e754d",
+      "d1090d3c054976f2d2bf36737bb093cff93a0b0b095b6e6f58e6697b",
+      "d5b2e203cd745a0c01b0e1dd7f096d03a1550802291b713e80dc8589",
+      "dd3f0fa71b3cdc729d0626d033175ae1837cf42398612358192e0aab"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 3,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 4
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "83030283830302838200581c9bf876cd7e6974bc92b1bbf388a99b3d34a36d2aa3386ff294ae453e8200581cd1090d3c054976f2d2bf36737bb093cff93a0b0b095b6e6f58e6697b8200581cb2803080a966c5ec3160abb17183fd10b42a64e1268ebdea67c8aa35830302838200581cdd3f0fa71b3cdc729d0626d033175ae1837cf42398612358192e0aab8200581cbacef20966224667cb15bc9398dca90fb8f243188e7709ba169e754d8200581ca18656a2e575f90defb617c0af46d6c45f1558db6440161a8b3ce35a830302838200581c0c7db53c6fdfd64cc8cf37377831828f3e34c98a589dbf052d716a7c8200581cd5b2e203cd745a0c01b0e1dd7f096d03a1550802291b713e80dc85898200581c53cf03a4f3c063ee7dca6f2bcff97dc189ddaad6a4fe2df5e9f0cfd4",
+      "preimageHex": "0083030283830302838200581c9bf876cd7e6974bc92b1bbf388a99b3d34a36d2aa3386ff294ae453e8200581cd1090d3c054976f2d2bf36737bb093cff93a0b0b095b6e6f58e6697b8200581cb2803080a966c5ec3160abb17183fd10b42a64e1268ebdea67c8aa35830302838200581cdd3f0fa71b3cdc729d0626d033175ae1837cf42398612358192e0aab8200581cbacef20966224667cb15bc9398dca90fb8f243188e7709ba169e754d8200581ca18656a2e575f90defb617c0af46d6c45f1558db6440161a8b3ce35a830302838200581c0c7db53c6fdfd64cc8cf37377831828f3e34c98a589dbf052d716a7c8200581cd5b2e203cd745a0c01b0e1dd7f096d03a1550802291b713e80dc85898200581c53cf03a4f3c063ee7dca6f2bcff97dc189ddaad6a4fe2df5e9f0cfd4",
+      "scriptHash": "e86a627938d33d3d40d44f608b01beac17a219c2112daf201478fd5b",
+      "cborBytes": 304
+    },
+    "cardanoBinary": {
+      "cborHex": "83030283830302838200581c9bf876cd7e6974bc92b1bbf388a99b3d34a36d2aa3386ff294ae453e8200581cd1090d3c054976f2d2bf36737bb093cff93a0b0b095b6e6f58e6697b8200581cb2803080a966c5ec3160abb17183fd10b42a64e1268ebdea67c8aa35830302838200581cdd3f0fa71b3cdc729d0626d033175ae1837cf42398612358192e0aab8200581cbacef20966224667cb15bc9398dca90fb8f243188e7709ba169e754d8200581ca18656a2e575f90defb617c0af46d6c45f1558db6440161a8b3ce35a830302838200581c0c7db53c6fdfd64cc8cf37377831828f3e34c98a589dbf052d716a7c8200581cd5b2e203cd745a0c01b0e1dd7f096d03a1550802291b713e80dc85898200581c53cf03a4f3c063ee7dca6f2bcff97dc189ddaad6a4fe2df5e9f0cfd4",
+      "preimageHex": "0083030283830302838200581c9bf876cd7e6974bc92b1bbf388a99b3d34a36d2aa3386ff294ae453e8200581cd1090d3c054976f2d2bf36737bb093cff93a0b0b095b6e6f58e6697b8200581cb2803080a966c5ec3160abb17183fd10b42a64e1268ebdea67c8aa35830302838200581cdd3f0fa71b3cdc729d0626d033175ae1837cf42398612358192e0aab8200581cbacef20966224667cb15bc9398dca90fb8f243188e7709ba169e754d8200581ca18656a2e575f90defb617c0af46d6c45f1558db6440161a8b3ce35a830302838200581c0c7db53c6fdfd64cc8cf37377831828f3e34c98a589dbf052d716a7c8200581cd5b2e203cd745a0c01b0e1dd7f096d03a1550802291b713e80dc85898200581c53cf03a4f3c063ee7dca6f2bcff97dc189ddaad6a4fe2df5e9f0cfd4",
+      "scriptHash": "e86a627938d33d3d40d44f608b01beac17a219c2112daf201478fd5b",
+      "cborBytes": 304
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w85x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kcwy6ucd",
+        "preview": "addr_test1wr5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kc4vwqhg",
+        "preprod": "addr_test1wr5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kc4vwqhg"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x85x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06klgdf38jwxn8575p4z0vz9sr04vz73pnss39khjq9rcl4ds3c4tu9",
+        "preview": "addr_test1xr5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06klgdf38jwxn8575p4z0vz9sr04vz73pnss39khjq9rcl4dsjwgts6",
+        "preprod": "addr_test1xr5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06klgdf38jwxn8575p4z0vz9sr04vz73pnss39khjq9rcl4dsjwgts6"
+      },
+      "reward": {
+        "mainnet": "stake1785x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kcjw66yl",
+        "preview": "stake_test17r5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kc4yscqz",
+        "preprod": "stake_test17r5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kc4yscqz"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y05x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kc0lkp3h",
+          "cip105": "drep_script1ap4xy7fc6v7n6sx5fasgkqd74st6yxwzzyk67gq50r74kratf62"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z05x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kcthshcn",
+          "cip105": "cc_cold_script1ap4xy7fc6v7n6sx5fasgkqd74st6yxwzzyk67gq50r74ka5ul2s"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q05x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kcatytz6",
+          "cip105": "cc_hot_script1ap4xy7fc6v7n6sx5fasgkqd74st6yxwzzyk67gq50r74ke2pqgm"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w85x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kcwy6ucd",
+        "preview": "addr_test1wr5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kc4vwqhg",
+        "preprod": "addr_test1wr5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kc4vwqhg"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x85x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06klgdf38jwxn8575p4z0vz9sr04vz73pnss39khjq9rcl4ds3c4tu9",
+        "preview": "addr_test1xr5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06klgdf38jwxn8575p4z0vz9sr04vz73pnss39khjq9rcl4dsjwgts6",
+        "preprod": "addr_test1xr5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06klgdf38jwxn8575p4z0vz9sr04vz73pnss39khjq9rcl4dsjwgts6"
+      },
+      "reward": {
+        "mainnet": "stake1785x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kcjw66yl",
+        "preview": "stake_test17r5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kc4yscqz",
+        "preprod": "stake_test17r5x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kc4yscqz"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y05x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kc0lkp3h",
+          "cip105": "drep_script1ap4xy7fc6v7n6sx5fasgkqd74st6yxwzzyk67gq50r74kratf62"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z05x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kcthshcn",
+          "cip105": "cc_cold_script1ap4xy7fc6v7n6sx5fasgkqd74st6yxwzzyk67gq50r74ka5ul2s"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q05x5cne8rfn602q638kpzcph6kp0gsecggjmteqz3u06kcatytz6",
+          "cip105": "cc_hot_script1ap4xy7fc6v7n6sx5fasgkqd74st6yxwzzyk67gq50r74ke2pqgm"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "0 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "0c7db53c6fdfd64cc8cf37377831828f3e34c98a589dbf052d716a7c"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "8@unbounded",
+      "signers": [
+        "dd3f0fa71b3cdc729d0626d033175ae1837cf42398612358192e0aab"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1@unbounded",
+      "signers": [
+        "0c7db53c6fdfd64cc8cf37377831828f3e34c98a589dbf052d716a7c",
+        "53cf03a4f3c063ee7dca6f2bcff97dc189ddaad6a4fe2df5e9f0cfd4"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "7+8@unbounded",
+      "signers": [
+        "d5b2e203cd745a0c01b0e1dd7f096d03a1550802291b713e80dc8589",
+        "dd3f0fa71b3cdc729d0626d033175ae1837cf42398612358192e0aab"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1+2@unbounded",
+      "signers": [
+        "0c7db53c6fdfd64cc8cf37377831828f3e34c98a589dbf052d716a7c",
+        "53cf03a4f3c063ee7dca6f2bcff97dc189ddaad6a4fe2df5e9f0cfd4",
+        "9bf876cd7e6974bc92b1bbf388a99b3d34a36d2aa3386ff294ae453e"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "6+7+8@unbounded",
+      "signers": [
+        "d1090d3c054976f2d2bf36737bb093cff93a0b0b095b6e6f58e6697b",
+        "d5b2e203cd745a0c01b0e1dd7f096d03a1550802291b713e80dc8589",
+        "dd3f0fa71b3cdc729d0626d033175ae1837cf42398612358192e0aab"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1+2+3+4+5+6+7@unbounded",
+      "signers": [
+        "0c7db53c6fdfd64cc8cf37377831828f3e34c98a589dbf052d716a7c",
+        "53cf03a4f3c063ee7dca6f2bcff97dc189ddaad6a4fe2df5e9f0cfd4",
+        "9bf876cd7e6974bc92b1bbf388a99b3d34a36d2aa3386ff294ae453e",
+        "a18656a2e575f90defb617c0af46d6c45f1558db6440161a8b3ce35a",
+        "b2803080a966c5ec3160abb17183fd10b42a64e1268ebdea67c8aa35",
+        "bacef20966224667cb15bc9398dca90fb8f243188e7709ba169e754d",
+        "d1090d3c054976f2d2bf36737bb093cff93a0b0b095b6e6f58e6697b",
+        "d5b2e203cd745a0c01b0e1dd7f096d03a1550802291b713e80dc8589"
+      ],
+      "expected": true,
+      "expectedReason": "3 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "1+2+3+4+5+6+7+8@unbounded",
+      "signers": [
+        "53cf03a4f3c063ee7dca6f2bcff97dc189ddaad6a4fe2df5e9f0cfd4",
+        "9bf876cd7e6974bc92b1bbf388a99b3d34a36d2aa3386ff294ae453e",
+        "a18656a2e575f90defb617c0af46d6c45f1558db6440161a8b3ce35a",
+        "b2803080a966c5ec3160abb17183fd10b42a64e1268ebdea67c8aa35",
+        "bacef20966224667cb15bc9398dca90fb8f243188e7709ba169e754d",
+        "d1090d3c054976f2d2bf36737bb093cff93a0b0b095b6e6f58e6697b",
+        "d5b2e203cd745a0c01b0e1dd7f096d03a1550802291b713e80dc8589",
+        "dd3f0fa71b3cdc729d0626d033175ae1837cf42398612358192e0aab"
+      ],
+      "expected": true,
+      "expectedReason": "3 of 3 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "0c7db53c6fdfd64cc8cf37377831828f3e34c98a589dbf052d716a7c",
+        "53cf03a4f3c063ee7dca6f2bcff97dc189ddaad6a4fe2df5e9f0cfd4",
+        "9bf876cd7e6974bc92b1bbf388a99b3d34a36d2aa3386ff294ae453e",
+        "a18656a2e575f90defb617c0af46d6c45f1558db6440161a8b3ce35a",
+        "b2803080a966c5ec3160abb17183fd10b42a64e1268ebdea67c8aa35",
+        "bacef20966224667cb15bc9398dca90fb8f243188e7709ba169e754d",
+        "d1090d3c054976f2d2bf36737bb093cff93a0b0b095b6e6f58e6697b",
+        "d5b2e203cd745a0c01b0e1dd7f096d03a1550802291b713e80dc8589",
+        "dd3f0fa71b3cdc729d0626d033175ae1837cf42398612358192e0aab"
+      ],
+      "expected": true,
+      "expectedReason": "3 of 3 sub-scripts satisfied, 2 required"
+    }
+  ],
+  "onchain": []
+}

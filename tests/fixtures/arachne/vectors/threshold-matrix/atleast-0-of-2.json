@@ -1,0 +1,160 @@
+{
+  "formatVersion": 2,
+  "id": "threshold-matrix/atleast-0-of-2",
+  "family": "threshold-matrix",
+  "question": "Does every k in 0..n+1 behave as the reference evaluator says, including the degenerate ends?",
+  "params": {
+    "n": 2,
+    "k": 0
+  },
+  "script": {
+    "type": "atLeast",
+    "required": 0,
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      },
+      {
+        "type": "sig",
+        "keyHash": "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 3,
+    "sigCount": 2,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 2,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 1
+    }
+  },
+  "remarks": [
+    {
+      "path": "",
+      "code": "required-zero",
+      "detail": "required is 0, so the threshold is met with no witnesses at all."
+    }
+  ],
+  "encoding": {
+    "definite": {
+      "cborHex": "830300828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "preimageHex": "00830300828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "scriptHash": "ef80bc4601aee6b53c9ac2d51cbd5d4ce9ab739135bd7240d1358a9e",
+      "cborBytes": 68
+    },
+    "cardanoBinary": {
+      "cborHex": "830300828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "preimageHex": "00830300828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "scriptHash": "ef80bc4601aee6b53c9ac2d51cbd5d4ce9ab739135bd7240d1358a9e",
+      "cborBytes": 68
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w8hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sa2dh3a",
+        "preview": "addr_test1wrhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sxzet7c",
+        "preprod": "addr_test1wrhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sxzet7c"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48h0sz7yvqdwu66nexkz65wt6h2vax4h8yf4h4eyp5f4320qml3675",
+        "preview": "addr_test1xrhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48h0sz7yvqdwu66nexkz65wt6h2vax4h8yf4h4eyp5f4320qcfv6jt",
+        "preprod": "addr_test1xrhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48h0sz7yvqdwu66nexkz65wt6h2vax4h8yf4h4eyp5f4320qcfv6jt"
+      },
+      "reward": {
+        "mainnet": "stake178hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48spqd3d0",
+        "preview": "stake_test17rhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sx28nfj",
+        "preprod": "stake_test17rhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sx28nfj"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48su3p2c8",
+          "cip105": "drep_script1a7qtc3sp4mnt20y6ct23e02afn56kuu3xk7hysx3xk9fuxe4lgc"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sce8u3r",
+          "cip105": "cc_cold_script1a7qtc3sp4mnt20y6ct23e02afn56kuu3xk7hysx3xk9fucszfcz"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sw9nqt2",
+          "cip105": "cc_hot_script1a7qtc3sp4mnt20y6ct23e02afn56kuu3xk7hysx3xk9fuuwlk6f"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w8hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sa2dh3a",
+        "preview": "addr_test1wrhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sxzet7c",
+        "preprod": "addr_test1wrhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sxzet7c"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48h0sz7yvqdwu66nexkz65wt6h2vax4h8yf4h4eyp5f4320qml3675",
+        "preview": "addr_test1xrhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48h0sz7yvqdwu66nexkz65wt6h2vax4h8yf4h4eyp5f4320qcfv6jt",
+        "preprod": "addr_test1xrhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48h0sz7yvqdwu66nexkz65wt6h2vax4h8yf4h4eyp5f4320qcfv6jt"
+      },
+      "reward": {
+        "mainnet": "stake178hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48spqd3d0",
+        "preview": "stake_test17rhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sx28nfj",
+        "preprod": "stake_test17rhcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sx28nfj"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48su3p2c8",
+          "cip105": "drep_script1a7qtc3sp4mnt20y6ct23e02afn56kuu3xk7hysx3xk9fuxe4lgc"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sce8u3r",
+          "cip105": "cc_cold_script1a7qtc3sp4mnt20y6ct23e02afn56kuu3xk7hysx3xk9fucszfcz"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0hcp0zxqxhwddfuntpd289at4xwn2mnjy6m6ujq6y6c48sw9nqt2",
+          "cip105": "cc_hot_script1a7qtc3sp4mnt20y6ct23e02afn56kuu3xk7hysx3xk9fuuwlk6f"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": true,
+      "expectedReason": "required is 0, satisfied with no witnesses"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": true,
+      "expectedReason": "required is 0, satisfied with no witnesses"
+    },
+    {
+      "id": "1@unbounded",
+      "signers": [
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": true,
+      "expectedReason": "required is 0, satisfied with no witnesses"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": true,
+      "expectedReason": "required is 0, satisfied with no witnesses"
+    }
+  ],
+  "onchain": []
+}

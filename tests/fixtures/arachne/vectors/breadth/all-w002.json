@@ -1,0 +1,153 @@
+{
+  "formatVersion": 2,
+  "id": "breadth/all-w002",
+  "family": "breadth",
+  "question": "How many sub-scripts fit in one container before the transaction exceeds its size limit?",
+  "params": {
+    "tag": "all",
+    "width": 2
+  },
+  "script": {
+    "type": "all",
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      },
+      {
+        "type": "sig",
+        "keyHash": "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 3,
+    "sigCount": 2,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 2,
+    "containerCounts": {
+      "all": 1,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "8201828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "preimageHex": "008201828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "scriptHash": "b834028d0e351fba62ee5b266538209f593ffde73323fed970fc389d",
+      "cborBytes": 67
+    },
+    "cardanoBinary": {
+      "cborHex": "8201828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "preimageHex": "008201828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "scriptHash": "b834028d0e351fba62ee5b266538209f593ffde73323fed970fc389d",
+      "cborBytes": 67
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1wxurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gk0ernc",
+        "preview": "addr_test1wzurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gd8dlua",
+        "preprod": "addr_test1wzurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gd8dlua"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xxurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38dcxspg6r34r7ax9mjmyejnsgyltyllmeeny0ldju8u8zwssyxz4h",
+        "preview": "addr_test1xzurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38dcxspg6r34r7ax9mjmyejnsgyltyllmeeny0ldju8u8zwsnjmzeg",
+        "preprod": "addr_test1xzurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38dcxspg6r34r7ax9mjmyejnsgyltyllmeeny0ldju8u8zwsnjmzeg"
+      },
+      "reward": {
+        "mainnet": "stake17xurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38g29e902",
+        "preview": "stake_test17zurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gd0n8th",
+        "preprod": "stake_test17zurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gd0n8th"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ywurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gh5476z",
+          "cip105": "drep_script1hq6q9rgwx50m5chwtvnx2wpqnavnll08xv3laktslsuf6cxq292"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zwurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gnungnx",
+          "cip105": "cc_cold_script1hq6q9rgwx50m5chwtvnx2wpqnavnll08xv3laktslsuf6x0hu4s"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qwurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38g9q85f0",
+          "cip105": "cc_hot_script1hq6q9rgwx50m5chwtvnx2wpqnavnll08xv3laktslsuf6z32rhm"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1wxurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gk0ernc",
+        "preview": "addr_test1wzurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gd8dlua",
+        "preprod": "addr_test1wzurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gd8dlua"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xxurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38dcxspg6r34r7ax9mjmyejnsgyltyllmeeny0ldju8u8zwssyxz4h",
+        "preview": "addr_test1xzurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38dcxspg6r34r7ax9mjmyejnsgyltyllmeeny0ldju8u8zwsnjmzeg",
+        "preprod": "addr_test1xzurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38dcxspg6r34r7ax9mjmyejnsgyltyllmeeny0ldju8u8zwsnjmzeg"
+      },
+      "reward": {
+        "mainnet": "stake17xurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38g29e902",
+        "preview": "stake_test17zurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gd0n8th",
+        "preprod": "stake_test17zurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gd0n8th"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ywurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gh5476z",
+          "cip105": "drep_script1hq6q9rgwx50m5chwtvnx2wpqnavnll08xv3laktslsuf6cxq292"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zwurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38gnungnx",
+          "cip105": "cc_cold_script1hq6q9rgwx50m5chwtvnx2wpqnavnll08xv3laktslsuf6x0hu4s"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qwurgq5dpc63lwnzaedjvefcyz04j0lauuej8lkewr7r38g9q85f0",
+          "cip105": "cc_hot_script1hq6q9rgwx50m5chwtvnx2wpqnavnll08xv3laktslsuf6z32rhm"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "2 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "1@unbounded",
+      "signers": [
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": true,
+      "expectedReason": "all 2 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

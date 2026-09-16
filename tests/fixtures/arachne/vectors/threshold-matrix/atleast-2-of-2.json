@@ -1,0 +1,154 @@
+{
+  "formatVersion": 2,
+  "id": "threshold-matrix/atleast-2-of-2",
+  "family": "threshold-matrix",
+  "question": "Does every k in 0..n+1 behave as the reference evaluator says, including the degenerate ends?",
+  "params": {
+    "n": 2,
+    "k": 2
+  },
+  "script": {
+    "type": "atLeast",
+    "required": 2,
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      },
+      {
+        "type": "sig",
+        "keyHash": "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 3,
+    "sigCount": 2,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 2,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 1
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "830302828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "preimageHex": "00830302828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "scriptHash": "c0feb3d4450ab0e215becdbda66f30b4947301e67f085cc88a25c2ef",
+      "cborBytes": 68
+    },
+    "cardanoBinary": {
+      "cborHex": "830302828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "preimageHex": "00830302828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "scriptHash": "c0feb3d4450ab0e215becdbda66f30b4947301e67f085cc88a25c2ef",
+      "cborBytes": 68
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w8q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc5ql0k8",
+        "preview": "addr_test1wrq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc0gtnez",
+        "preprod": "addr_test1wrq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc0gtnez"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9m7ql6eag3g2kr3pt0kdhknx7v95j3esrenlppwv3z39cthsl4dxqq",
+        "preview": "addr_test1xrq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9m7ql6eag3g2kr3pt0kdhknx7v95j3esrenlppwv3z39cthsursxvl",
+        "preprod": "addr_test1xrq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9m7ql6eag3g2kr3pt0kdhknx7v95j3esrenlppwv3z39cthsursxvl"
+      },
+      "reward": {
+        "mainnet": "stake178q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mcg2lf24",
+        "preview": "stake_test17rq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc0q4twg",
+        "preprod": "stake_test17rq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc0q4twg"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc4mnjla",
+          "cip105": "drep_script1crlt84z9p2cwy9d7ek76vmeskj28xq0x0uy9ejy2yhpw7m2nfpg"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc3n4yke",
+          "cip105": "cc_cold_script1crlt84z9p2cwy9d7ek76vmeskj28xq0x0uy9ejy2yhpw79ryl3j"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc80pcvs",
+          "cip105": "cc_hot_script1crlt84z9p2cwy9d7ek76vmeskj28xq0x0uy9ejy2yhpw7paeqne"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w8q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc5ql0k8",
+        "preview": "addr_test1wrq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc0gtnez",
+        "preprod": "addr_test1wrq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc0gtnez"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9m7ql6eag3g2kr3pt0kdhknx7v95j3esrenlppwv3z39cthsl4dxqq",
+        "preview": "addr_test1xrq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9m7ql6eag3g2kr3pt0kdhknx7v95j3esrenlppwv3z39cthsursxvl",
+        "preprod": "addr_test1xrq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9m7ql6eag3g2kr3pt0kdhknx7v95j3esrenlppwv3z39cthsursxvl"
+      },
+      "reward": {
+        "mainnet": "stake178q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mcg2lf24",
+        "preview": "stake_test17rq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc0q4twg",
+        "preprod": "stake_test17rq0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc0q4twg"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc4mnjla",
+          "cip105": "drep_script1crlt84z9p2cwy9d7ek76vmeskj28xq0x0uy9ejy2yhpw7m2nfpg"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc3n4yke",
+          "cip105": "cc_cold_script1crlt84z9p2cwy9d7ek76vmeskj28xq0x0uy9ejy2yhpw79ryl3j"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0q0av75g59tpcs4hmxmmfn0xz6fgucpuelsshxg3gju9mc80pcvs",
+          "cip105": "cc_hot_script1crlt84z9p2cwy9d7ek76vmeskj28xq0x0uy9ejy2yhpw7paeqne"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "0 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "1@unbounded",
+      "signers": [
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 2 sub-scripts satisfied, 2 required"
+    }
+  ],
+  "onchain": []
+}

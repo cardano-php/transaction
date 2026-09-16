@@ -1,0 +1,121 @@
+{
+  "formatVersion": 2,
+  "id": "degenerate/empty-all",
+  "family": "degenerate",
+  "question": "What do the empty and out-of-range containers hash to, and does a node accept them?",
+  "params": {
+    "shape": "empty-all"
+  },
+  "script": {
+    "type": "all",
+    "scripts": []
+  },
+  "shape": {
+    "depth": 1,
+    "nodeCount": 1,
+    "sigCount": 0,
+    "keyHashes": [],
+    "timelockCount": 0,
+    "maxBreadth": 0,
+    "containerCounts": {
+      "all": 1,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [
+    {
+      "path": "",
+      "code": "empty-all",
+      "detail": "An empty \"all\" is vacuously satisfied by any witness set, including none."
+    }
+  ],
+  "encoding": {
+    "definite": {
+      "cborHex": "820180",
+      "preimageHex": "00820180",
+      "scriptHash": "d441227553a0f1a965fee7d60a0f724b368dd1bddbc208730fccebcf",
+      "cborBytes": 3
+    },
+    "cardanoBinary": {
+      "cborHex": "820180",
+      "preimageHex": "00820180",
+      "scriptHash": "d441227553a0f1a965fee7d60a0f724b368dd1bddbc208730fccebcf",
+      "cborBytes": 3
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w82yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncxvfgxz",
+        "preview": "addr_test1wr2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncaya5f8",
+        "preprod": "addr_test1wr2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncaya5f8"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x82yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhn75gy3825aq7x5ktlh86c9q7ujtx6xar0wmcgy8xr7va08swkl427",
+        "preview": "addr_test1xr2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhn75gy3825aq7x5ktlh86c9q7ujtx6xar0wmcgy8xr7va08sdqz4xp",
+        "preprod": "addr_test1xr2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhn75gy3825aq7x5ktlh86c9q7ujtx6xar0wmcgy8xr7va08sdqz4xp"
+      },
+      "reward": {
+        "mainnet": "stake1782yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhnc6xfw6s",
+        "preview": "stake_test17r2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncavrv7d",
+        "preprod": "stake_test17r2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncavrv7d"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y02yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhnc8h940c",
+          "cip105": "drep_script163qjya2n5rc6je07ultq5rmjfvmgm5dam0pqsuc0en4u7vk5dkq"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z02yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncrlrrxu",
+          "cip105": "cc_cold_script163qjya2n5rc6je07ultq5rmjfvmgm5dam0pqsuc0en4u7jlrmx6"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q02yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhnc4rhlu4",
+          "cip105": "cc_hot_script163qjya2n5rc6je07ultq5rmjfvmgm5dam0pqsuc0en4u7kp7yy3"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w82yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncxvfgxz",
+        "preview": "addr_test1wr2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncaya5f8",
+        "preprod": "addr_test1wr2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncaya5f8"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x82yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhn75gy3825aq7x5ktlh86c9q7ujtx6xar0wmcgy8xr7va08swkl427",
+        "preview": "addr_test1xr2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhn75gy3825aq7x5ktlh86c9q7ujtx6xar0wmcgy8xr7va08sdqz4xp",
+        "preprod": "addr_test1xr2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhn75gy3825aq7x5ktlh86c9q7ujtx6xar0wmcgy8xr7va08sdqz4xp"
+      },
+      "reward": {
+        "mainnet": "stake1782yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhnc6xfw6s",
+        "preview": "stake_test17r2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncavrv7d",
+        "preprod": "stake_test17r2yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncavrv7d"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y02yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhnc8h940c",
+          "cip105": "drep_script163qjya2n5rc6je07ultq5rmjfvmgm5dam0pqsuc0en4u7vk5dkq"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z02yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhncrlrrxu",
+          "cip105": "cc_cold_script163qjya2n5rc6je07ultq5rmjfvmgm5dam0pqsuc0en4u7jlrmx6"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q02yzgn42ws0r2t9lmnavzs0wf9ndrw3hhduyzrnplxwhnc4rhlu4",
+          "cip105": "cc_hot_script163qjya2n5rc6je07ultq5rmjfvmgm5dam0pqsuc0en4u7kp7yy3"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": true,
+      "expectedReason": "empty \"all\" is vacuously satisfied"
+    }
+  ],
+  "onchain": []
+}

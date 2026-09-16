@@ -1,0 +1,951 @@
+{
+  "formatVersion": 2,
+  "generatedAt": "2026-09-15T22:32:47.924Z",
+  "generator": "arachne@0.1.0",
+  "families": [
+    {
+      "name": "nest-linear",
+      "question": "How deeply can one container type nest before a node rejects the script or the transaction stops fitting?",
+      "count": 24
+    },
+    {
+      "name": "nest-alternating",
+      "question": "Does alternating container types change the depth at which a script stops working?",
+      "count": 11
+    },
+    {
+      "name": "breadth",
+      "question": "How many sub-scripts fit in one container before the transaction exceeds its size limit?",
+      "count": 24
+    },
+    {
+      "name": "threshold-matrix",
+      "question": "Does every k in 0..n+1 behave as the reference evaluator says, including the degenerate ends?",
+      "count": 28
+    },
+    {
+      "name": "duplicate-keys",
+      "question": "Does a repeated key hash under one threshold count once or once per occurrence?",
+      "count": 4
+    },
+    {
+      "name": "degenerate",
+      "question": "What do the empty and out-of-range containers hash to, and does a node accept them?",
+      "count": 6
+    },
+    {
+      "name": "timelocks",
+      "question": "Which timelock arrangements can a transaction actually satisfy, given that an absent interval bound fails rather than passes?",
+      "count": 7
+    },
+    {
+      "name": "nested-threshold",
+      "question": "Does a threshold nested inside another evaluate independently, or does it flatten?",
+      "count": 5
+    },
+    {
+      "name": "federation",
+      "question": "Does a threshold over member organizations, each itself a threshold, evaluate seat by seat at the sizes a real federation reaches?",
+      "count": 7
+    },
+    {
+      "name": "federation-of-federations",
+      "question": "Does a three-level threshold hierarchy evaluate level by level, and how large is one before it stops fitting?",
+      "count": 4
+    },
+    {
+      "name": "encoding-boundary",
+      "question": "Does the definite-to-indefinite switch depend on each list independently, so a small root can still hide a divergent child?",
+      "count": 6
+    }
+  ],
+  "vectorCount": 126,
+  "satisfactionCaseCount": 1067,
+  "observationCount": 0,
+  "encodingSensitiveCount": 15,
+  "digest": "a6688f76c41e96e5bc1ebd45ad0bd148898d0bc8f3b5fdcca4c4059f",
+  "vectors": [
+    {
+      "id": "breadth/all-w002",
+      "family": "breadth",
+      "path": "breadth/all-w002.json",
+      "scriptHash": "b834028d0e351fba62ee5b266538209f593ffde73323fed970fc389d",
+      "cardanoBinaryScriptHash": "b834028d0e351fba62ee5b266538209f593ffde73323fed970fc389d"
+    },
+    {
+      "id": "breadth/all-w003",
+      "family": "breadth",
+      "path": "breadth/all-w003.json",
+      "scriptHash": "9ef51eb458dda455aa92d56e77c8b10d914126eceecb8bee3b709127",
+      "cardanoBinaryScriptHash": "9ef51eb458dda455aa92d56e77c8b10d914126eceecb8bee3b709127"
+    },
+    {
+      "id": "breadth/all-w005",
+      "family": "breadth",
+      "path": "breadth/all-w005.json",
+      "scriptHash": "c45a7da1c292b51d099d6ac589a00cc464f13d5c4f4f6b4f22f7ab74",
+      "cardanoBinaryScriptHash": "c45a7da1c292b51d099d6ac589a00cc464f13d5c4f4f6b4f22f7ab74"
+    },
+    {
+      "id": "breadth/all-w010",
+      "family": "breadth",
+      "path": "breadth/all-w010.json",
+      "scriptHash": "5366cc341b38df9954ad6fe7eb391f2964cd542b4f8e8d3eb938bb57",
+      "cardanoBinaryScriptHash": "5366cc341b38df9954ad6fe7eb391f2964cd542b4f8e8d3eb938bb57"
+    },
+    {
+      "id": "breadth/all-w020",
+      "family": "breadth",
+      "path": "breadth/all-w020.json",
+      "scriptHash": "0faaf2ce7a0458bb0d938fb781dd1aae0c655cb9c54372dc828be12f",
+      "cardanoBinaryScriptHash": "0faaf2ce7a0458bb0d938fb781dd1aae0c655cb9c54372dc828be12f"
+    },
+    {
+      "id": "breadth/all-w023",
+      "family": "breadth",
+      "path": "breadth/all-w023.json",
+      "scriptHash": "b168c85f621e77513c43b81061eaac5185e9b960cc551bad40967e33",
+      "cardanoBinaryScriptHash": "b168c85f621e77513c43b81061eaac5185e9b960cc551bad40967e33"
+    },
+    {
+      "id": "breadth/all-w024",
+      "family": "breadth",
+      "path": "breadth/all-w024.json",
+      "scriptHash": "6695681e5d3875e8195cecc23717a9ea36030506289a9d46c3bbc4da",
+      "cardanoBinaryScriptHash": "70a5c7c6bfabe9d3f988a9523ccdcf2502760441eae2c1ebcba89a49"
+    },
+    {
+      "id": "breadth/all-w025",
+      "family": "breadth",
+      "path": "breadth/all-w025.json",
+      "scriptHash": "48ebd1c37a7e19bfa9c7ffb1963149c199fb88f7784a43dc055cac74",
+      "cardanoBinaryScriptHash": "f6e388cbaae54a63ad12767ba3f06f2016b20448171ff0bb3e3bde40"
+    },
+    {
+      "id": "breadth/all-w050",
+      "family": "breadth",
+      "path": "breadth/all-w050.json",
+      "scriptHash": "c903bdc63fce124cf77a0141f1de482464c41708ca4875b97026e940",
+      "cardanoBinaryScriptHash": "ac845b3aed05d8812acde95cc2352a5a54e8e7a807ad5d890313a3cd"
+    },
+    {
+      "id": "breadth/all-w100",
+      "family": "breadth",
+      "path": "breadth/all-w100.json",
+      "scriptHash": "4cd1c30cfedb8b0da7c17565a90ab043f192ae0bf97998b50885012f",
+      "cardanoBinaryScriptHash": "01d369987cf85db417377093faa1dbd8e0dd64ca82432f5fb425097e"
+    },
+    {
+      "id": "breadth/all-w200",
+      "family": "breadth",
+      "path": "breadth/all-w200.json",
+      "scriptHash": "75f7fb5ab9bc7bbae21ced19459a532c98ca361c2d64656a6e6a08ff",
+      "cardanoBinaryScriptHash": "7e910f81aa96021d2397fe998d462c97a6bb12d0a8d5ff84f46aea4b"
+    },
+    {
+      "id": "breadth/all-w400",
+      "family": "breadth",
+      "path": "breadth/all-w400.json",
+      "scriptHash": "9046b328063e8db6fbe3f2f75d0c049b497a3b7ad329141962f562e9",
+      "cardanoBinaryScriptHash": "c604f11a3c347c4b2d335f6e37b5f8a8032375afe7e235102372dff3"
+    },
+    {
+      "id": "breadth/any-w002",
+      "family": "breadth",
+      "path": "breadth/any-w002.json",
+      "scriptHash": "9710fd775b5f02dc4ee89514c86135b9b611df482e815a28fe12ea18",
+      "cardanoBinaryScriptHash": "9710fd775b5f02dc4ee89514c86135b9b611df482e815a28fe12ea18"
+    },
+    {
+      "id": "breadth/any-w003",
+      "family": "breadth",
+      "path": "breadth/any-w003.json",
+      "scriptHash": "2fc3a21fe89c8a16ed4c65889d072593b465576cb22ef2abed3168be",
+      "cardanoBinaryScriptHash": "2fc3a21fe89c8a16ed4c65889d072593b465576cb22ef2abed3168be"
+    },
+    {
+      "id": "breadth/any-w005",
+      "family": "breadth",
+      "path": "breadth/any-w005.json",
+      "scriptHash": "7fe1e9fbbeefa72d2963d324eeb41cd5954748400854f345d2491722",
+      "cardanoBinaryScriptHash": "7fe1e9fbbeefa72d2963d324eeb41cd5954748400854f345d2491722"
+    },
+    {
+      "id": "breadth/any-w010",
+      "family": "breadth",
+      "path": "breadth/any-w010.json",
+      "scriptHash": "035a31da65020e6065e3eb041aed75f89232c42a75dcc5d54a51c0d1",
+      "cardanoBinaryScriptHash": "035a31da65020e6065e3eb041aed75f89232c42a75dcc5d54a51c0d1"
+    },
+    {
+      "id": "breadth/any-w020",
+      "family": "breadth",
+      "path": "breadth/any-w020.json",
+      "scriptHash": "ae0c309ce1a425fa49563c7d7919b7cc87786463a11bde3c7a6c244c",
+      "cardanoBinaryScriptHash": "ae0c309ce1a425fa49563c7d7919b7cc87786463a11bde3c7a6c244c"
+    },
+    {
+      "id": "breadth/any-w023",
+      "family": "breadth",
+      "path": "breadth/any-w023.json",
+      "scriptHash": "08ffa69341981b95671256136c2508e265ba45e33aa7fef1ab1b38d0",
+      "cardanoBinaryScriptHash": "08ffa69341981b95671256136c2508e265ba45e33aa7fef1ab1b38d0"
+    },
+    {
+      "id": "breadth/any-w024",
+      "family": "breadth",
+      "path": "breadth/any-w024.json",
+      "scriptHash": "33b1827d19b7a55b4c13d49ebd53935b19bccfa1f8e4607c07f083c4",
+      "cardanoBinaryScriptHash": "881781ab932c048677b063626c869596af2b9357e3e555468c008a00"
+    },
+    {
+      "id": "breadth/any-w025",
+      "family": "breadth",
+      "path": "breadth/any-w025.json",
+      "scriptHash": "04dbfb74d6fc159ccb803cc55f43f488b25a21c10a21c103342435ab",
+      "cardanoBinaryScriptHash": "c318254eec805d994d4a4197f2c795ec839f459cee869952fa626071"
+    },
+    {
+      "id": "breadth/any-w050",
+      "family": "breadth",
+      "path": "breadth/any-w050.json",
+      "scriptHash": "169540164436f989123077ef8d9854ca7ccd79cbe8f82c5f5ab3d939",
+      "cardanoBinaryScriptHash": "97d6cdfbfd8328b85e67fc643b3cc5bd32770185879d8353447eb766"
+    },
+    {
+      "id": "breadth/any-w100",
+      "family": "breadth",
+      "path": "breadth/any-w100.json",
+      "scriptHash": "a1169a15150bdca53f0b0168ca9b14ce52297286f46023e59d31331d",
+      "cardanoBinaryScriptHash": "aa042876253d4d93165f439144a3e76c23b9ea365a01596cfca0b4a4"
+    },
+    {
+      "id": "breadth/any-w200",
+      "family": "breadth",
+      "path": "breadth/any-w200.json",
+      "scriptHash": "6dcea1d1e01ea28a3775923007d2c88ccd5b58a921c26e48ad798f24",
+      "cardanoBinaryScriptHash": "a7d6ecad2c7261630220c2f9a68c4d5d899da11ce7e1b52c8c6a13ec"
+    },
+    {
+      "id": "breadth/any-w400",
+      "family": "breadth",
+      "path": "breadth/any-w400.json",
+      "scriptHash": "1151df8299aad2fe52a93f42ae37f174766d6de0b2833d812b62189c",
+      "cardanoBinaryScriptHash": "aca2842cdd42a33a0bd63315fdd52ba968e578177b8f67ac75e6f43c"
+    },
+    {
+      "id": "degenerate/atleast-negative",
+      "family": "degenerate",
+      "path": "degenerate/atleast-negative.json",
+      "scriptHash": "678f1ce0680cd787baac04fe6e30a82c1fbf2998bee934cc040960d4",
+      "cardanoBinaryScriptHash": "678f1ce0680cd787baac04fe6e30a82c1fbf2998bee934cc040960d4"
+    },
+    {
+      "id": "degenerate/empty-all",
+      "family": "degenerate",
+      "path": "degenerate/empty-all.json",
+      "scriptHash": "d441227553a0f1a965fee7d60a0f724b368dd1bddbc208730fccebcf",
+      "cardanoBinaryScriptHash": "d441227553a0f1a965fee7d60a0f724b368dd1bddbc208730fccebcf"
+    },
+    {
+      "id": "degenerate/empty-any",
+      "family": "degenerate",
+      "path": "degenerate/empty-any.json",
+      "scriptHash": "52dc3d43b6d2465e96109ce75ab61abe5e9c1d8a3c9ce6ff8a3af528",
+      "cardanoBinaryScriptHash": "52dc3d43b6d2465e96109ce75ab61abe5e9c1d8a3c9ce6ff8a3af528"
+    },
+    {
+      "id": "degenerate/empty-atleast-0",
+      "family": "degenerate",
+      "path": "degenerate/empty-atleast-0.json",
+      "scriptHash": "3530cc9ae7f2895111a99b7a02184dd7c0cea7424f1632d73951b1d7",
+      "cardanoBinaryScriptHash": "3530cc9ae7f2895111a99b7a02184dd7c0cea7424f1632d73951b1d7"
+    },
+    {
+      "id": "degenerate/empty-atleast-1",
+      "family": "degenerate",
+      "path": "degenerate/empty-atleast-1.json",
+      "scriptHash": "f6e57a7bfa194dbcd28dfbc32ae427976beed4d63dbf91b6ab82996a",
+      "cardanoBinaryScriptHash": "f6e57a7bfa194dbcd28dfbc32ae427976beed4d63dbf91b6ab82996a"
+    },
+    {
+      "id": "degenerate/nested-empty-all",
+      "family": "degenerate",
+      "path": "degenerate/nested-empty-all.json",
+      "scriptHash": "60be8259acde0a72b76f36977223cac39432713a42bcfdf76a55dd7f",
+      "cardanoBinaryScriptHash": "60be8259acde0a72b76f36977223cac39432713a42bcfdf76a55dd7f"
+    },
+    {
+      "id": "duplicate-keys/dup-2x-need-2",
+      "family": "duplicate-keys",
+      "path": "duplicate-keys/dup-2x-need-2.json",
+      "scriptHash": "2b6668faaa9914d81d708c56c0c3dc910bb366ac59d2b3d92ea584c7",
+      "cardanoBinaryScriptHash": "2b6668faaa9914d81d708c56c0c3dc910bb366ac59d2b3d92ea584c7"
+    },
+    {
+      "id": "duplicate-keys/dup-2x-need-3",
+      "family": "duplicate-keys",
+      "path": "duplicate-keys/dup-2x-need-3.json",
+      "scriptHash": "e0d219935319a37e83531b17a88e2135a818d2a8add6f16bca634418",
+      "cardanoBinaryScriptHash": "e0d219935319a37e83531b17a88e2135a818d2a8add6f16bca634418"
+    },
+    {
+      "id": "duplicate-keys/dup-3x-need-2",
+      "family": "duplicate-keys",
+      "path": "duplicate-keys/dup-3x-need-2.json",
+      "scriptHash": "d6c0687624a06970124c46285add6dc0726be64da15f32711a35c8cb",
+      "cardanoBinaryScriptHash": "d6c0687624a06970124c46285add6dc0726be64da15f32711a35c8cb"
+    },
+    {
+      "id": "duplicate-keys/dup-3x-need-3",
+      "family": "duplicate-keys",
+      "path": "duplicate-keys/dup-3x-need-3.json",
+      "scriptHash": "513590dd05269a170be318b38188baa6b69125f0742b79e06fbc57fb",
+      "cardanoBinaryScriptHash": "513590dd05269a170be318b38188baa6b69125f0742b79e06fbc57fb"
+    },
+    {
+      "id": "encoding-boundary/deep-w23",
+      "family": "encoding-boundary",
+      "path": "encoding-boundary/deep-w23.json",
+      "scriptHash": "7c086a72cd99aff5b6cf989244d367dd3834e19133c89cb1c7bc7056",
+      "cardanoBinaryScriptHash": "7c086a72cd99aff5b6cf989244d367dd3834e19133c89cb1c7bc7056"
+    },
+    {
+      "id": "encoding-boundary/deep-w24",
+      "family": "encoding-boundary",
+      "path": "encoding-boundary/deep-w24.json",
+      "scriptHash": "466305b79518a7c47cb14f6fae8fa2f25ae68f3f52782c2aeffec657",
+      "cardanoBinaryScriptHash": "1ad4ec1605ce0c4d1b6cfa11ed6ecac6194a12ccdcbb85ac5f4fd423"
+    },
+    {
+      "id": "encoding-boundary/nested-w23",
+      "family": "encoding-boundary",
+      "path": "encoding-boundary/nested-w23.json",
+      "scriptHash": "7fbfa3ba17f5f61cfc3d0f3ac38406e925f26e5a99c6fdce43839910",
+      "cardanoBinaryScriptHash": "7fbfa3ba17f5f61cfc3d0f3ac38406e925f26e5a99c6fdce43839910"
+    },
+    {
+      "id": "encoding-boundary/nested-w24",
+      "family": "encoding-boundary",
+      "path": "encoding-boundary/nested-w24.json",
+      "scriptHash": "cca52ea0be2fe85e0d5e1d5084b37ca4c326213cac12018331f3725c",
+      "cardanoBinaryScriptHash": "5c06c2b512364b0cea71a1ba39550e297439980239f2f4a420247097"
+    },
+    {
+      "id": "encoding-boundary/root-w23",
+      "family": "encoding-boundary",
+      "path": "encoding-boundary/root-w23.json",
+      "scriptHash": "764244af39b93c24c7a309e9b46bc38ad9d7a67f265db07b37571b4f",
+      "cardanoBinaryScriptHash": "764244af39b93c24c7a309e9b46bc38ad9d7a67f265db07b37571b4f"
+    },
+    {
+      "id": "encoding-boundary/root-w24",
+      "family": "encoding-boundary",
+      "path": "encoding-boundary/root-w24.json",
+      "scriptHash": "7de744f701763586dfb129a2691327f76acb2f69f723f6bd7935569d",
+      "cardanoBinaryScriptHash": "36db16a605b3ad5e48a02477079eede21c8a394da0cf7e6b8b4c462a"
+    },
+    {
+      "id": "federation-of-federations/b2-m2-c2",
+      "family": "federation-of-federations",
+      "path": "federation-of-federations/b2-m2-c2.json",
+      "scriptHash": "4486eb437417e927a880745d0502fe1b6cf2589d5781a53c1ff5d3c5",
+      "cardanoBinaryScriptHash": "4486eb437417e927a880745d0502fe1b6cf2589d5781a53c1ff5d3c5"
+    },
+    {
+      "id": "federation-of-federations/b3-m3-c3",
+      "family": "federation-of-federations",
+      "path": "federation-of-federations/b3-m3-c3.json",
+      "scriptHash": "b87ee3267e7e7d383b93367cbb66e1c1b32436ed781af56a2108e7ee",
+      "cardanoBinaryScriptHash": "b87ee3267e7e7d383b93367cbb66e1c1b32436ed781af56a2108e7ee"
+    },
+    {
+      "id": "federation-of-federations/b3-m5-c5",
+      "family": "federation-of-federations",
+      "path": "federation-of-federations/b3-m5-c5.json",
+      "scriptHash": "b4bd4d5558884d4967340b9b7d42005c4bffcbb51db10757ca2edc59",
+      "cardanoBinaryScriptHash": "b4bd4d5558884d4967340b9b7d42005c4bffcbb51db10757ca2edc59"
+    },
+    {
+      "id": "federation-of-federations/b5-m5-c5",
+      "family": "federation-of-federations",
+      "path": "federation-of-federations/b5-m5-c5.json",
+      "scriptHash": "bb3eec3effff5260a1810c9418dc6fe970843e4d98ff1045ab46c121",
+      "cardanoBinaryScriptHash": "bb3eec3effff5260a1810c9418dc6fe970843e4d98ff1045ab46c121"
+    },
+    {
+      "id": "federation/m10-c7-s6",
+      "family": "federation",
+      "path": "federation/m10-c7-s6.json",
+      "scriptHash": "231b78d58fd8fada1a65b1d5d1d8b1c83d948df65f6192486562cb74",
+      "cardanoBinaryScriptHash": "231b78d58fd8fada1a65b1d5d1d8b1c83d948df65f6192486562cb74"
+    },
+    {
+      "id": "federation/m15-c10-s8",
+      "family": "federation",
+      "path": "federation/m15-c10-s8.json",
+      "scriptHash": "a344b2ac139d61aab1079333333148484d681353b28cd108150f61c0",
+      "cardanoBinaryScriptHash": "a344b2ac139d61aab1079333333148484d681353b28cd108150f61c0"
+    },
+    {
+      "id": "federation/m20-c20-s11",
+      "family": "federation",
+      "path": "federation/m20-c20-s11.json",
+      "scriptHash": "400a818dace7a9471542941555201a355ecbba77d5b2bf7696d356ec",
+      "cardanoBinaryScriptHash": "400a818dace7a9471542941555201a355ecbba77d5b2bf7696d356ec"
+    },
+    {
+      "id": "federation/m3-c3-s2",
+      "family": "federation",
+      "path": "federation/m3-c3-s2.json",
+      "scriptHash": "e86a627938d33d3d40d44f608b01beac17a219c2112daf201478fd5b",
+      "cardanoBinaryScriptHash": "e86a627938d33d3d40d44f608b01beac17a219c2112daf201478fd5b"
+    },
+    {
+      "id": "federation/m5-c3-s3",
+      "family": "federation",
+      "path": "federation/m5-c3-s3.json",
+      "scriptHash": "778fb30e91100597750c33e03d9af7c2547655d6eebd2f2cdf7024ff",
+      "cardanoBinaryScriptHash": "778fb30e91100597750c33e03d9af7c2547655d6eebd2f2cdf7024ff"
+    },
+    {
+      "id": "federation/m5-c5-s3",
+      "family": "federation",
+      "path": "federation/m5-c5-s3.json",
+      "scriptHash": "660c784d9ad18f941b3335db2092a93985ce4411dec2b18bdcf99c12",
+      "cardanoBinaryScriptHash": "660c784d9ad18f941b3335db2092a93985ce4411dec2b18bdcf99c12"
+    },
+    {
+      "id": "federation/m7-c5-s4",
+      "family": "federation",
+      "path": "federation/m7-c5-s4.json",
+      "scriptHash": "39f4b004f3c637e493b6bec37410952b3db9487724689ef243cd57a0",
+      "cardanoBinaryScriptHash": "39f4b004f3c637e493b6bec37410952b3db9487724689ef243cd57a0"
+    },
+    {
+      "id": "nest-alternating/alt-d002",
+      "family": "nest-alternating",
+      "path": "nest-alternating/alt-d002.json",
+      "scriptHash": "e157e4e0a85c48252e22eb2291f6ead4349b70b95e9b750f0ee94d79",
+      "cardanoBinaryScriptHash": "e157e4e0a85c48252e22eb2291f6ead4349b70b95e9b750f0ee94d79"
+    },
+    {
+      "id": "nest-alternating/alt-d003",
+      "family": "nest-alternating",
+      "path": "nest-alternating/alt-d003.json",
+      "scriptHash": "2095151552243a2fbd6c42f7ca4484488e74d66f145fa7c2da308056",
+      "cardanoBinaryScriptHash": "2095151552243a2fbd6c42f7ca4484488e74d66f145fa7c2da308056"
+    },
+    {
+      "id": "nest-alternating/alt-d004",
+      "family": "nest-alternating",
+      "path": "nest-alternating/alt-d004.json",
+      "scriptHash": "c36c8dc9dda9cb81c24fb8f8e1143c06b5b60986a8ea85f80ad84e87",
+      "cardanoBinaryScriptHash": "c36c8dc9dda9cb81c24fb8f8e1143c06b5b60986a8ea85f80ad84e87"
+    },
+    {
+      "id": "nest-alternating/alt-d005",
+      "family": "nest-alternating",
+      "path": "nest-alternating/alt-d005.json",
+      "scriptHash": "a760042b986e592b0e237f0b0d3d3f0ab7d853f1567f1950454aefef",
+      "cardanoBinaryScriptHash": "a760042b986e592b0e237f0b0d3d3f0ab7d853f1567f1950454aefef"
+    },
+    {
+      "id": "nest-alternating/alt-d008",
+      "family": "nest-alternating",
+      "path": "nest-alternating/alt-d008.json",
+      "scriptHash": "7755449e046144746632a641ec76a57a0f73f07b2b47661ff8958a77",
+      "cardanoBinaryScriptHash": "7755449e046144746632a641ec76a57a0f73f07b2b47661ff8958a77"
+    },
+    {
+      "id": "nest-alternating/alt-d012",
+      "family": "nest-alternating",
+      "path": "nest-alternating/alt-d012.json",
+      "scriptHash": "0e51fb9b965dfd92d664286e25c299c11aaadc3eb429896d2ca0065f",
+      "cardanoBinaryScriptHash": "0e51fb9b965dfd92d664286e25c299c11aaadc3eb429896d2ca0065f"
+    },
+    {
+      "id": "nest-alternating/alt-d016",
+      "family": "nest-alternating",
+      "path": "nest-alternating/alt-d016.json",
+      "scriptHash": "67635e59258feb528869e7bb895568b1c4632001c64d3e838c3c8a07",
+      "cardanoBinaryScriptHash": "67635e59258feb528869e7bb895568b1c4632001c64d3e838c3c8a07"
+    },
+    {
+      "id": "nest-alternating/alt-d024",
+      "family": "nest-alternating",
+      "path": "nest-alternating/alt-d024.json",
+      "scriptHash": "2218da601f14476488c283e3d12519cae7b439a5396f70783040a0ce",
+      "cardanoBinaryScriptHash": "2218da601f14476488c283e3d12519cae7b439a5396f70783040a0ce"
+    },
+    {
+      "id": "nest-alternating/alt-d032",
+      "family": "nest-alternating",
+      "path": "nest-alternating/alt-d032.json",
+      "scriptHash": "10790dcbb8549265f6b24053a04c45658949cd9f8500a795a60f35bb",
+      "cardanoBinaryScriptHash": "10790dcbb8549265f6b24053a04c45658949cd9f8500a795a60f35bb"
+    },
+    {
+      "id": "nest-alternating/alt-d048",
+      "family": "nest-alternating",
+      "path": "nest-alternating/alt-d048.json",
+      "scriptHash": "f9dfd47b394bdabd9f9cf45a424a432cf0d79e5fd54c7e85be72fb32",
+      "cardanoBinaryScriptHash": "f9dfd47b394bdabd9f9cf45a424a432cf0d79e5fd54c7e85be72fb32"
+    },
+    {
+      "id": "nest-alternating/alt-d064",
+      "family": "nest-alternating",
+      "path": "nest-alternating/alt-d064.json",
+      "scriptHash": "4089a25fd960005b697f1e1d1a1464f2a089da48cf0b643b07fe7863",
+      "cardanoBinaryScriptHash": "4089a25fd960005b697f1e1d1a1464f2a089da48cf0b643b07fe7863"
+    },
+    {
+      "id": "nest-linear/all-d001",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d001.json",
+      "scriptHash": "537102d3eb47a5a1c61ae60e23d22d4d375484bba6e874954e969076",
+      "cardanoBinaryScriptHash": "537102d3eb47a5a1c61ae60e23d22d4d375484bba6e874954e969076"
+    },
+    {
+      "id": "nest-linear/all-d002",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d002.json",
+      "scriptHash": "108ebf945c7d468a408a496faa8488a0bce06bfdc0e736208556c126",
+      "cardanoBinaryScriptHash": "108ebf945c7d468a408a496faa8488a0bce06bfdc0e736208556c126"
+    },
+    {
+      "id": "nest-linear/all-d003",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d003.json",
+      "scriptHash": "e18ea68097d8059c642e3d8debcd06f029abc6414caf8d60fcad4027",
+      "cardanoBinaryScriptHash": "e18ea68097d8059c642e3d8debcd06f029abc6414caf8d60fcad4027"
+    },
+    {
+      "id": "nest-linear/all-d004",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d004.json",
+      "scriptHash": "b79e1d7f37a9a3c96f2d4d36a99e8d2593f7c8ccfe55d0ac1b03369f",
+      "cardanoBinaryScriptHash": "b79e1d7f37a9a3c96f2d4d36a99e8d2593f7c8ccfe55d0ac1b03369f"
+    },
+    {
+      "id": "nest-linear/all-d005",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d005.json",
+      "scriptHash": "2d426f624c2f772ea7e4bbd1257a6d9fb167111b46472ccc054a82f7",
+      "cardanoBinaryScriptHash": "2d426f624c2f772ea7e4bbd1257a6d9fb167111b46472ccc054a82f7"
+    },
+    {
+      "id": "nest-linear/all-d008",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d008.json",
+      "scriptHash": "7e17db0b07fc21ccc8f0e14206cfebd31dbb7db487af58c3c1f53a05",
+      "cardanoBinaryScriptHash": "7e17db0b07fc21ccc8f0e14206cfebd31dbb7db487af58c3c1f53a05"
+    },
+    {
+      "id": "nest-linear/all-d012",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d012.json",
+      "scriptHash": "147029c3ed8cd179e8c658d5c22d90de303f3bf5d8757f2eb91765cc",
+      "cardanoBinaryScriptHash": "147029c3ed8cd179e8c658d5c22d90de303f3bf5d8757f2eb91765cc"
+    },
+    {
+      "id": "nest-linear/all-d016",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d016.json",
+      "scriptHash": "593e7e6f89afadf48cea10ecc917d45dd0e024968146147fd364ba3d",
+      "cardanoBinaryScriptHash": "593e7e6f89afadf48cea10ecc917d45dd0e024968146147fd364ba3d"
+    },
+    {
+      "id": "nest-linear/all-d024",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d024.json",
+      "scriptHash": "5e63773ad0291ebbf4af123e930297a5f445aeac8579f1c9616c54ad",
+      "cardanoBinaryScriptHash": "5e63773ad0291ebbf4af123e930297a5f445aeac8579f1c9616c54ad"
+    },
+    {
+      "id": "nest-linear/all-d032",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d032.json",
+      "scriptHash": "dc8c04a3cf1dc6acc7c55be3a208b2098f74d0744ca6bb8adbc896c4",
+      "cardanoBinaryScriptHash": "dc8c04a3cf1dc6acc7c55be3a208b2098f74d0744ca6bb8adbc896c4"
+    },
+    {
+      "id": "nest-linear/all-d048",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d048.json",
+      "scriptHash": "c2851435999d99d3d636d8090b96bcb15e2c9bd58c74dc7fa33fb6e5",
+      "cardanoBinaryScriptHash": "c2851435999d99d3d636d8090b96bcb15e2c9bd58c74dc7fa33fb6e5"
+    },
+    {
+      "id": "nest-linear/all-d064",
+      "family": "nest-linear",
+      "path": "nest-linear/all-d064.json",
+      "scriptHash": "938c26e8b6e8bb65f8fc37fc8d86e7f0b4cc220a2aa31a86524315ad",
+      "cardanoBinaryScriptHash": "938c26e8b6e8bb65f8fc37fc8d86e7f0b4cc220a2aa31a86524315ad"
+    },
+    {
+      "id": "nest-linear/any-d001",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d001.json",
+      "scriptHash": "5bb258aab01ffefb8515b7b3ad4cfaee32bf38ebf5e8f3f555a9338a",
+      "cardanoBinaryScriptHash": "5bb258aab01ffefb8515b7b3ad4cfaee32bf38ebf5e8f3f555a9338a"
+    },
+    {
+      "id": "nest-linear/any-d002",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d002.json",
+      "scriptHash": "2a38bb0ba44706bc64a568db742b57ecd50b241c1e776eaedbcf7abd",
+      "cardanoBinaryScriptHash": "2a38bb0ba44706bc64a568db742b57ecd50b241c1e776eaedbcf7abd"
+    },
+    {
+      "id": "nest-linear/any-d003",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d003.json",
+      "scriptHash": "5113f064f5978843fce3c714fbea1825b4e11894fa71672c95fa0625",
+      "cardanoBinaryScriptHash": "5113f064f5978843fce3c714fbea1825b4e11894fa71672c95fa0625"
+    },
+    {
+      "id": "nest-linear/any-d004",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d004.json",
+      "scriptHash": "f00eb0e196377bf2fbe0b3376eb9cb10db3f6c6c71286ec3307399e1",
+      "cardanoBinaryScriptHash": "f00eb0e196377bf2fbe0b3376eb9cb10db3f6c6c71286ec3307399e1"
+    },
+    {
+      "id": "nest-linear/any-d005",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d005.json",
+      "scriptHash": "66f8fe5db1dbe12a484e4593bce1e4c6d155a9c60d3ab7f70921c029",
+      "cardanoBinaryScriptHash": "66f8fe5db1dbe12a484e4593bce1e4c6d155a9c60d3ab7f70921c029"
+    },
+    {
+      "id": "nest-linear/any-d008",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d008.json",
+      "scriptHash": "e8bb3c8eeaa4578d7420be7ef291ff195224680181c9812df6e1fdeb",
+      "cardanoBinaryScriptHash": "e8bb3c8eeaa4578d7420be7ef291ff195224680181c9812df6e1fdeb"
+    },
+    {
+      "id": "nest-linear/any-d012",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d012.json",
+      "scriptHash": "1072efd49e3125bd3e8be35e9d4d856ac9c37fb9570f2b6c691fb644",
+      "cardanoBinaryScriptHash": "1072efd49e3125bd3e8be35e9d4d856ac9c37fb9570f2b6c691fb644"
+    },
+    {
+      "id": "nest-linear/any-d016",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d016.json",
+      "scriptHash": "27fdd0bf6785b6e71c7ec524b8e17993d540f12f8804e7aa47bcb9dd",
+      "cardanoBinaryScriptHash": "27fdd0bf6785b6e71c7ec524b8e17993d540f12f8804e7aa47bcb9dd"
+    },
+    {
+      "id": "nest-linear/any-d024",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d024.json",
+      "scriptHash": "ed89471e4423c401ac07370814765ed95731ba6fb4f048ad35bdda06",
+      "cardanoBinaryScriptHash": "ed89471e4423c401ac07370814765ed95731ba6fb4f048ad35bdda06"
+    },
+    {
+      "id": "nest-linear/any-d032",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d032.json",
+      "scriptHash": "cd414f7786d1579e9deeb50cc424c7c6961ae91ca08e14b6b7932e6d",
+      "cardanoBinaryScriptHash": "cd414f7786d1579e9deeb50cc424c7c6961ae91ca08e14b6b7932e6d"
+    },
+    {
+      "id": "nest-linear/any-d048",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d048.json",
+      "scriptHash": "23ce42cb8ba894fd34aefe2302c2b84e75ad6f141fa566d416323cfb",
+      "cardanoBinaryScriptHash": "23ce42cb8ba894fd34aefe2302c2b84e75ad6f141fa566d416323cfb"
+    },
+    {
+      "id": "nest-linear/any-d064",
+      "family": "nest-linear",
+      "path": "nest-linear/any-d064.json",
+      "scriptHash": "5b97b10691e514fd04a75e9087f930986322fa0eb2233375218d2f9b",
+      "cardanoBinaryScriptHash": "5b97b10691e514fd04a75e9087f930986322fa0eb2233375218d2f9b"
+    },
+    {
+      "id": "nested-threshold/outer2-inner2-k1",
+      "family": "nested-threshold",
+      "path": "nested-threshold/outer2-inner2-k1.json",
+      "scriptHash": "111ddc8576895b7e8cf94f9e1ab4341e065aa7d08d85a5636536337f",
+      "cardanoBinaryScriptHash": "111ddc8576895b7e8cf94f9e1ab4341e065aa7d08d85a5636536337f"
+    },
+    {
+      "id": "nested-threshold/outer2-inner2-k2",
+      "family": "nested-threshold",
+      "path": "nested-threshold/outer2-inner2-k2.json",
+      "scriptHash": "d53867505cc655eadf4b991423b896c23d6bbaa73338b2c96af2cf91",
+      "cardanoBinaryScriptHash": "d53867505cc655eadf4b991423b896c23d6bbaa73338b2c96af2cf91"
+    },
+    {
+      "id": "nested-threshold/outer3-inner2-k2",
+      "family": "nested-threshold",
+      "path": "nested-threshold/outer3-inner2-k2.json",
+      "scriptHash": "e1dbbc8c8cb6e8504c679769a945d9287b93a1c8a4fe19b06cf10dd4",
+      "cardanoBinaryScriptHash": "e1dbbc8c8cb6e8504c679769a945d9287b93a1c8a4fe19b06cf10dd4"
+    },
+    {
+      "id": "nested-threshold/outer3-inner3-k2",
+      "family": "nested-threshold",
+      "path": "nested-threshold/outer3-inner3-k2.json",
+      "scriptHash": "b0ea481457ba96f0c6af1b0125dae01129c32e9145da02e7c4621f94",
+      "cardanoBinaryScriptHash": "b0ea481457ba96f0c6af1b0125dae01129c32e9145da02e7c4621f94"
+    },
+    {
+      "id": "nested-threshold/outer5-inner3-k3",
+      "family": "nested-threshold",
+      "path": "nested-threshold/outer5-inner3-k3.json",
+      "scriptHash": "e1d97698baaabe0eb41275fef202b6cfb2fa5866dd573221ab0fea41",
+      "cardanoBinaryScriptHash": "e1d97698baaabe0eb41275fef202b6cfb2fa5866dd573221ab0fea41"
+    },
+    {
+      "id": "threshold-matrix/atleast-0-of-1",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-0-of-1.json",
+      "scriptHash": "56d9cf5e070581e3d0320ea23bec6762a17865982db9e138a0bdbfe5",
+      "cardanoBinaryScriptHash": "56d9cf5e070581e3d0320ea23bec6762a17865982db9e138a0bdbfe5"
+    },
+    {
+      "id": "threshold-matrix/atleast-0-of-2",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-0-of-2.json",
+      "scriptHash": "ef80bc4601aee6b53c9ac2d51cbd5d4ce9ab739135bd7240d1358a9e",
+      "cardanoBinaryScriptHash": "ef80bc4601aee6b53c9ac2d51cbd5d4ce9ab739135bd7240d1358a9e"
+    },
+    {
+      "id": "threshold-matrix/atleast-0-of-3",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-0-of-3.json",
+      "scriptHash": "1e53c03606458bcf1173bda959ff068333958c012e9f4eebcae6cd6e",
+      "cardanoBinaryScriptHash": "1e53c03606458bcf1173bda959ff068333958c012e9f4eebcae6cd6e"
+    },
+    {
+      "id": "threshold-matrix/atleast-0-of-5",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-0-of-5.json",
+      "scriptHash": "5645d61e0118a983de485f8c4ca4ef14bcadaa1553d71fe577290944",
+      "cardanoBinaryScriptHash": "5645d61e0118a983de485f8c4ca4ef14bcadaa1553d71fe577290944"
+    },
+    {
+      "id": "threshold-matrix/atleast-0-of-7",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-0-of-7.json",
+      "scriptHash": "8db0d9d64e7974c9f740133595519f7565a552be629ab5dbf291785b",
+      "cardanoBinaryScriptHash": "8db0d9d64e7974c9f740133595519f7565a552be629ab5dbf291785b"
+    },
+    {
+      "id": "threshold-matrix/atleast-1-of-1",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-1-of-1.json",
+      "scriptHash": "fdd0ca082489c51df168ece0b183a6e274a5c7f81dc191efeaf65ad6",
+      "cardanoBinaryScriptHash": "fdd0ca082489c51df168ece0b183a6e274a5c7f81dc191efeaf65ad6"
+    },
+    {
+      "id": "threshold-matrix/atleast-1-of-2",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-1-of-2.json",
+      "scriptHash": "8d00a091f1b44ebf3a5060f7a50ee8ed49435480bdbaf1c48f2756cb",
+      "cardanoBinaryScriptHash": "8d00a091f1b44ebf3a5060f7a50ee8ed49435480bdbaf1c48f2756cb"
+    },
+    {
+      "id": "threshold-matrix/atleast-1-of-3",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-1-of-3.json",
+      "scriptHash": "628c002e0a9549096b45b222d3cbf18dc8ea01722223cf3427bdb0dd",
+      "cardanoBinaryScriptHash": "628c002e0a9549096b45b222d3cbf18dc8ea01722223cf3427bdb0dd"
+    },
+    {
+      "id": "threshold-matrix/atleast-1-of-5",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-1-of-5.json",
+      "scriptHash": "fba4932e2029438efb425cf51fb64c754a28d4c81c075c36e4f8f584",
+      "cardanoBinaryScriptHash": "fba4932e2029438efb425cf51fb64c754a28d4c81c075c36e4f8f584"
+    },
+    {
+      "id": "threshold-matrix/atleast-1-of-7",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-1-of-7.json",
+      "scriptHash": "7b7cc2e95fb8ee63769d4305e995b8ef7178fc36ce6861e16d13b8df",
+      "cardanoBinaryScriptHash": "7b7cc2e95fb8ee63769d4305e995b8ef7178fc36ce6861e16d13b8df"
+    },
+    {
+      "id": "threshold-matrix/atleast-2-of-1",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-2-of-1.json",
+      "scriptHash": "d536dba112bb3dbe66f0ea1c216acdaaac440f62df80f36735633657",
+      "cardanoBinaryScriptHash": "d536dba112bb3dbe66f0ea1c216acdaaac440f62df80f36735633657"
+    },
+    {
+      "id": "threshold-matrix/atleast-2-of-2",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-2-of-2.json",
+      "scriptHash": "c0feb3d4450ab0e215becdbda66f30b4947301e67f085cc88a25c2ef",
+      "cardanoBinaryScriptHash": "c0feb3d4450ab0e215becdbda66f30b4947301e67f085cc88a25c2ef"
+    },
+    {
+      "id": "threshold-matrix/atleast-2-of-3",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-2-of-3.json",
+      "scriptHash": "e4a4d4e5b69f0ff1be11f7abfe8b2a0e7831262572cbd00b86c58f3f",
+      "cardanoBinaryScriptHash": "e4a4d4e5b69f0ff1be11f7abfe8b2a0e7831262572cbd00b86c58f3f"
+    },
+    {
+      "id": "threshold-matrix/atleast-2-of-5",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-2-of-5.json",
+      "scriptHash": "e2e6f700d3f4a80bf83843237c793f9d12e7035bc9a8553a1214db39",
+      "cardanoBinaryScriptHash": "e2e6f700d3f4a80bf83843237c793f9d12e7035bc9a8553a1214db39"
+    },
+    {
+      "id": "threshold-matrix/atleast-2-of-7",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-2-of-7.json",
+      "scriptHash": "d955555a9b43b46a2e9fcb7df52b81a518d3c168f1351cc04472e0f8",
+      "cardanoBinaryScriptHash": "d955555a9b43b46a2e9fcb7df52b81a518d3c168f1351cc04472e0f8"
+    },
+    {
+      "id": "threshold-matrix/atleast-3-of-2",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-3-of-2.json",
+      "scriptHash": "ae47ea93e8022557a481b6cd6f5ece11ce97430f153ac3555d79da76",
+      "cardanoBinaryScriptHash": "ae47ea93e8022557a481b6cd6f5ece11ce97430f153ac3555d79da76"
+    },
+    {
+      "id": "threshold-matrix/atleast-3-of-3",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-3-of-3.json",
+      "scriptHash": "53bad1a5d8169bc5e18571cfb4b9d2d644fb2b863a63b53e0be52620",
+      "cardanoBinaryScriptHash": "53bad1a5d8169bc5e18571cfb4b9d2d644fb2b863a63b53e0be52620"
+    },
+    {
+      "id": "threshold-matrix/atleast-3-of-5",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-3-of-5.json",
+      "scriptHash": "17373cab06eae00e6fbf0d7f05f4a0c6b72063d4ab914375c258e0dd",
+      "cardanoBinaryScriptHash": "17373cab06eae00e6fbf0d7f05f4a0c6b72063d4ab914375c258e0dd"
+    },
+    {
+      "id": "threshold-matrix/atleast-3-of-7",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-3-of-7.json",
+      "scriptHash": "70534083998f28cc64c3e6a1cbace6604142276fd5d0fd541146eceb",
+      "cardanoBinaryScriptHash": "70534083998f28cc64c3e6a1cbace6604142276fd5d0fd541146eceb"
+    },
+    {
+      "id": "threshold-matrix/atleast-4-of-3",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-4-of-3.json",
+      "scriptHash": "8b37f9c93e348bf6097730ecf622bde0aeb5a06a2fab50aa28d0157b",
+      "cardanoBinaryScriptHash": "8b37f9c93e348bf6097730ecf622bde0aeb5a06a2fab50aa28d0157b"
+    },
+    {
+      "id": "threshold-matrix/atleast-4-of-5",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-4-of-5.json",
+      "scriptHash": "9e3fd968b58c1b2ef5093bc339b10d78fb3415bf583c1c313cd3ceaa",
+      "cardanoBinaryScriptHash": "9e3fd968b58c1b2ef5093bc339b10d78fb3415bf583c1c313cd3ceaa"
+    },
+    {
+      "id": "threshold-matrix/atleast-4-of-7",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-4-of-7.json",
+      "scriptHash": "f67189fde45f311500c91a29817bfd76797f1f83d97165f856fdbdbd",
+      "cardanoBinaryScriptHash": "f67189fde45f311500c91a29817bfd76797f1f83d97165f856fdbdbd"
+    },
+    {
+      "id": "threshold-matrix/atleast-5-of-5",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-5-of-5.json",
+      "scriptHash": "cff9a016b500f95990c75b2ffe9d6009318cd359d7f09e925147f8e5",
+      "cardanoBinaryScriptHash": "cff9a016b500f95990c75b2ffe9d6009318cd359d7f09e925147f8e5"
+    },
+    {
+      "id": "threshold-matrix/atleast-5-of-7",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-5-of-7.json",
+      "scriptHash": "3f56f8d7fe257390a7f79e31604b2125f261ad1085abad750038ff4a",
+      "cardanoBinaryScriptHash": "3f56f8d7fe257390a7f79e31604b2125f261ad1085abad750038ff4a"
+    },
+    {
+      "id": "threshold-matrix/atleast-6-of-5",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-6-of-5.json",
+      "scriptHash": "b01fc38af0aa81397b2ca71ad6b4caaea8028e0159ef1edbbfd86516",
+      "cardanoBinaryScriptHash": "b01fc38af0aa81397b2ca71ad6b4caaea8028e0159ef1edbbfd86516"
+    },
+    {
+      "id": "threshold-matrix/atleast-6-of-7",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-6-of-7.json",
+      "scriptHash": "2a70a5f0a5cad8146af1c7ceca1e5924ba3e815bfc8f3b391b9b2f16",
+      "cardanoBinaryScriptHash": "2a70a5f0a5cad8146af1c7ceca1e5924ba3e815bfc8f3b391b9b2f16"
+    },
+    {
+      "id": "threshold-matrix/atleast-7-of-7",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-7-of-7.json",
+      "scriptHash": "36463e7e0ba21e690feeb68741aa586d6e3cfb10b1603bae41922bca",
+      "cardanoBinaryScriptHash": "36463e7e0ba21e690feeb68741aa586d6e3cfb10b1603bae41922bca"
+    },
+    {
+      "id": "threshold-matrix/atleast-8-of-7",
+      "family": "threshold-matrix",
+      "path": "threshold-matrix/atleast-8-of-7.json",
+      "scriptHash": "067b066e8be89e6c5fdb573d1d27569aede059ac91cb0f608ced3b88",
+      "cardanoBinaryScriptHash": "067b066e8be89e6c5fdb573d1d27569aede059ac91cb0f608ced3b88"
+    },
+    {
+      "id": "timelocks/after-only",
+      "family": "timelocks",
+      "path": "timelocks/after-only.json",
+      "scriptHash": "592fb0f9d8ed15c06858118d134d5c4b7c77320507810fee9ac2ddf9",
+      "cardanoBinaryScriptHash": "592fb0f9d8ed15c06858118d134d5c4b7c77320507810fee9ac2ddf9"
+    },
+    {
+      "id": "timelocks/any-timelock-nested",
+      "family": "timelocks",
+      "path": "timelocks/any-timelock-nested.json",
+      "scriptHash": "dabb71feb2f99d76c234d8cd9eb86d84302d64305c34e08705eb2de7",
+      "cardanoBinaryScriptHash": "dabb71feb2f99d76c234d8cd9eb86d84302d64305c34e08705eb2de7"
+    },
+    {
+      "id": "timelocks/before-only",
+      "family": "timelocks",
+      "path": "timelocks/before-only.json",
+      "scriptHash": "db10ec9b102875ad32661f3e168be007795152c68c811a0b82baecc1",
+      "cardanoBinaryScriptHash": "db10ec9b102875ad32661f3e168be007795152c68c811a0b82baecc1"
+    },
+    {
+      "id": "timelocks/inverted-window",
+      "family": "timelocks",
+      "path": "timelocks/inverted-window.json",
+      "scriptHash": "473570859a3412edabd6afd26a4cbf2001edb86216cea3d86e3296bb",
+      "cardanoBinaryScriptHash": "473570859a3412edabd6afd26a4cbf2001edb86216cea3d86e3296bb"
+    },
+    {
+      "id": "timelocks/sig-and-after",
+      "family": "timelocks",
+      "path": "timelocks/sig-and-after.json",
+      "scriptHash": "e607a3e4c3cc6f3e9445400fa4b62d6b62a6e644b1c97db9928500b3",
+      "cardanoBinaryScriptHash": "e607a3e4c3cc6f3e9445400fa4b62d6b62a6e644b1c97db9928500b3"
+    },
+    {
+      "id": "timelocks/sig-or-after",
+      "family": "timelocks",
+      "path": "timelocks/sig-or-after.json",
+      "scriptHash": "843486a38e4def23575130246c7555e2ee7c158990809e3fc2862b24",
+      "cardanoBinaryScriptHash": "843486a38e4def23575130246c7555e2ee7c158990809e3fc2862b24"
+    },
+    {
+      "id": "timelocks/window",
+      "family": "timelocks",
+      "path": "timelocks/window.json",
+      "scriptHash": "01d07a84cc65c3c36bcb74684cc3d4132a637c91603bbb86a81828c5",
+      "cardanoBinaryScriptHash": "01d07a84cc65c3c36bcb74684cc3d4132a637c91603bbb86a81828c5"
+    }
+  ]
+}

@@ -1,0 +1,331 @@
+{
+  "formatVersion": 2,
+  "id": "breadth/any-w020",
+  "family": "breadth",
+  "question": "How many sub-scripts fit in one container before the transaction exceeds its size limit?",
+  "params": {
+    "tag": "any",
+    "width": 20
+  },
+  "script": {
+    "type": "any",
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      },
+      {
+        "type": "sig",
+        "keyHash": "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      },
+      {
+        "type": "sig",
+        "keyHash": "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      },
+      {
+        "type": "sig",
+        "keyHash": "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c"
+      },
+      {
+        "type": "sig",
+        "keyHash": "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f"
+      },
+      {
+        "type": "sig",
+        "keyHash": "1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f467"
+      },
+      {
+        "type": "sig",
+        "keyHash": "cb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c"
+      },
+      {
+        "type": "sig",
+        "keyHash": "9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f"
+      },
+      {
+        "type": "sig",
+        "keyHash": "e21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d7072"
+      },
+      {
+        "type": "sig",
+        "keyHash": "f36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d"
+      },
+      {
+        "type": "sig",
+        "keyHash": "528b42d3b627145a9f25a19dee1024bd7aa9da063ac2eb22db57c3ab"
+      },
+      {
+        "type": "sig",
+        "keyHash": "aafbf8f5fc8f69c4408ade158b80ee3b91d322a813d1abd9fc65862d"
+      },
+      {
+        "type": "sig",
+        "keyHash": "b27f2d6dbdb93b77b8fc0d19fde4df469df37c10bf7ef62eb46b518e"
+      },
+      {
+        "type": "sig",
+        "keyHash": "dd283e4a1af2e1f2e84b857f306a6c1710716a2b80dafc7f84a0c9bf"
+      },
+      {
+        "type": "sig",
+        "keyHash": "48ca42e55165ecefdd446b529315a1b140624526d6c1864e80c69510"
+      },
+      {
+        "type": "sig",
+        "keyHash": "cea7b613dc970b61f06282e76c1172d37d88daca7934c4f5afffff8d"
+      },
+      {
+        "type": "sig",
+        "keyHash": "f93597a7c9f992eba58e606e77d3663386a625c1b8691fea1824ed8e"
+      },
+      {
+        "type": "sig",
+        "keyHash": "de6920e339180754eae83c939611724319e6bb27f72bf6f8c682458f"
+      },
+      {
+        "type": "sig",
+        "keyHash": "29a7e61294907264c6274b8e0a65daae1ab56bf4e1b485083db0439f"
+      },
+      {
+        "type": "sig",
+        "keyHash": "9e5a49efbbc278f10c897376cb64df014e28f18d9435c234fa4a3d10"
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 21,
+    "sigCount": 20,
+    "keyHashes": [
+      "1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f467",
+      "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+      "29a7e61294907264c6274b8e0a65daae1ab56bf4e1b485083db0439f",
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+      "48ca42e55165ecefdd446b529315a1b140624526d6c1864e80c69510",
+      "528b42d3b627145a9f25a19dee1024bd7aa9da063ac2eb22db57c3ab",
+      "9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f",
+      "9e5a49efbbc278f10c897376cb64df014e28f18d9435c234fa4a3d10",
+      "aafbf8f5fc8f69c4408ade158b80ee3b91d322a813d1abd9fc65862d",
+      "b27f2d6dbdb93b77b8fc0d19fde4df469df37c10bf7ef62eb46b518e",
+      "cb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c",
+      "cea7b613dc970b61f06282e76c1172d37d88daca7934c4f5afffff8d",
+      "dd283e4a1af2e1f2e84b857f306a6c1710716a2b80dafc7f84a0c9bf",
+      "de6920e339180754eae83c939611724319e6bb27f72bf6f8c682458f",
+      "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "e21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d7072",
+      "f36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d",
+      "f93597a7c9f992eba58e606e77d3663386a625c1b8691fea1824ed8e",
+      "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 20,
+    "containerCounts": {
+      "all": 0,
+      "any": 1,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "8202948200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f8200581c1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f4678200581ccb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c8200581c9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f8200581ce21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d70728200581cf36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d8200581c528b42d3b627145a9f25a19dee1024bd7aa9da063ac2eb22db57c3ab8200581caafbf8f5fc8f69c4408ade158b80ee3b91d322a813d1abd9fc65862d8200581cb27f2d6dbdb93b77b8fc0d19fde4df469df37c10bf7ef62eb46b518e8200581cdd283e4a1af2e1f2e84b857f306a6c1710716a2b80dafc7f84a0c9bf8200581c48ca42e55165ecefdd446b529315a1b140624526d6c1864e80c695108200581ccea7b613dc970b61f06282e76c1172d37d88daca7934c4f5afffff8d8200581cf93597a7c9f992eba58e606e77d3663386a625c1b8691fea1824ed8e8200581cde6920e339180754eae83c939611724319e6bb27f72bf6f8c682458f8200581c29a7e61294907264c6274b8e0a65daae1ab56bf4e1b485083db0439f8200581c9e5a49efbbc278f10c897376cb64df014e28f18d9435c234fa4a3d10",
+      "preimageHex": "008202948200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f8200581c1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f4678200581ccb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c8200581c9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f8200581ce21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d70728200581cf36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d8200581c528b42d3b627145a9f25a19dee1024bd7aa9da063ac2eb22db57c3ab8200581caafbf8f5fc8f69c4408ade158b80ee3b91d322a813d1abd9fc65862d8200581cb27f2d6dbdb93b77b8fc0d19fde4df469df37c10bf7ef62eb46b518e8200581cdd283e4a1af2e1f2e84b857f306a6c1710716a2b80dafc7f84a0c9bf8200581c48ca42e55165ecefdd446b529315a1b140624526d6c1864e80c695108200581ccea7b613dc970b61f06282e76c1172d37d88daca7934c4f5afffff8d8200581cf93597a7c9f992eba58e606e77d3663386a625c1b8691fea1824ed8e8200581cde6920e339180754eae83c939611724319e6bb27f72bf6f8c682458f8200581c29a7e61294907264c6274b8e0a65daae1ab56bf4e1b485083db0439f8200581c9e5a49efbbc278f10c897376cb64df014e28f18d9435c234fa4a3d10",
+      "scriptHash": "ae0c309ce1a425fa49563c7d7919b7cc87786463a11bde3c7a6c244c",
+      "cborBytes": 643
+    },
+    "cardanoBinary": {
+      "cborHex": "8202948200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f8200581c1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f4678200581ccb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c8200581c9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f8200581ce21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d70728200581cf36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d8200581c528b42d3b627145a9f25a19dee1024bd7aa9da063ac2eb22db57c3ab8200581caafbf8f5fc8f69c4408ade158b80ee3b91d322a813d1abd9fc65862d8200581cb27f2d6dbdb93b77b8fc0d19fde4df469df37c10bf7ef62eb46b518e8200581cdd283e4a1af2e1f2e84b857f306a6c1710716a2b80dafc7f84a0c9bf8200581c48ca42e55165ecefdd446b529315a1b140624526d6c1864e80c695108200581ccea7b613dc970b61f06282e76c1172d37d88daca7934c4f5afffff8d8200581cf93597a7c9f992eba58e606e77d3663386a625c1b8691fea1824ed8e8200581cde6920e339180754eae83c939611724319e6bb27f72bf6f8c682458f8200581c29a7e61294907264c6274b8e0a65daae1ab56bf4e1b485083db0439f8200581c9e5a49efbbc278f10c897376cb64df014e28f18d9435c234fa4a3d10",
+      "preimageHex": "008202948200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f8200581c1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f4678200581ccb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c8200581c9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f8200581ce21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d70728200581cf36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d8200581c528b42d3b627145a9f25a19dee1024bd7aa9da063ac2eb22db57c3ab8200581caafbf8f5fc8f69c4408ade158b80ee3b91d322a813d1abd9fc65862d8200581cb27f2d6dbdb93b77b8fc0d19fde4df469df37c10bf7ef62eb46b518e8200581cdd283e4a1af2e1f2e84b857f306a6c1710716a2b80dafc7f84a0c9bf8200581c48ca42e55165ecefdd446b529315a1b140624526d6c1864e80c695108200581ccea7b613dc970b61f06282e76c1172d37d88daca7934c4f5afffff8d8200581cf93597a7c9f992eba58e606e77d3663386a625c1b8691fea1824ed8e8200581cde6920e339180754eae83c939611724319e6bb27f72bf6f8c682458f8200581c29a7e61294907264c6274b8e0a65daae1ab56bf4e1b485083db0439f8200581c9e5a49efbbc278f10c897376cb64df014e28f18d9435c234fa4a3d10",
+      "scriptHash": "ae0c309ce1a425fa49563c7d7919b7cc87786463a11bde3c7a6c244c",
+      "cborBytes": 643
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1wxhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqd2pszj",
+        "preview": "addr_test1wzhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqkz4vdh",
+        "preprod": "addr_test1wzhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqkz4vdh"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xxhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgn9wpscfecdyyhayj43u04u3nd7vsauxgcapr00rc7nvy3xqf6nr9h",
+        "preview": "addr_test1xzhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgn9wpscfecdyyhayj43u04u3nd7vsauxgcapr00rc7nvy3xq2vwrfg",
+        "preprod": "addr_test1xzhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgn9wpscfecdyyhayj43u04u3nd7vsauxgcapr00rc7nvy3xq2vwrfg"
+      },
+      "reward": {
+        "mainnet": "stake17xhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnq3qpk7q",
+        "preview": "stake_test17zhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqk2t56a",
+        "preprod": "stake_test17zhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqk2t56a"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ywhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqv3ddtg",
+          "cip105": "drep_script14cxrp88p5sjl5j2k837hjxdhejrhserr5ydau0r6dsjyc4dqc2c"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zwhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqgetmzv",
+          "cip105": "cc_cold_script14cxrp88p5sjl5j2k837hjxdhejrhserr5ydau0r6dsjyctyhw6z"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qwhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnq79l8c9",
+          "cip105": "cc_hot_script14cxrp88p5sjl5j2k837hjxdhejrhserr5ydau0r6dsjyc0623cf"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1wxhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqd2pszj",
+        "preview": "addr_test1wzhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqkz4vdh",
+        "preprod": "addr_test1wzhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqkz4vdh"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xxhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgn9wpscfecdyyhayj43u04u3nd7vsauxgcapr00rc7nvy3xqf6nr9h",
+        "preview": "addr_test1xzhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgn9wpscfecdyyhayj43u04u3nd7vsauxgcapr00rc7nvy3xq2vwrfg",
+        "preprod": "addr_test1xzhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgn9wpscfecdyyhayj43u04u3nd7vsauxgcapr00rc7nvy3xq2vwrfg"
+      },
+      "reward": {
+        "mainnet": "stake17xhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnq3qpk7q",
+        "preview": "stake_test17zhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqk2t56a",
+        "preprod": "stake_test17zhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqk2t56a"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ywhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqv3ddtg",
+          "cip105": "drep_script14cxrp88p5sjl5j2k837hjxdhejrhserr5ydau0r6dsjyc4dqc2c"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zwhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnqgetmzv",
+          "cip105": "cc_cold_script14cxrp88p5sjl5j2k837hjxdhejrhserr5ydau0r6dsjyctyhw6z"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qwhqcvyuuxjzt7jf2c7867geklxgw7ryvws3hh3u0fkzgnq79l8c9",
+          "cip105": "cc_hot_script14cxrp88p5sjl5j2k837hjxdhejrhserr5ydau0r6dsjyc0623cf"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "none of 20 sub-scripts satisfied"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f467"
+      ],
+      "expected": true,
+      "expectedReason": "1 of 20 sub-scripts satisfied"
+    },
+    {
+      "id": "19@unbounded",
+      "signers": [
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": true,
+      "expectedReason": "1 of 20 sub-scripts satisfied"
+    },
+    {
+      "id": "0+1@unbounded",
+      "signers": [
+        "1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f467",
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 20 sub-scripts satisfied"
+    },
+    {
+      "id": "18+19@unbounded",
+      "signers": [
+        "f93597a7c9f992eba58e606e77d3663386a625c1b8691fea1824ed8e",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 20 sub-scripts satisfied"
+    },
+    {
+      "id": "0+1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18@unbounded",
+      "signers": [
+        "1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f467",
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "29a7e61294907264c6274b8e0a65daae1ab56bf4e1b485083db0439f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "48ca42e55165ecefdd446b529315a1b140624526d6c1864e80c69510",
+        "528b42d3b627145a9f25a19dee1024bd7aa9da063ac2eb22db57c3ab",
+        "9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f",
+        "9e5a49efbbc278f10c897376cb64df014e28f18d9435c234fa4a3d10",
+        "aafbf8f5fc8f69c4408ade158b80ee3b91d322a813d1abd9fc65862d",
+        "b27f2d6dbdb93b77b8fc0d19fde4df469df37c10bf7ef62eb46b518e",
+        "cb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c",
+        "cea7b613dc970b61f06282e76c1172d37d88daca7934c4f5afffff8d",
+        "dd283e4a1af2e1f2e84b857f306a6c1710716a2b80dafc7f84a0c9bf",
+        "de6920e339180754eae83c939611724319e6bb27f72bf6f8c682458f",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "e21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d7072",
+        "f36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d",
+        "f93597a7c9f992eba58e606e77d3663386a625c1b8691fea1824ed8e"
+      ],
+      "expected": true,
+      "expectedReason": "19 of 20 sub-scripts satisfied"
+    },
+    {
+      "id": "1+2+3+4+5+6+7+8+9+10+11+12+13+14+15+16+17+18+19@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "29a7e61294907264c6274b8e0a65daae1ab56bf4e1b485083db0439f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "48ca42e55165ecefdd446b529315a1b140624526d6c1864e80c69510",
+        "528b42d3b627145a9f25a19dee1024bd7aa9da063ac2eb22db57c3ab",
+        "9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f",
+        "9e5a49efbbc278f10c897376cb64df014e28f18d9435c234fa4a3d10",
+        "aafbf8f5fc8f69c4408ade158b80ee3b91d322a813d1abd9fc65862d",
+        "b27f2d6dbdb93b77b8fc0d19fde4df469df37c10bf7ef62eb46b518e",
+        "cb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c",
+        "cea7b613dc970b61f06282e76c1172d37d88daca7934c4f5afffff8d",
+        "dd283e4a1af2e1f2e84b857f306a6c1710716a2b80dafc7f84a0c9bf",
+        "de6920e339180754eae83c939611724319e6bb27f72bf6f8c682458f",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "e21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d7072",
+        "f36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d",
+        "f93597a7c9f992eba58e606e77d3663386a625c1b8691fea1824ed8e",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": true,
+      "expectedReason": "19 of 20 sub-scripts satisfied"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "1615544ffb8c04de74512311bef148ebbdbe868ffe5ab8577fc4f467",
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "29a7e61294907264c6274b8e0a65daae1ab56bf4e1b485083db0439f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "48ca42e55165ecefdd446b529315a1b140624526d6c1864e80c69510",
+        "528b42d3b627145a9f25a19dee1024bd7aa9da063ac2eb22db57c3ab",
+        "9a3601fbcce74e217a3a18ae57836826887e85ed63d5cd3e3f5f102f",
+        "9e5a49efbbc278f10c897376cb64df014e28f18d9435c234fa4a3d10",
+        "aafbf8f5fc8f69c4408ade158b80ee3b91d322a813d1abd9fc65862d",
+        "b27f2d6dbdb93b77b8fc0d19fde4df469df37c10bf7ef62eb46b518e",
+        "cb159f2f7b81e0ca51cd5929d936cb5c047992f92de598908d71774c",
+        "cea7b613dc970b61f06282e76c1172d37d88daca7934c4f5afffff8d",
+        "dd283e4a1af2e1f2e84b857f306a6c1710716a2b80dafc7f84a0c9bf",
+        "de6920e339180754eae83c939611724319e6bb27f72bf6f8c682458f",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "e21bf31f5687440ccc218e7badd1ec00dc954f971ed9d6befa3d7072",
+        "f36dfd62bfd7ef42fec97713df4ce5b82663f1759a2a2f6ddb14656d",
+        "f93597a7c9f992eba58e606e77d3663386a625c1b8691fea1824ed8e",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": true,
+      "expectedReason": "20 of 20 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

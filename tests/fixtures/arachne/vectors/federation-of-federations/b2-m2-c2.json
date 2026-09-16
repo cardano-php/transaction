@@ -1,0 +1,293 @@
+{
+  "formatVersion": 2,
+  "id": "federation-of-federations/b2-m2-c2",
+  "family": "federation-of-federations",
+  "question": "Does a three-level threshold hierarchy evaluate level by level, and how large is one before it stops fitting?",
+  "params": {
+    "blocs": 2,
+    "members": 2,
+    "cohort": 2
+  },
+  "script": {
+    "type": "atLeast",
+    "required": 2,
+    "scripts": [
+      {
+        "type": "atLeast",
+        "required": 2,
+        "scripts": [
+          {
+            "type": "atLeast",
+            "required": 2,
+            "scripts": [
+              {
+                "type": "sig",
+                "keyHash": "e78904c34f8b22f243f79b1e8ac50d8e80c0f3bc4e5ae602e887652d"
+              },
+              {
+                "type": "sig",
+                "keyHash": "32f28c577c2039162cc30470245dfc7b17af507ab6d7f5d0cf2e7c78"
+              }
+            ]
+          },
+          {
+            "type": "atLeast",
+            "required": 2,
+            "scripts": [
+              {
+                "type": "sig",
+                "keyHash": "dced67c0691a0e3e76af4023a8ba140cf6b1a451c1e6935ead141dcd"
+              },
+              {
+                "type": "sig",
+                "keyHash": "4851f5b566e84de04240bc41c03e4dd853140f9184aa8d021457292d"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "atLeast",
+        "required": 2,
+        "scripts": [
+          {
+            "type": "atLeast",
+            "required": 2,
+            "scripts": [
+              {
+                "type": "sig",
+                "keyHash": "ac117005ad2dd92b226b8a986e1724438e745bb890aaef45ed3d65de"
+              },
+              {
+                "type": "sig",
+                "keyHash": "f05629a219070b4db7aa171df1953ce15955cf232678405b5954f9ea"
+              }
+            ]
+          },
+          {
+            "type": "atLeast",
+            "required": 2,
+            "scripts": [
+              {
+                "type": "sig",
+                "keyHash": "c21cc401906fc37e6626686f69df23a327c5a5cc07a781439c4544bc"
+              },
+              {
+                "type": "sig",
+                "keyHash": "4a5586d729c0f47e4bf6396bfc14391f568ca72790e0a9bda7703195"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "depth": 4,
+    "nodeCount": 15,
+    "sigCount": 8,
+    "keyHashes": [
+      "32f28c577c2039162cc30470245dfc7b17af507ab6d7f5d0cf2e7c78",
+      "4851f5b566e84de04240bc41c03e4dd853140f9184aa8d021457292d",
+      "4a5586d729c0f47e4bf6396bfc14391f568ca72790e0a9bda7703195",
+      "ac117005ad2dd92b226b8a986e1724438e745bb890aaef45ed3d65de",
+      "c21cc401906fc37e6626686f69df23a327c5a5cc07a781439c4544bc",
+      "dced67c0691a0e3e76af4023a8ba140cf6b1a451c1e6935ead141dcd",
+      "e78904c34f8b22f243f79b1e8ac50d8e80c0f3bc4e5ae602e887652d",
+      "f05629a219070b4db7aa171df1953ce15955cf232678405b5954f9ea"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 2,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 7
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "8303028283030282830302828200581ce78904c34f8b22f243f79b1e8ac50d8e80c0f3bc4e5ae602e887652d8200581c32f28c577c2039162cc30470245dfc7b17af507ab6d7f5d0cf2e7c78830302828200581cdced67c0691a0e3e76af4023a8ba140cf6b1a451c1e6935ead141dcd8200581c4851f5b566e84de04240bc41c03e4dd853140f9184aa8d021457292d83030282830302828200581cac117005ad2dd92b226b8a986e1724438e745bb890aaef45ed3d65de8200581cf05629a219070b4db7aa171df1953ce15955cf232678405b5954f9ea830302828200581cc21cc401906fc37e6626686f69df23a327c5a5cc07a781439c4544bc8200581c4a5586d729c0f47e4bf6396bfc14391f568ca72790e0a9bda7703195",
+      "preimageHex": "008303028283030282830302828200581ce78904c34f8b22f243f79b1e8ac50d8e80c0f3bc4e5ae602e887652d8200581c32f28c577c2039162cc30470245dfc7b17af507ab6d7f5d0cf2e7c78830302828200581cdced67c0691a0e3e76af4023a8ba140cf6b1a451c1e6935ead141dcd8200581c4851f5b566e84de04240bc41c03e4dd853140f9184aa8d021457292d83030282830302828200581cac117005ad2dd92b226b8a986e1724438e745bb890aaef45ed3d65de8200581cf05629a219070b4db7aa171df1953ce15955cf232678405b5954f9ea830302828200581cc21cc401906fc37e6626686f69df23a327c5a5cc07a781439c4544bc8200581c4a5586d729c0f47e4bf6396bfc14391f568ca72790e0a9bda7703195",
+      "scriptHash": "4486eb437417e927a880745d0502fe1b6cf2589d5781a53c1ff5d3c5",
+      "cborBytes": 284
+    },
+    "cardanoBinary": {
+      "cborHex": "8303028283030282830302828200581ce78904c34f8b22f243f79b1e8ac50d8e80c0f3bc4e5ae602e887652d8200581c32f28c577c2039162cc30470245dfc7b17af507ab6d7f5d0cf2e7c78830302828200581cdced67c0691a0e3e76af4023a8ba140cf6b1a451c1e6935ead141dcd8200581c4851f5b566e84de04240bc41c03e4dd853140f9184aa8d021457292d83030282830302828200581cac117005ad2dd92b226b8a986e1724438e745bb890aaef45ed3d65de8200581cf05629a219070b4db7aa171df1953ce15955cf232678405b5954f9ea830302828200581cc21cc401906fc37e6626686f69df23a327c5a5cc07a781439c4544bc8200581c4a5586d729c0f47e4bf6396bfc14391f568ca72790e0a9bda7703195",
+      "preimageHex": "008303028283030282830302828200581ce78904c34f8b22f243f79b1e8ac50d8e80c0f3bc4e5ae602e887652d8200581c32f28c577c2039162cc30470245dfc7b17af507ab6d7f5d0cf2e7c78830302828200581cdced67c0691a0e3e76af4023a8ba140cf6b1a451c1e6935ead141dcd8200581c4851f5b566e84de04240bc41c03e4dd853140f9184aa8d021457292d83030282830302828200581cac117005ad2dd92b226b8a986e1724438e745bb890aaef45ed3d65de8200581cf05629a219070b4db7aa171df1953ce15955cf232678405b5954f9ea830302828200581cc21cc401906fc37e6626686f69df23a327c5a5cc07a781439c4544bc8200581c4a5586d729c0f47e4bf6396bfc14391f568ca72790e0a9bda7703195",
+      "scriptHash": "4486eb437417e927a880745d0502fe1b6cf2589d5781a53c1ff5d3c5",
+      "cborBytes": 284
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w9zgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83gxmtpg8",
+        "preview": "addr_test1wpzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83ganla8z",
+        "preprod": "addr_test1wpzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83ganla8z"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9zgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a832ysm45xaqhayn63qr5t5zs9lsmdne9382hsxjnc8l460zspq09lr",
+        "preview": "addr_test1xpzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a832ysm45xaqhayn63qr5t5zs9lsmdne9382hsxjnc8l460zszkj9nu",
+        "preprod": "addr_test1xpzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a832ysm45xaqhayn63qr5t5zs9lsmdne9382hsxjnc8l460zszkj9nu"
+      },
+      "reward": {
+        "mainnet": "stake179zgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83g63t854",
+        "preview": "stake_test17pzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83gamp9sg",
+        "preprod": "stake_test17pzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83gamp9sg"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83g8q8upa",
+          "cip105": "drep_script1gjrwksm5zl5j02yqw3ws2qh7rdk0ykya27q620ql7hfu2m9mxy7"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83grgp2ge",
+          "cip105": "cc_cold_script1gjrwksm5zl5j02yqw3ws2qh7rdk0ykya27q620ql7hfu29vvs5y"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83g454kjs",
+          "cip105": "cc_hot_script1gjrwksm5zl5j02yqw3ws2qh7rdk0ykya27q620ql7hfu2pj30k0"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w9zgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83gxmtpg8",
+        "preview": "addr_test1wpzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83ganla8z",
+        "preprod": "addr_test1wpzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83ganla8z"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9zgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a832ysm45xaqhayn63qr5t5zs9lsmdne9382hsxjnc8l460zspq09lr",
+        "preview": "addr_test1xpzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a832ysm45xaqhayn63qr5t5zs9lsmdne9382hsxjnc8l460zszkj9nu",
+        "preprod": "addr_test1xpzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a832ysm45xaqhayn63qr5t5zs9lsmdne9382hsxjnc8l460zszkj9nu"
+      },
+      "reward": {
+        "mainnet": "stake179zgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83g63t854",
+        "preview": "stake_test17pzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83gamp9sg",
+        "preprod": "stake_test17pzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83gamp9sg"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83g8q8upa",
+          "cip105": "drep_script1gjrwksm5zl5j02yqw3ws2qh7rdk0ykya27q620ql7hfu2m9mxy7"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83grgp2ge",
+          "cip105": "cc_cold_script1gjrwksm5zl5j02yqw3ws2qh7rdk0ykya27q620ql7hfu29vvs5y"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdzgd66rwst7jfagsp696pgzlcdkeujcn4tcrffurl6a83g454kjs",
+          "cip105": "cc_hot_script1gjrwksm5zl5j02yqw3ws2qh7rdk0ykya27q620ql7hfu2pj30k0"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "0 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "32f28c577c2039162cc30470245dfc7b17af507ab6d7f5d0cf2e7c78"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "7@unbounded",
+      "signers": [
+        "f05629a219070b4db7aa171df1953ce15955cf232678405b5954f9ea"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1@unbounded",
+      "signers": [
+        "32f28c577c2039162cc30470245dfc7b17af507ab6d7f5d0cf2e7c78",
+        "4851f5b566e84de04240bc41c03e4dd853140f9184aa8d021457292d"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "6+7@unbounded",
+      "signers": [
+        "e78904c34f8b22f243f79b1e8ac50d8e80c0f3bc4e5ae602e887652d",
+        "f05629a219070b4db7aa171df1953ce15955cf232678405b5954f9ea"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1+2@unbounded",
+      "signers": [
+        "32f28c577c2039162cc30470245dfc7b17af507ab6d7f5d0cf2e7c78",
+        "4851f5b566e84de04240bc41c03e4dd853140f9184aa8d021457292d",
+        "4a5586d729c0f47e4bf6396bfc14391f568ca72790e0a9bda7703195"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "5+6+7@unbounded",
+      "signers": [
+        "dced67c0691a0e3e76af4023a8ba140cf6b1a451c1e6935ead141dcd",
+        "e78904c34f8b22f243f79b1e8ac50d8e80c0f3bc4e5ae602e887652d",
+        "f05629a219070b4db7aa171df1953ce15955cf232678405b5954f9ea"
+      ],
+      "expected": false,
+      "expectedReason": "0 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "0+1+2+3+4+5+6@unbounded",
+      "signers": [
+        "32f28c577c2039162cc30470245dfc7b17af507ab6d7f5d0cf2e7c78",
+        "4851f5b566e84de04240bc41c03e4dd853140f9184aa8d021457292d",
+        "4a5586d729c0f47e4bf6396bfc14391f568ca72790e0a9bda7703195",
+        "ac117005ad2dd92b226b8a986e1724438e745bb890aaef45ed3d65de",
+        "c21cc401906fc37e6626686f69df23a327c5a5cc07a781439c4544bc",
+        "dced67c0691a0e3e76af4023a8ba140cf6b1a451c1e6935ead141dcd",
+        "e78904c34f8b22f243f79b1e8ac50d8e80c0f3bc4e5ae602e887652d"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "1+2+3+4+5+6+7@unbounded",
+      "signers": [
+        "4851f5b566e84de04240bc41c03e4dd853140f9184aa8d021457292d",
+        "4a5586d729c0f47e4bf6396bfc14391f568ca72790e0a9bda7703195",
+        "ac117005ad2dd92b226b8a986e1724438e745bb890aaef45ed3d65de",
+        "c21cc401906fc37e6626686f69df23a327c5a5cc07a781439c4544bc",
+        "dced67c0691a0e3e76af4023a8ba140cf6b1a451c1e6935ead141dcd",
+        "e78904c34f8b22f243f79b1e8ac50d8e80c0f3bc4e5ae602e887652d",
+        "f05629a219070b4db7aa171df1953ce15955cf232678405b5954f9ea"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts satisfied, 2 required"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "32f28c577c2039162cc30470245dfc7b17af507ab6d7f5d0cf2e7c78",
+        "4851f5b566e84de04240bc41c03e4dd853140f9184aa8d021457292d",
+        "4a5586d729c0f47e4bf6396bfc14391f568ca72790e0a9bda7703195",
+        "ac117005ad2dd92b226b8a986e1724438e745bb890aaef45ed3d65de",
+        "c21cc401906fc37e6626686f69df23a327c5a5cc07a781439c4544bc",
+        "dced67c0691a0e3e76af4023a8ba140cf6b1a451c1e6935ead141dcd",
+        "e78904c34f8b22f243f79b1e8ac50d8e80c0f3bc4e5ae602e887652d",
+        "f05629a219070b4db7aa171df1953ce15955cf232678405b5954f9ea"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 2 sub-scripts satisfied, 2 required"
+    }
+  ],
+  "onchain": []
+}

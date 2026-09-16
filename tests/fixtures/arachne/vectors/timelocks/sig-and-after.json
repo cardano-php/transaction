@@ -1,0 +1,284 @@
+{
+  "formatVersion": 2,
+  "id": "timelocks/sig-and-after",
+  "family": "timelocks",
+  "question": "Which timelock arrangements can a transaction actually satisfy, given that an absent interval bound fails rather than passes?",
+  "params": {
+    "shape": "sig-and-after"
+  },
+  "script": {
+    "type": "all",
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      },
+      {
+        "type": "after",
+        "slot": 1000
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 3,
+    "sigCount": 1,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+    ],
+    "timelockCount": 1,
+    "maxBreadth": 2,
+    "containerCounts": {
+      "all": 1,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "8201828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad26457071882041903e8",
+      "preimageHex": "008201828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad26457071882041903e8",
+      "scriptHash": "e607a3e4c3cc6f3e9445400fa4b62d6b62a6e644b1c97db9928500b3",
+      "cborBytes": 40
+    },
+    "cardanoBinary": {
+      "cborHex": "8201828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad26457071882041903e8",
+      "preimageHex": "008201828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad26457071882041903e8",
+      "scriptHash": "e607a3e4c3cc6f3e9445400fa4b62d6b62a6e644b1c97db9928500b3",
+      "cborBytes": 40
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w8nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvck6yt3r",
+        "preview": "addr_test1wrnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvcdjsh7x",
+        "preprod": "addr_test1wrnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvcdjsh7x"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvlxq737fs7vdulfg32qp7jtvtttv2nwv393e97mny59qzesd69wjq",
+        "preview": "addr_test1xrnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvlxq737fs7vdulfg32qp7jtvtttv2nwv393e97mny59qzeswvcw7l",
+        "preprod": "addr_test1xrnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvlxq737fs7vdulfg32qp7jtvtttv2nwv393e97mny59qzeswvcw7l"
+      },
+      "reward": {
+        "mainnet": "stake178nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvc2sydd3",
+        "preview": "stake_test17rnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvcd6w0fv",
+        "preprod": "stake_test17rnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvcd6w0fv"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvchpgkce",
+          "cip105": "drep_script1ucr68exre3hna9z9gq86fd3ddd32dejyk8yhmwvjs5qtxyleayu"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvcnfwq3a",
+          "cip105": "cc_cold_script1ucr68exre3hna9z9gq86fd3ddd32dejyk8yhmwvjs5qtx6kwt5x"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvc946ut5",
+          "cip105": "cc_hot_script1ucr68exre3hna9z9gq86fd3ddd32dejyk8yhmwvjs5qtx7gn5kd"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w8nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvck6yt3r",
+        "preview": "addr_test1wrnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvcdjsh7x",
+        "preprod": "addr_test1wrnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvcdjsh7x"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvlxq737fs7vdulfg32qp7jtvtttv2nwv393e97mny59qzesd69wjq",
+        "preview": "addr_test1xrnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvlxq737fs7vdulfg32qp7jtvtttv2nwv393e97mny59qzeswvcw7l",
+        "preprod": "addr_test1xrnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvlxq737fs7vdulfg32qp7jtvtttv2nwv393e97mny59qzeswvcw7l"
+      },
+      "reward": {
+        "mainnet": "stake178nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvc2sydd3",
+        "preview": "stake_test17rnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvcd6w0fv",
+        "preprod": "stake_test17rnq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvcd6w0fv"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvchpgkce",
+          "cip105": "drep_script1ucr68exre3hna9z9gq86fd3ddd32dejyk8yhmwvjs5qtxyleayu"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvcnfwq3a",
+          "cip105": "cc_cold_script1ucr68exre3hna9z9gq86fd3ddd32dejyk8yhmwvjs5qtx6kwt5x"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0nq0glyc0xx7055g4qqlf9k944k9fhxgjcujldej2zspvc946ut5",
+          "cip105": "cc_hot_script1ucr68exre3hna9z9gq86fd3ddd32dejyk8yhmwvjs5qtx7gn5kd"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "2 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@start999",
+      "signers": [],
+      "validityStart": 999,
+      "expected": false,
+      "expectedReason": "2 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@end999",
+      "signers": [],
+      "validityEnd": 999,
+      "expected": false,
+      "expectedReason": "2 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@span999",
+      "signers": [],
+      "validityStart": 999,
+      "validityEnd": 999,
+      "expected": false,
+      "expectedReason": "2 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@start1000",
+      "signers": [],
+      "validityStart": 1000,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@end1000",
+      "signers": [],
+      "validityEnd": 1000,
+      "expected": false,
+      "expectedReason": "2 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@span1000",
+      "signers": [],
+      "validityStart": 1000,
+      "validityEnd": 1000,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@start1001",
+      "signers": [],
+      "validityStart": 1001,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@end1001",
+      "signers": [],
+      "validityEnd": 1001,
+      "expected": false,
+      "expectedReason": "2 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "none@span1001",
+      "signers": [],
+      "validityStart": 1001,
+      "validityEnd": 1001,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@start999",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "validityStart": 999,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@end999",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "validityEnd": 999,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@span999",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "validityStart": 999,
+      "validityEnd": 999,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@start1000",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "validityStart": 1000,
+      "expected": true,
+      "expectedReason": "all 2 sub-scripts satisfied"
+    },
+    {
+      "id": "all@end1000",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "validityEnd": 1000,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@span1000",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "validityStart": 1000,
+      "validityEnd": 1000,
+      "expected": true,
+      "expectedReason": "all 2 sub-scripts satisfied"
+    },
+    {
+      "id": "all@start1001",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "validityStart": 1001,
+      "expected": true,
+      "expectedReason": "all 2 sub-scripts satisfied"
+    },
+    {
+      "id": "all@end1001",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "validityEnd": 1001,
+      "expected": false,
+      "expectedReason": "1 of 2 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@span1001",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "validityStart": 1001,
+      "validityEnd": 1001,
+      "expected": true,
+      "expectedReason": "all 2 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

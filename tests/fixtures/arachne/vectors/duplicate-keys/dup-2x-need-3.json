@@ -1,0 +1,147 @@
+{
+  "formatVersion": 2,
+  "id": "duplicate-keys/dup-2x-need-3",
+  "family": "duplicate-keys",
+  "question": "Does a repeated key hash under one threshold count once or once per occurrence?",
+  "params": {
+    "copies": 2,
+    "k": 3
+  },
+  "script": {
+    "type": "atLeast",
+    "required": 3,
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      },
+      {
+        "type": "sig",
+        "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 3,
+    "sigCount": 2,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 2,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 1
+    }
+  },
+  "remarks": [
+    {
+      "path": "",
+      "code": "required-exceeds-children",
+      "detail": "required is 3 but only 2 sub-scripts exist, so it can never be satisfied."
+    },
+    {
+      "path": "",
+      "code": "duplicate-key-in-threshold",
+      "detail": "Key 3118644a appears more than once directly under a threshold, so one signature counts more than once toward required."
+    }
+  ],
+  "encoding": {
+    "definite": {
+      "cborHex": "830303828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "00830303828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "e0d219935319a37e83531b17a88e2135a818d2a8add6f16bca634418",
+      "cborBytes": 68
+    },
+    "cardanoBinary": {
+      "cborHex": "830303828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "00830303828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "e0d219935319a37e83531b17a88e2135a818d2a8add6f16bca634418",
+      "cborBytes": 68
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w8sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxq4zh7d5",
+        "preview": "addr_test1wrsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqw2rzz3",
+        "preprod": "addr_test1wrsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqw2rzz3"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gx8q6gvex5ce5dlgx5cmz75gugf44qvd929d6mckhjnrgsvqs4fxtg",
+        "preview": "addr_test1xrsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gx8q6gvex5ce5dlgx5cmz75gugf44qvd929d6mckhjnrgsvqnr5x8h",
+        "preprod": "addr_test1xrsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gx8q6gvex5ce5dlgx5cmz75gugf44qvd929d6mckhjnrgsvqnr5x8h"
+      },
+      "reward": {
+        "mainnet": "stake178sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqfghc3x",
+        "preview": "stake_test17rsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqwza64m",
+        "preprod": "stake_test17rsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqwza64m"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxq5emryw",
+          "cip105": "drep_script1urfpny6nrx3haq6nrvt63r3pxk5p354g4ht0z672vdzpslstcg2"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqs3a4d2",
+          "cip105": "cc_cold_script1urfpny6nrx3haq6nrvt63r3pxk5p354g4ht0z672vdzpspeuwcs"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqxdffhr",
+          "cip105": "cc_hot_script1urfpny6nrx3haq6nrvt63r3pxk5p354g4ht0z672vdzps98p36m"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w8sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxq4zh7d5",
+        "preview": "addr_test1wrsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqw2rzz3",
+        "preprod": "addr_test1wrsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqw2rzz3"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gx8q6gvex5ce5dlgx5cmz75gugf44qvd929d6mckhjnrgsvqs4fxtg",
+        "preview": "addr_test1xrsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gx8q6gvex5ce5dlgx5cmz75gugf44qvd929d6mckhjnrgsvqnr5x8h",
+        "preprod": "addr_test1xrsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gx8q6gvex5ce5dlgx5cmz75gugf44qvd929d6mckhjnrgsvqnr5x8h"
+      },
+      "reward": {
+        "mainnet": "stake178sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqfghc3x",
+        "preview": "stake_test17rsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqwza64m",
+        "preprod": "stake_test17rsdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqwza64m"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxq5emryw",
+          "cip105": "drep_script1urfpny6nrx3haq6nrvt63r3pxk5p354g4ht0z672vdzpslstcg2"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqs3a4d2",
+          "cip105": "cc_cold_script1urfpny6nrx3haq6nrvt63r3pxk5p354g4ht0z672vdzpspeuwcs"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0sdyxvn2vv6xl5r2vd302ywyy66sxxj4zkaduttef35gxqxdffhr",
+          "cip105": "cc_hot_script1urfpny6nrx3haq6nrvt63r3pxk5p354g4ht0z672vdzps98p36m"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "required is 3 but only 2 sub-scripts exist, unsatisfiable"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": false,
+      "expectedReason": "required is 3 but only 2 sub-scripts exist, unsatisfiable"
+    }
+  ],
+  "onchain": []
+}

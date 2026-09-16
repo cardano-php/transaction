@@ -1,0 +1,440 @@
+{
+  "formatVersion": 2,
+  "id": "breadth/all-w005",
+  "family": "breadth",
+  "question": "How many sub-scripts fit in one container before the transaction exceeds its size limit?",
+  "params": {
+    "tag": "all",
+    "width": 5
+  },
+  "script": {
+    "type": "all",
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      },
+      {
+        "type": "sig",
+        "keyHash": "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      },
+      {
+        "type": "sig",
+        "keyHash": "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      },
+      {
+        "type": "sig",
+        "keyHash": "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c"
+      },
+      {
+        "type": "sig",
+        "keyHash": "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f"
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 6,
+    "sigCount": 5,
+    "keyHashes": [
+      "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+      "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 5,
+    "containerCounts": {
+      "all": 1,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "8201858200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+      "preimageHex": "008201858200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+      "scriptHash": "c45a7da1c292b51d099d6ac589a00cc464f13d5c4f4f6b4f22f7ab74",
+      "cborBytes": 163
+    },
+    "cardanoBinary": {
+      "cborHex": "8201858200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+      "preimageHex": "008201858200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a038200581c3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c8200581c21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+      "scriptHash": "c45a7da1c292b51d099d6ac589a00cc464f13d5c4f4f6b4f22f7ab74",
+      "cborBytes": 163
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w8z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqrmswdt",
+        "preview": "addr_test1wrz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqcnyjzw",
+        "preprod": "addr_test1wrz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqcnyjzw"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaxytf76rs5jk5wsn8t2cky6qrxyvncn6hz0fa457ghh4d6qeqet7w",
+        "preview": "addr_test1xrz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaxytf76rs5jk5wsn8t2cky6qrxyvncn6hz0fa457ghh4d6q6kytj3",
+        "preprod": "addr_test1xrz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaxytf76rs5jk5wsn8t2cky6qrxyvncn6hz0fa457ghh4d6q6kytj3"
+      },
+      "reward": {
+        "mainnet": "stake178z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaql3sg3e",
+        "preview": "stake_test17rz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqcm624y",
+        "preprod": "stake_test17rz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqcm624y"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqzquny3",
+          "cip105": "drep_script1c3d8mgwzj2636zvadtzcngqvc3j0z02ufa8kknez774hgnlq5lr"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqxg69d4",
+          "cip105": "cc_cold_script1c3d8mgwzj2636zvadtzcngqvc3j0z02ufa8kknez774hgdkhz0e"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqs5wehu",
+          "cip105": "cc_hot_script1c3d8mgwzj2636zvadtzcngqvc3j0z02ufa8kknez774hgfg2adj"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w8z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqrmswdt",
+        "preview": "addr_test1wrz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqcnyjzw",
+        "preprod": "addr_test1wrz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqcnyjzw"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaxytf76rs5jk5wsn8t2cky6qrxyvncn6hz0fa457ghh4d6qeqet7w",
+        "preview": "addr_test1xrz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaxytf76rs5jk5wsn8t2cky6qrxyvncn6hz0fa457ghh4d6q6kytj3",
+        "preprod": "addr_test1xrz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaxytf76rs5jk5wsn8t2cky6qrxyvncn6hz0fa457ghh4d6q6kytj3"
+      },
+      "reward": {
+        "mainnet": "stake178z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaql3sg3e",
+        "preview": "stake_test17rz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqcm624y",
+        "preprod": "stake_test17rz95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqcm624y"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqzquny3",
+          "cip105": "drep_script1c3d8mgwzj2636zvadtzcngqvc3j0z02ufa8kknez774hgnlq5lr"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqxg69d4",
+          "cip105": "cc_cold_script1c3d8mgwzj2636zvadtzcngqvc3j0z02ufa8kknez774hgdkhz0e"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0z95ldpc2ft28gfn44vtzdqpnzxfufat3857660ytm6kaqs5wehu",
+          "cip105": "cc_hot_script1c3d8mgwzj2636zvadtzcngqvc3j0z02ufa8kknez774hgfg2adj"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "5 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f"
+      ],
+      "expected": false,
+      "expectedReason": "4 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "1@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": false,
+      "expectedReason": "4 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+1@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": false,
+      "expectedReason": "3 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "2@unbounded",
+      "signers": [
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c"
+      ],
+      "expected": false,
+      "expectedReason": "4 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+2@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c"
+      ],
+      "expected": false,
+      "expectedReason": "3 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "1+2@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c"
+      ],
+      "expected": false,
+      "expectedReason": "3 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+1+2@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c"
+      ],
+      "expected": false,
+      "expectedReason": "2 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "3@unbounded",
+      "signers": [
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "4 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+3@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "3 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "1+3@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "3 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+1+3@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "2 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "2+3@unbounded",
+      "signers": [
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "3 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+2+3@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "2 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "1+2+3@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "2 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+1+2+3@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "4@unbounded",
+      "signers": [
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "4 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+4@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "3 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "1+4@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "3 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+1+4@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "2 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "2+4@unbounded",
+      "signers": [
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "3 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+2+4@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "2 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "1+2+4@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "2 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+1+2+4@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "3+4@unbounded",
+      "signers": [
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "3 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+3+4@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "2 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "1+3+4@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "2 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+1+3+4@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "2+3+4@unbounded",
+      "signers": [
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "2 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "0+2+3+4@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "1+2+3+4@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "1 of 5 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "21e06870162d4678d0ed4b1fce2c92d6c0321a1d4716803a7d7fc64f",
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "3c344cd87d7582ed8c75405f3274d3f808a8c3d1e42f5dba5a19266c",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": true,
+      "expectedReason": "all 5 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

@@ -1,0 +1,201 @@
+{
+  "formatVersion": 2,
+  "id": "threshold-matrix/atleast-4-of-3",
+  "family": "threshold-matrix",
+  "question": "Does every k in 0..n+1 behave as the reference evaluator says, including the degenerate ends?",
+  "params": {
+    "n": 3,
+    "k": 4
+  },
+  "script": {
+    "type": "atLeast",
+    "required": 4,
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      },
+      {
+        "type": "sig",
+        "keyHash": "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      },
+      {
+        "type": "sig",
+        "keyHash": "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 4,
+    "sigCount": 3,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 3,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 1
+    }
+  },
+  "remarks": [
+    {
+      "path": "",
+      "code": "required-exceeds-children",
+      "detail": "required is 4 but only 3 sub-scripts exist, so it can never be satisfied."
+    }
+  ],
+  "encoding": {
+    "definite": {
+      "cborHex": "830304838200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03",
+      "preimageHex": "00830304838200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03",
+      "scriptHash": "8b37f9c93e348bf6097730ecf622bde0aeb5a06a2fab50aa28d0157b",
+      "cborBytes": 100
+    },
+    "cardanoBinary": {
+      "cborHex": "830304838200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03",
+      "preimageHex": "00830304838200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d8200581cfb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03",
+      "scriptHash": "8b37f9c93e348bf6097730ecf622bde0aeb5a06a2fab50aa28d0157b",
+      "cborBytes": 100
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1wx9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27c9urht2",
+        "preview": "addr_test1wz9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27c75hty0",
+        "preprod": "addr_test1wz9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27c75hty0"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xx9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27utxluuj03530mqjaesanmz900q4666q6304dg252xsz4asxn4qu5",
+        "preview": "addr_test1xz9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27utxluuj03530mqjaesanmz900q4666q6304dg252xsz4as99gqst",
+        "preprod": "addr_test1xz9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27utxluuj03530mqjaesanmz900q4666q6304dg252xsz4as99gqst"
+      },
+      "reward": {
+        "mainnet": "stake17x9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27cekr3hc",
+        "preview": "stake_test17z9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27c7ufnn9",
+        "preprod": "stake_test17z9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27c7ufnn9"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1yw9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27cy802zs",
+          "cip105": "drep_script13vmlnjf7xj9lvzthxrk0vg4auzhttgr29744p23g6q2hksela7c"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zw9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27cq0fut5",
+          "cip105": "cc_cold_script13vmlnjf7xj9lvzthxrk0vg4auzhttgr29744p23g6q2hkwsgtwz"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qw9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27cknaq3a",
+          "cip105": "cc_hot_script13vmlnjf7xj9lvzthxrk0vg4auzhttgr29744p23g6q2hk2w45vf"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1wx9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27c9urht2",
+        "preview": "addr_test1wz9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27c75hty0",
+        "preprod": "addr_test1wz9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27c75hty0"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xx9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27utxluuj03530mqjaesanmz900q4666q6304dg252xsz4asxn4qu5",
+        "preview": "addr_test1xz9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27utxluuj03530mqjaesanmz900q4666q6304dg252xsz4as99gqst",
+        "preprod": "addr_test1xz9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27utxluuj03530mqjaesanmz900q4666q6304dg252xsz4as99gqst"
+      },
+      "reward": {
+        "mainnet": "stake17x9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27cekr3hc",
+        "preview": "stake_test17z9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27c7ufnn9",
+        "preprod": "stake_test17z9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27c7ufnn9"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1yw9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27cy802zs",
+          "cip105": "drep_script13vmlnjf7xj9lvzthxrk0vg4auzhttgr29744p23g6q2hksela7c"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zw9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27cq0fut5",
+          "cip105": "cc_cold_script13vmlnjf7xj9lvzthxrk0vg4auzhttgr29744p23g6q2hkwsgtwz"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qw9n07wf8c6ghasfwucwea3zhhs2addqdgh6k5929rgp27cknaq3a",
+          "cip105": "cc_hot_script13vmlnjf7xj9lvzthxrk0vg4auzhttgr29744p23g6q2hk2w45vf"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "required is 4 but only 3 sub-scripts exist, unsatisfiable"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": false,
+      "expectedReason": "required is 4 but only 3 sub-scripts exist, unsatisfiable"
+    },
+    {
+      "id": "1@unbounded",
+      "signers": [
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "required is 4 but only 3 sub-scripts exist, unsatisfiable"
+    },
+    {
+      "id": "0+1@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": false,
+      "expectedReason": "required is 4 but only 3 sub-scripts exist, unsatisfiable"
+    },
+    {
+      "id": "2@unbounded",
+      "signers": [
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "required is 4 but only 3 sub-scripts exist, unsatisfiable"
+    },
+    {
+      "id": "0+2@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "required is 4 but only 3 sub-scripts exist, unsatisfiable"
+    },
+    {
+      "id": "1+2@unbounded",
+      "signers": [
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "required is 4 but only 3 sub-scripts exist, unsatisfiable"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+        "fb8252e9ec0fba2a5031d14922a62c76ebfbaea23f2f633694128a03"
+      ],
+      "expected": false,
+      "expectedReason": "required is 4 but only 3 sub-scripts exist, unsatisfiable"
+    }
+  ],
+  "onchain": []
+}

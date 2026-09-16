@@ -1,0 +1,153 @@
+{
+  "formatVersion": 2,
+  "id": "breadth/any-w002",
+  "family": "breadth",
+  "question": "How many sub-scripts fit in one container before the transaction exceeds its size limit?",
+  "params": {
+    "tag": "any",
+    "width": 2
+  },
+  "script": {
+    "type": "any",
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      },
+      {
+        "type": "sig",
+        "keyHash": "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 3,
+    "sigCount": 2,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 2,
+    "containerCounts": {
+      "all": 0,
+      "any": 1,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "8202828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "preimageHex": "008202828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "scriptHash": "9710fd775b5f02dc4ee89514c86135b9b611df482e815a28fe12ea18",
+      "cborBytes": 67
+    },
+    "cardanoBinary": {
+      "cborHex": "8202828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "preimageHex": "008202828200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad2645707188200581ce07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d",
+      "scriptHash": "9710fd775b5f02dc4ee89514c86135b9b611df482e815a28fe12ea18",
+      "cborBytes": 67
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1wxt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqrzh44h",
+        "preview": "addr_test1wzt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqc2rf6j",
+        "preprod": "addr_test1wzt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqc2rf6j"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xxt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xyhzr7hwk6lqtwya6y4znyxzddekcga7jpws9dz3lsjagvqqdwtkc",
+        "preview": "addr_test1xzt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xyhzr7hwk6lqtwya6y4znyxzddekcga7jpws9dz3lsjagvqrmnt68",
+        "preprod": "addr_test1xzt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xyhzr7hwk6lqtwya6y4znyxzddekcga7jpws9dz3lsjagvqrmnt68"
+      },
+      "reward": {
+        "mainnet": "stake17xt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqlghnf9",
+        "preview": "stake_test17zt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqcza3dc",
+        "preprod": "stake_test17zt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqcza3dc"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ywt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqzemgud",
+          "cip105": "drep_script1jug06a6mtupdcnhgj52vscf4hxmprh6g96q45287zt4psxrs0wf"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zwt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqx3a74f",
+          "cip105": "cc_cold_script1jug06a6mtupdcnhgj52vscf4hxmprh6g96q45287zt4psc28e7n"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qwt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqsdfz0q",
+          "cip105": "cc_hot_script1jug06a6mtupdcnhgj52vscf4hxmprh6g96q45287zt4psu56xuc"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1wxt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqrzh44h",
+        "preview": "addr_test1wzt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqc2rf6j",
+        "preprod": "addr_test1wzt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqc2rf6j"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xxt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xyhzr7hwk6lqtwya6y4znyxzddekcga7jpws9dz3lsjagvqqdwtkc",
+        "preview": "addr_test1xzt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xyhzr7hwk6lqtwya6y4znyxzddekcga7jpws9dz3lsjagvqrmnt68",
+        "preprod": "addr_test1xzt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xyhzr7hwk6lqtwya6y4znyxzddekcga7jpws9dz3lsjagvqrmnt68"
+      },
+      "reward": {
+        "mainnet": "stake17xt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqlghnf9",
+        "preview": "stake_test17zt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqcza3dc",
+        "preprod": "stake_test17zt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqcza3dc"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ywt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqzemgud",
+          "cip105": "drep_script1jug06a6mtupdcnhgj52vscf4hxmprh6g96q45287zt4psxrs0wf"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zwt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqx3a74f",
+          "cip105": "cc_cold_script1jug06a6mtupdcnhgj52vscf4hxmprh6g96q45287zt4psc28e7n"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qwt3plthtd0s9hzwaz23fjrpxkumvywlfqhgzk3glcfw5xqsdfz0q",
+          "cip105": "cc_hot_script1jug06a6mtupdcnhgj52vscf4hxmprh6g96q45287zt4psu56xuc"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "none of 2 sub-scripts satisfied"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": true,
+      "expectedReason": "1 of 2 sub-scripts satisfied"
+    },
+    {
+      "id": "1@unbounded",
+      "signers": [
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": true,
+      "expectedReason": "1 of 2 sub-scripts satisfied"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+        "e07caf4bf751495f75774ace30552441e4df84d141e5d1f5029cb04d"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 2 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

@@ -1,0 +1,205 @@
+{
+  "formatVersion": 2,
+  "id": "nest-alternating/alt-d016",
+  "family": "nest-alternating",
+  "question": "Does alternating container types change the depth at which a script stops working?",
+  "params": {
+    "depth": 16
+  },
+  "script": {
+    "type": "any",
+    "scripts": [
+      {
+        "type": "all",
+        "scripts": [
+          {
+            "type": "any",
+            "scripts": [
+              {
+                "type": "all",
+                "scripts": [
+                  {
+                    "type": "any",
+                    "scripts": [
+                      {
+                        "type": "all",
+                        "scripts": [
+                          {
+                            "type": "any",
+                            "scripts": [
+                              {
+                                "type": "all",
+                                "scripts": [
+                                  {
+                                    "type": "any",
+                                    "scripts": [
+                                      {
+                                        "type": "all",
+                                        "scripts": [
+                                          {
+                                            "type": "any",
+                                            "scripts": [
+                                              {
+                                                "type": "all",
+                                                "scripts": [
+                                                  {
+                                                    "type": "any",
+                                                    "scripts": [
+                                                      {
+                                                        "type": "all",
+                                                        "scripts": [
+                                                          {
+                                                            "type": "any",
+                                                            "scripts": [
+                                                              {
+                                                                "type": "all",
+                                                                "scripts": [
+                                                                  {
+                                                                    "type": "sig",
+                                                                    "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+                                                                  }
+                                                                ]
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "depth": 17,
+    "nodeCount": 17,
+    "sigCount": 1,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 1,
+    "containerCounts": {
+      "all": 8,
+      "any": 8,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "8202818201818202818201818202818201818202818201818202818201818202818201818202818201818202818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "008202818201818202818201818202818201818202818201818202818201818202818201818202818201818202818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "67635e59258feb528869e7bb895568b1c4632001c64d3e838c3c8a07",
+      "cborBytes": 80
+    },
+    "cardanoBinary": {
+      "cborHex": "8202818201818202818201818202818201818202818201818202818201818202818201818202818201818202818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "008202818201818202818201818202818201818202818201818202818201818202818201818202818201818202818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "67635e59258feb528869e7bb895568b1c4632001c64d3e838c3c8a07",
+      "cborBytes": 80
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w9nkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pcwx06z9",
+        "preview": "addr_test1wpnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pc4wmxdq",
+        "preprod": "addr_test1wpnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pc4wmxdq"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9nkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pm8vd09jfv0adfgs608hwy42693c33jqqwxf5lg8rpu3grs0vmvn2",
+        "preview": "addr_test1xpnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pm8vd09jfv0adfgs608hwy42693c33jqqwxf5lg8rpu3grsv6xvl4",
+        "preprod": "addr_test1xpnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pm8vd09jfv0adfgs608hwy42693c33jqqwxf5lg8rpu3grsv6xvl4"
+      },
+      "reward": {
+        "mainnet": "stake179nkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pcjv0u7h",
+        "preview": "stake_test17pnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pc4x9762",
+        "preprod": "stake_test17pnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pc4x9762"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pc0ar8tl",
+          "cip105": "drep_script1va34ukf93l449zrfu7acj4tgk8zxxgqpcexnaquv8j9qwpf3j2n"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pct493zm",
+          "cip105": "cc_cold_script1va34ukf93l449zrfu7acj4tgk8zxxgqpcexnaquv8j9qwlqxy6f"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pcaf3dcj",
+          "cip105": "cc_hot_script1va34ukf93l449zrfu7acj4tgk8zxxgqpcexnaquv8j9qwm7mmcz"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w9nkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pcwx06z9",
+        "preview": "addr_test1wpnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pc4wmxdq",
+        "preprod": "addr_test1wpnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pc4wmxdq"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9nkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pm8vd09jfv0adfgs608hwy42693c33jqqwxf5lg8rpu3grs0vmvn2",
+        "preview": "addr_test1xpnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pm8vd09jfv0adfgs608hwy42693c33jqqwxf5lg8rpu3grsv6xvl4",
+        "preprod": "addr_test1xpnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pm8vd09jfv0adfgs608hwy42693c33jqqwxf5lg8rpu3grsv6xvl4"
+      },
+      "reward": {
+        "mainnet": "stake179nkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pcjv0u7h",
+        "preview": "stake_test17pnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pc4x9762",
+        "preprod": "stake_test17pnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pc4x9762"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pc0ar8tl",
+          "cip105": "drep_script1va34ukf93l449zrfu7acj4tgk8zxxgqpcexnaquv8j9qwpf3j2n"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pct493zm",
+          "cip105": "cc_cold_script1va34ukf93l449zrfu7acj4tgk8zxxgqpcexnaquv8j9qwlqxy6f"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdnkxhjeyk87k55gd8nmhz24dzcugceqq8ry605r3s7g5pcaf3dcj",
+          "cip105": "cc_hot_script1va34ukf93l449zrfu7acj4tgk8zxxgqpcexnaquv8j9qwm7mmcz"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "none of 1 sub-scripts satisfied"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": true,
+      "expectedReason": "1 of 1 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

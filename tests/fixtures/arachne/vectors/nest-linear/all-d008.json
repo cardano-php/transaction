@@ -1,0 +1,166 @@
+{
+  "formatVersion": 2,
+  "id": "nest-linear/all-d008",
+  "family": "nest-linear",
+  "question": "How deeply can one container type nest before a node rejects the script or the transaction stops fitting?",
+  "params": {
+    "tag": "all",
+    "depth": 8
+  },
+  "script": {
+    "type": "all",
+    "scripts": [
+      {
+        "type": "all",
+        "scripts": [
+          {
+            "type": "all",
+            "scripts": [
+              {
+                "type": "all",
+                "scripts": [
+                  {
+                    "type": "all",
+                    "scripts": [
+                      {
+                        "type": "all",
+                        "scripts": [
+                          {
+                            "type": "all",
+                            "scripts": [
+                              {
+                                "type": "all",
+                                "scripts": [
+                                  {
+                                    "type": "sig",
+                                    "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "depth": 9,
+    "nodeCount": 9,
+    "sigCount": 1,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 1,
+    "containerCounts": {
+      "all": 8,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "8201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "008201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "7e17db0b07fc21ccc8f0e14206cfebd31dbb7db487af58c3c1f53a05",
+      "cborBytes": 56
+    },
+    "cardanoBinary": {
+      "cborHex": "8201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "008201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "7e17db0b07fc21ccc8f0e14206cfebd31dbb7db487af58c3c1f53a05",
+      "cborBytes": 56
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w9lp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgdjy7m2",
+        "preview": "addr_test1wplp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgk6sz50",
+        "preprod": "addr_test1wplp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgk6sz50"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9lp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pt7zldskpluy8xv3u8pggrvl67nrkahmdy84avv8s048gzs8syhu8",
+        "preview": "addr_test1xplp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pt7zldskpluy8xv3u8pggrvl67nrkahmdy84avv8s048gzsyxehsc",
+        "preprod": "addr_test1xplp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pt7zldskpluy8xv3u8pggrvl67nrkahmdy84avv8s048gzsyxehsc"
+      },
+      "reward": {
+        "mainnet": "stake179lp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pg3cyc8c",
+        "preview": "stake_test17plp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgkjw6r9",
+        "preprod": "stake_test17plp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgkjw6r9"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydlp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgvfgrjs",
+          "cip105": "drep_script10ctakzc8lssuej8su9pqdnlt6vwmkld5s7h43s7p75aq24lalrt"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdlp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pggpw4m5",
+          "cip105": "cc_cold_script10ctakzc8lssuej8su9pqdnlt6vwmkld5s7h43s7p75aq2tk2fn3"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdlp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pg7a6fpa",
+          "cip105": "cc_hot_script10ctakzc8lssuej8su9pqdnlt6vwmkld5s7h43s7p75aq20ghk36"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w9lp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgdjy7m2",
+        "preview": "addr_test1wplp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgk6sz50",
+        "preprod": "addr_test1wplp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgk6sz50"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9lp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pt7zldskpluy8xv3u8pggrvl67nrkahmdy84avv8s048gzs8syhu8",
+        "preview": "addr_test1xplp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pt7zldskpluy8xv3u8pggrvl67nrkahmdy84avv8s048gzsyxehsc",
+        "preprod": "addr_test1xplp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pt7zldskpluy8xv3u8pggrvl67nrkahmdy84avv8s048gzsyxehsc"
+      },
+      "reward": {
+        "mainnet": "stake179lp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pg3cyc8c",
+        "preview": "stake_test17plp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgkjw6r9",
+        "preprod": "stake_test17plp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgkjw6r9"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydlp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pgvfgrjs",
+          "cip105": "drep_script10ctakzc8lssuej8su9pqdnlt6vwmkld5s7h43s7p75aq24lalrt"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdlp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pggpw4m5",
+          "cip105": "cc_cold_script10ctakzc8lssuej8su9pqdnlt6vwmkld5s7h43s7p75aq2tk2fn3"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdlp0kctql7zrnxg7rs5ypk0a0f3mwmakjr67kxrc86n5pg7a6fpa",
+          "cip105": "cc_hot_script10ctakzc8lssuej8su9pqdnlt6vwmkld5s7h43s7p75aq20ghk36"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "1 of 1 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": true,
+      "expectedReason": "all 1 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

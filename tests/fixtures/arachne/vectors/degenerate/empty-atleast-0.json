@@ -1,0 +1,122 @@
+{
+  "formatVersion": 2,
+  "id": "degenerate/empty-atleast-0",
+  "family": "degenerate",
+  "question": "What do the empty and out-of-range containers hash to, and does a node accept them?",
+  "params": {
+    "shape": "empty-atleast-0"
+  },
+  "script": {
+    "type": "atLeast",
+    "required": 0,
+    "scripts": []
+  },
+  "shape": {
+    "depth": 1,
+    "nodeCount": 1,
+    "sigCount": 0,
+    "keyHashes": [],
+    "timelockCount": 0,
+    "maxBreadth": 0,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 1
+    }
+  },
+  "remarks": [
+    {
+      "path": "",
+      "code": "required-zero",
+      "detail": "required is 0, so the threshold is met with no witnesses at all."
+    }
+  ],
+  "encoding": {
+    "definite": {
+      "cborHex": "83030080",
+      "preimageHex": "0083030080",
+      "scriptHash": "3530cc9ae7f2895111a99b7a02184dd7c0cea7424f1632d73951b1d7",
+      "cborBytes": 4
+    },
+    "cardanoBinary": {
+      "cborHex": "83030080",
+      "preimageHex": "0083030080",
+      "scriptHash": "3530cc9ae7f2895111a99b7a02184dd7c0cea7424f1632d73951b1d7",
+      "cborBytes": 4
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1wy6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cye8ffx",
+        "preview": "addr_test1wq6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cl3n4xr",
+        "preprod": "addr_test1wq6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cl3n4xr"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xy6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4e4xrxf4elj39g3r2vm0gppsnwhcr82wsj0zcedww23k8tsslskpg",
+        "preview": "addr_test1xq6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4e4xrxf4elj39g3r2vm0gppsnwhcr82wsj0zcedww23k8tsnfdkdh",
+        "preprod": "addr_test1xq6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4e4xrxf4elj39g3r2vm0gppsnwhcr82wsj0zcedww23k8tsnfdkdh"
+      },
+      "reward": {
+        "mainnet": "stake17y6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4ccn8045",
+        "preview": "stake_test17q6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cledd3f",
+        "preprod": "stake_test17q6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cledd3f"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1yv6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4c9zt5qu",
+          "cip105": "drep_script1x5cvexh872y4zydfndaqyxzd6lqvaf6zfutr94ee2xcaw939a6w"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zv6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cp2dzfc",
+          "cip105": "cc_cold_script1x5cvexh872y4zydfndaqyxzd6lqvaf6zfutr94ee2xcawmcjt25"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qv6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4chke7n3",
+          "cip105": "cc_hot_script1x5cvexh872y4zydfndaqyxzd6lqvaf6zfutr94ee2xcawlx05gl"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1wy6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cye8ffx",
+        "preview": "addr_test1wq6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cl3n4xr",
+        "preprod": "addr_test1wq6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cl3n4xr"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xy6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4e4xrxf4elj39g3r2vm0gppsnwhcr82wsj0zcedww23k8tsslskpg",
+        "preview": "addr_test1xq6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4e4xrxf4elj39g3r2vm0gppsnwhcr82wsj0zcedww23k8tsnfdkdh",
+        "preprod": "addr_test1xq6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4e4xrxf4elj39g3r2vm0gppsnwhcr82wsj0zcedww23k8tsnfdkdh"
+      },
+      "reward": {
+        "mainnet": "stake17y6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4ccn8045",
+        "preview": "stake_test17q6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cledd3f",
+        "preprod": "stake_test17q6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cledd3f"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1yv6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4c9zt5qu",
+          "cip105": "drep_script1x5cvexh872y4zydfndaqyxzd6lqvaf6zfutr94ee2xcaw939a6w"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zv6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4cp2dzfc",
+          "cip105": "cc_cold_script1x5cvexh872y4zydfndaqyxzd6lqvaf6zfutr94ee2xcawmcjt25"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qv6npny6ulegj5g34xdh5qscfhtupn48gf83vvkh89gmr4chke7n3",
+          "cip105": "cc_hot_script1x5cvexh872y4zydfndaqyxzd6lqvaf6zfutr94ee2xcawlx05gl"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": true,
+      "expectedReason": "required is 0, satisfied with no witnesses"
+    }
+  ],
+  "onchain": []
+}

@@ -1,0 +1,146 @@
+{
+  "formatVersion": 2,
+  "id": "nest-linear/all-d004",
+  "family": "nest-linear",
+  "question": "How deeply can one container type nest before a node rejects the script or the transaction stops fitting?",
+  "params": {
+    "tag": "all",
+    "depth": 4
+  },
+  "script": {
+    "type": "all",
+    "scripts": [
+      {
+        "type": "all",
+        "scripts": [
+          {
+            "type": "all",
+            "scripts": [
+              {
+                "type": "all",
+                "scripts": [
+                  {
+                    "type": "sig",
+                    "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "depth": 5,
+    "nodeCount": 5,
+    "sigCount": 1,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 1,
+    "containerCounts": {
+      "all": 4,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "8201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "008201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "b79e1d7f37a9a3c96f2d4d36a99e8d2593f7c8ccfe55d0ac1b03369f",
+      "cborBytes": 44
+    },
+    "cardanoBinary": {
+      "cborHex": "8201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "008201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "b79e1d7f37a9a3c96f2d4d36a99e8d2593f7c8ccfe55d0ac1b03369f",
+      "cborBytes": 44
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1wxmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cr4yzqg",
+        "preview": "addr_test1wzmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8ccas70d",
+        "preprod": "addr_test1wzmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8ccas70d"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xxmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8ahncwh7daf50yk7t2dx65earf9j0mu3n872hg2cxcrx60sz9kh4l",
+        "preview": "addr_test1xzmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8ahncwh7daf50yk7t2dx65earf9j0mu3n872hg2cxcrx60spntheq",
+        "preprod": "addr_test1xzmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8ahncwh7daf50yk7t2dx65earf9j0mu3n872hg2cxcrx60spntheq"
+      },
+      "reward": {
+        "mainnet": "stake17xmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cllyyu6",
+        "preview": "stake_test17zmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cc4wxc8",
+        "preprod": "stake_test17zmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cc4wxc8"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ywmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8czwglfj",
+          "cip105": "drep_script1k70p6leh4x3ujmedf5m2n85dykfl0jxvle2aptqmqvmf7c77z99"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zwmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cxxwfqk",
+          "cip105": "cc_cold_script1k70p6leh4x3ujmedf5m2n85dykfl0jxvle2aptqmqvmf7xhf54l"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qwmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cs6646l",
+          "cip105": "cc_hot_script1k70p6leh4x3ujmedf5m2n85dykfl0jxvle2aptqmqvmf7zf5th5"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1wxmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cr4yzqg",
+        "preview": "addr_test1wzmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8ccas70d",
+        "preprod": "addr_test1wzmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8ccas70d"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xxmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8ahncwh7daf50yk7t2dx65earf9j0mu3n872hg2cxcrx60sz9kh4l",
+        "preview": "addr_test1xzmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8ahncwh7daf50yk7t2dx65earf9j0mu3n872hg2cxcrx60spntheq",
+        "preprod": "addr_test1xzmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8ahncwh7daf50yk7t2dx65earf9j0mu3n872hg2cxcrx60spntheq"
+      },
+      "reward": {
+        "mainnet": "stake17xmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cllyyu6",
+        "preview": "stake_test17zmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cc4wxc8",
+        "preprod": "stake_test17zmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cc4wxc8"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ywmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8czwglfj",
+          "cip105": "drep_script1k70p6leh4x3ujmedf5m2n85dykfl0jxvle2aptqmqvmf7c77z99"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zwmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cxxwfqk",
+          "cip105": "cc_cold_script1k70p6leh4x3ujmedf5m2n85dykfl0jxvle2aptqmqvmf7xhf54l"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qwmeu8tlx7568jt094xnd2v735je8a7genl9t59vrvpnd8cs6646l",
+          "cip105": "cc_hot_script1k70p6leh4x3ujmedf5m2n85dykfl0jxvle2aptqmqvmf7zf5th5"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "1 of 1 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": true,
+      "expectedReason": "all 1 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

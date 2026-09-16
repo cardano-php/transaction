@@ -1,0 +1,366 @@
+{
+  "formatVersion": 2,
+  "id": "nest-linear/all-d048",
+  "family": "nest-linear",
+  "question": "How deeply can one container type nest before a node rejects the script or the transaction stops fitting?",
+  "params": {
+    "tag": "all",
+    "depth": 48
+  },
+  "script": {
+    "type": "all",
+    "scripts": [
+      {
+        "type": "all",
+        "scripts": [
+          {
+            "type": "all",
+            "scripts": [
+              {
+                "type": "all",
+                "scripts": [
+                  {
+                    "type": "all",
+                    "scripts": [
+                      {
+                        "type": "all",
+                        "scripts": [
+                          {
+                            "type": "all",
+                            "scripts": [
+                              {
+                                "type": "all",
+                                "scripts": [
+                                  {
+                                    "type": "all",
+                                    "scripts": [
+                                      {
+                                        "type": "all",
+                                        "scripts": [
+                                          {
+                                            "type": "all",
+                                            "scripts": [
+                                              {
+                                                "type": "all",
+                                                "scripts": [
+                                                  {
+                                                    "type": "all",
+                                                    "scripts": [
+                                                      {
+                                                        "type": "all",
+                                                        "scripts": [
+                                                          {
+                                                            "type": "all",
+                                                            "scripts": [
+                                                              {
+                                                                "type": "all",
+                                                                "scripts": [
+                                                                  {
+                                                                    "type": "all",
+                                                                    "scripts": [
+                                                                      {
+                                                                        "type": "all",
+                                                                        "scripts": [
+                                                                          {
+                                                                            "type": "all",
+                                                                            "scripts": [
+                                                                              {
+                                                                                "type": "all",
+                                                                                "scripts": [
+                                                                                  {
+                                                                                    "type": "all",
+                                                                                    "scripts": [
+                                                                                      {
+                                                                                        "type": "all",
+                                                                                        "scripts": [
+                                                                                          {
+                                                                                            "type": "all",
+                                                                                            "scripts": [
+                                                                                              {
+                                                                                                "type": "all",
+                                                                                                "scripts": [
+                                                                                                  {
+                                                                                                    "type": "all",
+                                                                                                    "scripts": [
+                                                                                                      {
+                                                                                                        "type": "all",
+                                                                                                        "scripts": [
+                                                                                                          {
+                                                                                                            "type": "all",
+                                                                                                            "scripts": [
+                                                                                                              {
+                                                                                                                "type": "all",
+                                                                                                                "scripts": [
+                                                                                                                  {
+                                                                                                                    "type": "all",
+                                                                                                                    "scripts": [
+                                                                                                                      {
+                                                                                                                        "type": "all",
+                                                                                                                        "scripts": [
+                                                                                                                          {
+                                                                                                                            "type": "all",
+                                                                                                                            "scripts": [
+                                                                                                                              {
+                                                                                                                                "type": "all",
+                                                                                                                                "scripts": [
+                                                                                                                                  {
+                                                                                                                                    "type": "all",
+                                                                                                                                    "scripts": [
+                                                                                                                                      {
+                                                                                                                                        "type": "all",
+                                                                                                                                        "scripts": [
+                                                                                                                                          {
+                                                                                                                                            "type": "all",
+                                                                                                                                            "scripts": [
+                                                                                                                                              {
+                                                                                                                                                "type": "all",
+                                                                                                                                                "scripts": [
+                                                                                                                                                  {
+                                                                                                                                                    "type": "all",
+                                                                                                                                                    "scripts": [
+                                                                                                                                                      {
+                                                                                                                                                        "type": "all",
+                                                                                                                                                        "scripts": [
+                                                                                                                                                          {
+                                                                                                                                                            "type": "all",
+                                                                                                                                                            "scripts": [
+                                                                                                                                                              {
+                                                                                                                                                                "type": "all",
+                                                                                                                                                                "scripts": [
+                                                                                                                                                                  {
+                                                                                                                                                                    "type": "all",
+                                                                                                                                                                    "scripts": [
+                                                                                                                                                                      {
+                                                                                                                                                                        "type": "all",
+                                                                                                                                                                        "scripts": [
+                                                                                                                                                                          {
+                                                                                                                                                                            "type": "all",
+                                                                                                                                                                            "scripts": [
+                                                                                                                                                                              {
+                                                                                                                                                                                "type": "all",
+                                                                                                                                                                                "scripts": [
+                                                                                                                                                                                  {
+                                                                                                                                                                                    "type": "all",
+                                                                                                                                                                                    "scripts": [
+                                                                                                                                                                                      {
+                                                                                                                                                                                        "type": "all",
+                                                                                                                                                                                        "scripts": [
+                                                                                                                                                                                          {
+                                                                                                                                                                                            "type": "all",
+                                                                                                                                                                                            "scripts": [
+                                                                                                                                                                                              {
+                                                                                                                                                                                                "type": "all",
+                                                                                                                                                                                                "scripts": [
+                                                                                                                                                                                                  {
+                                                                                                                                                                                                    "type": "sig",
+                                                                                                                                                                                                    "keyHash": "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+                                                                                                                                                                                                  }
+                                                                                                                                                                                                ]
+                                                                                                                                                                                              }
+                                                                                                                                                                                            ]
+                                                                                                                                                                                          }
+                                                                                                                                                                                        ]
+                                                                                                                                                                                      }
+                                                                                                                                                                                    ]
+                                                                                                                                                                                  }
+                                                                                                                                                                                ]
+                                                                                                                                                                              }
+                                                                                                                                                                            ]
+                                                                                                                                                                          }
+                                                                                                                                                                        ]
+                                                                                                                                                                      }
+                                                                                                                                                                    ]
+                                                                                                                                                                  }
+                                                                                                                                                                ]
+                                                                                                                                                              }
+                                                                                                                                                            ]
+                                                                                                                                                          }
+                                                                                                                                                        ]
+                                                                                                                                                      }
+                                                                                                                                                    ]
+                                                                                                                                                  }
+                                                                                                                                                ]
+                                                                                                                                              }
+                                                                                                                                            ]
+                                                                                                                                          }
+                                                                                                                                        ]
+                                                                                                                                      }
+                                                                                                                                    ]
+                                                                                                                                  }
+                                                                                                                                ]
+                                                                                                                              }
+                                                                                                                            ]
+                                                                                                                          }
+                                                                                                                        ]
+                                                                                                                      }
+                                                                                                                    ]
+                                                                                                                  }
+                                                                                                                ]
+                                                                                                              }
+                                                                                                            ]
+                                                                                                          }
+                                                                                                        ]
+                                                                                                      }
+                                                                                                    ]
+                                                                                                  }
+                                                                                                ]
+                                                                                              }
+                                                                                            ]
+                                                                                          }
+                                                                                        ]
+                                                                                      }
+                                                                                    ]
+                                                                                  }
+                                                                                ]
+                                                                              }
+                                                                            ]
+                                                                          }
+                                                                        ]
+                                                                      }
+                                                                    ]
+                                                                  }
+                                                                ]
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "depth": 49,
+    "nodeCount": 49,
+    "sigCount": 1,
+    "keyHashes": [
+      "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 1,
+    "containerCounts": {
+      "all": 48,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "8201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "008201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "c2851435999d99d3d636d8090b96bcb15e2c9bd58c74dc7fa33fb6e5",
+      "cborBytes": 176
+    },
+    "cardanoBinary": {
+      "cborHex": "8201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "preimageHex": "008201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818201818200581c3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718",
+      "scriptHash": "c2851435999d99d3d636d8090b96bcb15e2c9bd58c74dc7fa33fb6e5",
+      "cborBytes": 176
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w8pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdeg9lhkxz",
+        "preview": "addr_test1wrpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdeg7hr2f8",
+        "preprod": "addr_test1wrpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdeg7hr2f8"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdewzs52rtxvan8favdkcpy9ed093tckfh4vvwnw8lgelkmjs6x3n49",
+        "preview": "addr_test1xrpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdewzs52rtxvan8favdkcpy9ed093tckfh4vvwnw8lgelkmjsesvne6",
+        "preprod": "addr_test1xrpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdewzs52rtxvan8favdkcpy9ed093tckfh4vvwnw8lgelkmjsesvne6"
+      },
+      "reward": {
+        "mainnet": "stake178pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdege4hs6s",
+        "preview": "stake_test17rpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdeg7laj7d",
+        "preprod": "stake_test17rpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdeg7laj7d"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdegyymt0c",
+          "cip105": "drep_script1c2z3gdvenkva843kmqysh94uk90zex74336dclar87mw2hxarrs"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdegqvaaxu",
+          "cip105": "cc_cold_script1c2z3gdvenkva843kmqysh94uk90zex74336dclar87mw2f024n2"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdegksfpu4",
+          "cip105": "cc_hot_script1c2z3gdvenkva843kmqysh94uk90zex74336dclar87mw2d3h23p"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w8pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdeg9lhkxz",
+        "preview": "addr_test1wrpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdeg7hr2f8",
+        "preprod": "addr_test1wrpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdeg7hr2f8"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdewzs52rtxvan8favdkcpy9ed093tckfh4vvwnw8lgelkmjs6x3n49",
+        "preview": "addr_test1xrpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdewzs52rtxvan8favdkcpy9ed093tckfh4vvwnw8lgelkmjsesvne6",
+        "preprod": "addr_test1xrpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdewzs52rtxvan8favdkcpy9ed093tckfh4vvwnw8lgelkmjsesvne6"
+      },
+      "reward": {
+        "mainnet": "stake178pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdege4hs6s",
+        "preview": "stake_test17rpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdeg7laj7d",
+        "preprod": "stake_test17rpg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdeg7laj7d"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdegyymt0c",
+          "cip105": "drep_script1c2z3gdvenkva843kmqysh94uk90zex74336dclar87mw2hxarrs"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdegqvaaxu",
+          "cip105": "cc_cold_script1c2z3gdvenkva843kmqysh94uk90zex74336dclar87mw2f024n2"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0pg29p4nxwen57kxmvqjzukhjc4utym6kx8fhrl5vlmdegksfpu4",
+          "cip105": "cc_hot_script1c2z3gdvenkva843kmqysh94uk90zex74336dclar87mw2d3h23p"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "1 of 1 sub-scripts unsatisfied"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "3118644aa21ba172c82732ce80d1c94cdcb5f2e8891e1ad264570718"
+      ],
+      "expected": true,
+      "expectedReason": "all 1 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

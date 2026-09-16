@@ -1,0 +1,122 @@
+{
+  "formatVersion": 2,
+  "id": "degenerate/empty-atleast-1",
+  "family": "degenerate",
+  "question": "What do the empty and out-of-range containers hash to, and does a node accept them?",
+  "params": {
+    "shape": "empty-atleast-1"
+  },
+  "script": {
+    "type": "atLeast",
+    "required": 1,
+    "scripts": []
+  },
+  "shape": {
+    "depth": 1,
+    "nodeCount": 1,
+    "sigCount": 0,
+    "keyHashes": [],
+    "timelockCount": 0,
+    "maxBreadth": 0,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 1
+    }
+  },
+  "remarks": [
+    {
+      "path": "",
+      "code": "required-exceeds-children",
+      "detail": "required is 1 but only 0 sub-scripts exist, so it can never be satisfied."
+    }
+  ],
+  "encoding": {
+    "definite": {
+      "cborHex": "83030180",
+      "preimageHex": "0083030180",
+      "scriptHash": "f6e57a7bfa194dbcd28dfbc32ae427976beed4d63dbf91b6ab82996a",
+      "cborBytes": 4
+    },
+    "cardanoBinary": {
+      "cborHex": "83030180",
+      "preimageHex": "0083030180",
+      "scriptHash": "f6e57a7bfa194dbcd28dfbc32ae427976beed4d63dbf91b6ab82996a",
+      "cborBytes": 4
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w8mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6se8mxsd",
+        "preview": "addr_test1wrmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6sz006lg",
+        "preprod": "addr_test1wrmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6sz006lg"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6hku4a8h7sefk7d9r0mcv4wgfuhd0hdf43ah7gmd2uzn94q690ks9",
+        "preview": "addr_test1xrmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6hku4a8h7sefk7d9r0mcv4wgfuhd0hdf43ah7gmd2uzn94qenjku6",
+        "preprod": "addr_test1xrmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6hku4a8h7sefk7d9r0mcv4wgfuhd0hdf43ah7gmd2uzn94qenjku6"
+      },
+      "reward": {
+        "mainnet": "stake178mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6s9dmqvl",
+        "preview": "stake_test17rmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6sz83zgz",
+        "preprod": "stake_test17rmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6sz83zgz"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6scuhmeh",
+          "cip105": "drep_script17mjh57l6r9xme55dl0pj4ep8ja47a4xk8klerd4ts2vk5eqncc8"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6su53dsn",
+          "cip105": "cc_cold_script17mjh57l6r9xme55dl0pj4ep8ja47a4xk8klerd4ts2vk58fywga"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6s2g9326",
+          "cip105": "cc_hot_script17mjh57l6r9xme55dl0pj4ep8ja47a4xk8klerd4ts2vk5rhe32k"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w8mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6se8mxsd",
+        "preview": "addr_test1wrmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6sz006lg",
+        "preprod": "addr_test1wrmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6sz006lg"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6hku4a8h7sefk7d9r0mcv4wgfuhd0hdf43ah7gmd2uzn94q690ks9",
+        "preview": "addr_test1xrmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6hku4a8h7sefk7d9r0mcv4wgfuhd0hdf43ah7gmd2uzn94qenjku6",
+        "preprod": "addr_test1xrmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6hku4a8h7sefk7d9r0mcv4wgfuhd0hdf43ah7gmd2uzn94qenjku6"
+      },
+      "reward": {
+        "mainnet": "stake178mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6s9dmqvl",
+        "preview": "stake_test17rmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6sz83zgz",
+        "preprod": "stake_test17rmw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6sz83zgz"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6scuhmeh",
+          "cip105": "drep_script17mjh57l6r9xme55dl0pj4ep8ja47a4xk8klerd4ts2vk5eqncc8"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6su53dsn",
+          "cip105": "cc_cold_script17mjh57l6r9xme55dl0pj4ep8ja47a4xk8klerd4ts2vk58fywga"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0mw27nmlgv5m0xj3haux2hyy7tkhmk56c7mlydk4wpfj6s2g9326",
+          "cip105": "cc_hot_script17mjh57l6r9xme55dl0pj4ep8ja47a4xk8klerd4ts2vk5rhe32k"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "required is 1 but only 0 sub-scripts exist, unsatisfiable"
+    }
+  ],
+  "onchain": []
+}

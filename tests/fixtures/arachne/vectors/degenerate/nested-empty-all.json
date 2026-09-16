@@ -1,0 +1,126 @@
+{
+  "formatVersion": 2,
+  "id": "degenerate/nested-empty-all",
+  "family": "degenerate",
+  "question": "What do the empty and out-of-range containers hash to, and does a node accept them?",
+  "params": {
+    "shape": "nested-empty-all"
+  },
+  "script": {
+    "type": "all",
+    "scripts": [
+      {
+        "type": "all",
+        "scripts": []
+      }
+    ]
+  },
+  "shape": {
+    "depth": 2,
+    "nodeCount": 2,
+    "sigCount": 0,
+    "keyHashes": [],
+    "timelockCount": 0,
+    "maxBreadth": 1,
+    "containerCounts": {
+      "all": 2,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [
+    {
+      "path": "/all[0]",
+      "code": "empty-all",
+      "detail": "An empty \"all\" is vacuously satisfied by any witness set, including none."
+    }
+  ],
+  "encoding": {
+    "definite": {
+      "cborHex": "820181820180",
+      "preimageHex": "00820181820180",
+      "scriptHash": "60be8259acde0a72b76f36977223cac39432713a42bcfdf76a55dd7f",
+      "cborBytes": 6
+    },
+    "cardanoBinary": {
+      "cborHex": "820181820180",
+      "preimageHex": "00820181820180",
+      "scriptHash": "60be8259acde0a72b76f36977223cac39432713a42bcfdf76a55dd7f",
+      "cborBytes": 6
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w9staqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lc6rnnlp",
+        "preview": "addr_test1wpstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcpt80sy",
+        "preprod": "addr_test1wpstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcpt80sy"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9staqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lmqh6p9ntx7pfetwmekjaez8jkrjse8zwjzhn7lw6j4m4lsn6wp8c",
+        "preview": "addr_test1xpstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lmqh6p9ntx7pfetwmekjaez8jkrjse8zwjzhn7lw6j4m4lssvnpt8",
+        "preprod": "addr_test1xpstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lmqh6p9ntx7pfetwmekjaez8jkrjse8zwjzhn7lw6j4m4lssvnpt8"
+      },
+      "reward": {
+        "mainnet": "stake179staqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcxfn4rn",
+        "preview": "stake_test17pstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcpreh8w",
+        "preprod": "stake_test17pstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcpreh8w"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcmclwkm",
+          "cip105": "drep_script1vzlgykdvmc989dm0x6thyg72cw2ryuf6g270mam22hwh742vvnz"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lclsecll",
+          "cip105": "cc_cold_script1vzlgykdvmc989dm0x6thyg72cw2ryuf6g270mam22hwh7trm6rc"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcfvdy9k",
+          "cip105": "cc_hot_script1vzlgykdvmc989dm0x6thyg72cw2ryuf6g270mam22hwh70ax9pn"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w9staqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lc6rnnlp",
+        "preview": "addr_test1wpstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcpt80sy",
+        "preprod": "addr_test1wpstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcpt80sy"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x9staqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lmqh6p9ntx7pfetwmekjaez8jkrjse8zwjzhn7lw6j4m4lsn6wp8c",
+        "preview": "addr_test1xpstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lmqh6p9ntx7pfetwmekjaez8jkrjse8zwjzhn7lw6j4m4lssvnpt8",
+        "preprod": "addr_test1xpstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lmqh6p9ntx7pfetwmekjaez8jkrjse8zwjzhn7lw6j4m4lssvnpt8"
+      },
+      "reward": {
+        "mainnet": "stake179staqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcxfn4rn",
+        "preview": "stake_test17pstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcpreh8w",
+        "preprod": "stake_test17pstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcpreh8w"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1ydstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcmclwkm",
+          "cip105": "drep_script1vzlgykdvmc989dm0x6thyg72cw2ryuf6g270mam22hwh742vvnz"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zdstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lclsecll",
+          "cip105": "cc_cold_script1vzlgykdvmc989dm0x6thyg72cw2ryuf6g270mam22hwh7trm6rc"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qdstaqje4n0q5u4hdumfwu3retpegvn38fptel0hdf2a6lcfvdy9k",
+          "cip105": "cc_hot_script1vzlgykdvmc989dm0x6thyg72cw2ryuf6g270mam22hwh70ax9pn"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": true,
+      "expectedReason": "all 1 sub-scripts satisfied"
+    }
+  ],
+  "onchain": []
+}

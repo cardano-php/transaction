@@ -1,0 +1,181 @@
+{
+  "formatVersion": 2,
+  "id": "timelocks/before-only",
+  "family": "timelocks",
+  "question": "Which timelock arrangements can a transaction actually satisfy, given that an absent interval bound fails rather than passes?",
+  "params": {
+    "shape": "before-only"
+  },
+  "script": {
+    "type": "before",
+    "slot": 9000000
+  },
+  "shape": {
+    "depth": 1,
+    "nodeCount": 1,
+    "sigCount": 0,
+    "keyHashes": [],
+    "timelockCount": 1,
+    "maxBreadth": 0,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 0
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "82051a00895440",
+      "preimageHex": "0082051a00895440",
+      "scriptHash": "db10ec9b102875ad32661f3e168be007795152c68c811a0b82baecc1",
+      "cborBytes": 7
+    },
+    "cardanoBinary": {
+      "cborHex": "82051a00895440",
+      "preimageHex": "0082051a00895440",
+      "scriptHash": "db10ec9b102875ad32661f3e168be007795152c68c811a0b82baecc1",
+      "cborBytes": 7
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1w8d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesgut4u4h",
+        "preview": "addr_test1wrd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesg8rpq6j",
+        "preprod": "addr_test1wrd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesg8rpq6j"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2aweswmzrkfkypgwkknyesl8ctghcq809g4935vsydqhq46anqslgxysk",
+        "preview": "addr_test1xrd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2aweswmzrkfkypgwkknyesl8ctghcq809g4935vsydqhq46anqsu7myuf",
+        "preprod": "addr_test1xrd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2aweswmzrkfkypgwkknyesl8ctghcq809g4935vsydqhq46anqsu7myuf"
+      },
+      "reward": {
+        "mainnet": "stake178d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesgqp46f9",
+        "preview": "stake_test17rd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesg8tlcdc",
+        "preprod": "stake_test17rd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesg8tlcdc"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesgasepud",
+          "cip105": "drep_script1mvgwexcs9p666vnxrulpdzlqqau4z5kx3jq35zuzhtkvzskguxq"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesgeclh4f",
+          "cip105": "cc_cold_script1mvgwexcs9p666vnxrulpdzlqqau4z5kx3jq35zuzhtkvzwll2k6"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesg0ytt0q",
+          "cip105": "cc_hot_script1mvgwexcs9p666vnxrulpdzlqqau4z5kx3jq35zuzhtkvz2pz453"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1w8d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesgut4u4h",
+        "preview": "addr_test1wrd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesg8rpq6j",
+        "preprod": "addr_test1wrd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesg8rpq6j"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1x8d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2aweswmzrkfkypgwkknyesl8ctghcq809g4935vsydqhq46anqslgxysk",
+        "preview": "addr_test1xrd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2aweswmzrkfkypgwkknyesl8ctghcq809g4935vsydqhq46anqsu7myuf",
+        "preprod": "addr_test1xrd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2aweswmzrkfkypgwkknyesl8ctghcq809g4935vsydqhq46anqsu7myuf"
+      },
+      "reward": {
+        "mainnet": "stake178d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesgqp46f9",
+        "preview": "stake_test17rd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesg8tlcdc",
+        "preprod": "stake_test17rd3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesg8tlcdc"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1y0d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesgasepud",
+          "cip105": "drep_script1mvgwexcs9p666vnxrulpdzlqqau4z5kx3jq35zuzhtkvzskguxq"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1z0d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesgeclh4f",
+          "cip105": "cc_cold_script1mvgwexcs9p666vnxrulpdzlqqau4z5kx3jq35zuzhtkvzwll2k6"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1q0d3pmymzq58ttfjvc0nu95tuqrhj52jc6xgzxsts2awesg0ytt0q",
+          "cip105": "cc_hot_script1mvgwexcs9p666vnxrulpdzlqqau4z5kx3jq35zuzhtkvz2pz453"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "requires ttl <= 9000000 but the transaction sets no validity end"
+    },
+    {
+      "id": "none@start8999999",
+      "signers": [],
+      "validityStart": 8999999,
+      "expected": false,
+      "expectedReason": "requires ttl <= 9000000 but the transaction sets no validity end"
+    },
+    {
+      "id": "none@end8999999",
+      "signers": [],
+      "validityEnd": 8999999,
+      "expected": true,
+      "expectedReason": "ttl 8999999 is at or before 9000000"
+    },
+    {
+      "id": "none@span8999999",
+      "signers": [],
+      "validityStart": 8999999,
+      "validityEnd": 8999999,
+      "expected": true,
+      "expectedReason": "ttl 8999999 is at or before 9000000"
+    },
+    {
+      "id": "none@start9000000",
+      "signers": [],
+      "validityStart": 9000000,
+      "expected": false,
+      "expectedReason": "requires ttl <= 9000000 but the transaction sets no validity end"
+    },
+    {
+      "id": "none@end9000000",
+      "signers": [],
+      "validityEnd": 9000000,
+      "expected": true,
+      "expectedReason": "ttl 9000000 is at or before 9000000"
+    },
+    {
+      "id": "none@span9000000",
+      "signers": [],
+      "validityStart": 9000000,
+      "validityEnd": 9000000,
+      "expected": true,
+      "expectedReason": "ttl 9000000 is at or before 9000000"
+    },
+    {
+      "id": "none@start9000001",
+      "signers": [],
+      "validityStart": 9000001,
+      "expected": false,
+      "expectedReason": "requires ttl <= 9000000 but the transaction sets no validity end"
+    },
+    {
+      "id": "none@end9000001",
+      "signers": [],
+      "validityEnd": 9000001,
+      "expected": false,
+      "expectedReason": "ttl 9000001 is after 9000000"
+    },
+    {
+      "id": "none@span9000001",
+      "signers": [],
+      "validityStart": 9000001,
+      "validityEnd": 9000001,
+      "expected": false,
+      "expectedReason": "ttl 9000001 is after 9000000"
+    }
+  ],
+  "onchain": []
+}

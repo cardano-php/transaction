@@ -1,0 +1,202 @@
+{
+  "formatVersion": 2,
+  "id": "nested-threshold/outer2-inner2-k1",
+  "family": "nested-threshold",
+  "question": "Does a threshold nested inside another evaluate independently, or does it flatten?",
+  "params": {
+    "outer": 2,
+    "inner": 2,
+    "k": 1
+  },
+  "script": {
+    "type": "atLeast",
+    "required": 1,
+    "scripts": [
+      {
+        "type": "sig",
+        "keyHash": "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76"
+      },
+      {
+        "type": "atLeast",
+        "required": 1,
+        "scripts": [
+          {
+            "type": "sig",
+            "keyHash": "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e"
+          },
+          {
+            "type": "sig",
+            "keyHash": "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+          }
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "depth": 3,
+    "nodeCount": 5,
+    "sigCount": 3,
+    "keyHashes": [
+      "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+      "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+      "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+    ],
+    "timelockCount": 0,
+    "maxBreadth": 2,
+    "containerCounts": {
+      "all": 0,
+      "any": 0,
+      "atLeast": 2
+    }
+  },
+  "remarks": [],
+  "encoding": {
+    "definite": {
+      "cborHex": "830301828200581c5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76830301828200581c2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e8200581cbb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15",
+      "preimageHex": "00830301828200581c5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76830301828200581c2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e8200581cbb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15",
+      "scriptHash": "111ddc8576895b7e8cf94f9e1ab4341e065aa7d08d85a5636536337f",
+      "cborBytes": 104
+    },
+    "cardanoBinary": {
+      "cborHex": "830301828200581c5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76830301828200581c2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e8200581cbb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15",
+      "preimageHex": "00830301828200581c5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76830301828200581c2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e8200581cbb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15",
+      "scriptHash": "111ddc8576895b7e8cf94f9e1ab4341e065aa7d08d85a5636536337f",
+      "cborBytes": 104
+    },
+    "encodingSensitive": false
+  },
+  "credentials": {
+    "definite": {
+      "enterprise": {
+        "mainnet": "addr1wyg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcflw56s",
+        "preview": "addr_test1wqg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcjh6g44",
+        "preprod": "addr_test1wqg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcjh6g44"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xyg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlc3rhwg2a5ftdlge720ncdtgdq7qed205ydskjkxefkxdls8q3pr7",
+        "preview": "addr_test1xqg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlc3rhwg2a5ftdlge720ncdtgdq7qed205ydskjkxefkxdlsykvp0p",
+        "preprod": "addr_test1xqg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlc3rhwg2a5ftdlge720ncdtgdq7qed205ydskjkxefkxdlsykvp0p"
+      },
+      "reward": {
+        "mainnet": "stake17yg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlc44wjxz",
+        "preview": "stake_test17qg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcjlyszl",
+        "preprod": "stake_test17qg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcjlyszl"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1yvg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcgyzfn2",
+          "cip105": "drep_script1zywaeptk39dhar8ef70p4dp5rcr94f7s3kz62cm9xceh7wx35l5"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zvg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcvvyl6w",
+          "cip105": "cc_cold_script1zywaeptk39dhar8ef70p4dp5rcr94f7s3kz62cm9xceh7s0xz0w"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qvg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlc6ssrq8",
+          "cip105": "cc_hot_script1zywaeptk39dhar8ef70p4dp5rcr94f7s3kz62cm9xceh753mad9"
+        }
+      }
+    },
+    "cardanoBinary": {
+      "enterprise": {
+        "mainnet": "addr1wyg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcflw56s",
+        "preview": "addr_test1wqg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcjh6g44",
+        "preprod": "addr_test1wqg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcjh6g44"
+      },
+      "baseScriptStake": {
+        "mainnet": "addr1xyg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlc3rhwg2a5ftdlge720ncdtgdq7qed205ydskjkxefkxdls8q3pr7",
+        "preview": "addr_test1xqg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlc3rhwg2a5ftdlge720ncdtgdq7qed205ydskjkxefkxdlsykvp0p",
+        "preprod": "addr_test1xqg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlc3rhwg2a5ftdlge720ncdtgdq7qed205ydskjkxefkxdlsykvp0p"
+      },
+      "reward": {
+        "mainnet": "stake17yg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlc44wjxz",
+        "preview": "stake_test17qg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcjlyszl",
+        "preprod": "stake_test17qg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcjlyszl"
+      },
+      "governance": {
+        "drep": {
+          "cip129": "drep1yvg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcgyzfn2",
+          "cip105": "drep_script1zywaeptk39dhar8ef70p4dp5rcr94f7s3kz62cm9xceh7wx35l5"
+        },
+        "ccCold": {
+          "cip129": "cc_cold1zvg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlcvvyl6w",
+          "cip105": "cc_cold_script1zywaeptk39dhar8ef70p4dp5rcr94f7s3kz62cm9xceh7s0xz0w"
+        },
+        "ccHot": {
+          "cip129": "cc_hot1qvg3mhy9w6y4kl5vl98eux45xs0qvk486zxctftrv5mrxlc6ssrq8",
+          "cip105": "cc_hot_script1zywaeptk39dhar8ef70p4dp5rcr94f7s3kz62cm9xceh753mad9"
+        }
+      }
+    }
+  },
+  "satisfaction": [
+    {
+      "id": "none@unbounded",
+      "signers": [],
+      "expected": false,
+      "expectedReason": "0 of 2 sub-scripts satisfied, 1 required"
+    },
+    {
+      "id": "0@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e"
+      ],
+      "expected": true,
+      "expectedReason": "1 of 2 sub-scripts satisfied, 1 required"
+    },
+    {
+      "id": "1@unbounded",
+      "signers": [
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76"
+      ],
+      "expected": true,
+      "expectedReason": "1 of 2 sub-scripts satisfied, 1 required"
+    },
+    {
+      "id": "0+1@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 2 sub-scripts satisfied, 1 required"
+    },
+    {
+      "id": "2@unbounded",
+      "signers": [
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "1 of 2 sub-scripts satisfied, 1 required"
+    },
+    {
+      "id": "0+2@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "1 of 2 sub-scripts satisfied, 1 required"
+    },
+    {
+      "id": "1+2@unbounded",
+      "signers": [
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 2 sub-scripts satisfied, 1 required"
+    },
+    {
+      "id": "all@unbounded",
+      "signers": [
+        "2ffa59c1aadf219fa03fc9e45e49b28f002d386e923fa3a12ff5d88e",
+        "5eb8ee18113d39abb18f238dad4b1bf9da0c0fa8b3e07432c6888e76",
+        "bb028d575a6e9c76c44e79081ebe3e98ffea35ce232c59ae56625b15"
+      ],
+      "expected": true,
+      "expectedReason": "2 of 2 sub-scripts satisfied, 1 required"
+    }
+  ],
+  "onchain": []
+}
