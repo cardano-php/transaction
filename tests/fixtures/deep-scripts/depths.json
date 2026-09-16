@@ -1,0 +1,83 @@
+{
+    "what": "Generated native scripts at the depths that decide whether this package can read what the chain carries. No recorded script is deep enough to serve, so these are built from a rule rather than fetched.",
+    "generator": "tests/fixtures/deep-scripts/generate.php",
+    "key_label": "cardano-php/transaction/deep-scripts",
+    "key_hash": "60ad9cc7c9e10ee82812928dba9b67dcdd011ddcea9b6425cfc15f03",
+    "max_depth": 5461,
+    "max_transaction_bytes": 16384,
+    "min_bytes_per_level": 3,
+    "cases": [
+        {
+            "id": "one-level",
+            "why": "The smallest nest there is, short enough to read off by eye and check the three byte cost against.",
+            "shape": "all-around-sig",
+            "depth": 1,
+            "script_bytes": 35,
+            "script_hash": "3e6daae829bd213ff701e6f2cc581da9d1e8af64726a3f20bb8b668b",
+            "refused": false
+        },
+        {
+            "id": "past-the-corpus",
+            "why": "One level past the deepest vector in the conformance corpus, which is where generated cases start.",
+            "shape": "all-around-sig",
+            "depth": 65,
+            "script_bytes": 227,
+            "script_hash": "a1e5128949594848a3fdbe35c9271d84040e7d9049fb85f5885c2fd1",
+            "refused": false
+        },
+        {
+            "id": "rotating-past-the-corpus",
+            "why": "The same depth with all, any and atLeast alternating, so no container kind is only tested shallow.",
+            "shape": "rotating-around-sig",
+            "depth": 65,
+            "script_bytes": 248,
+            "script_hash": "cf4fcd147a8df2412d30e33c415f282dc91ba32eb01fdfad4628b189",
+            "refused": false
+        },
+        {
+            "id": "node-accepted",
+            "why": "The deepest script a node has accepted, in preprod transaction f90dce5765108da976abdbb9fc618f9a6ffd9fa4d93b2f288eed1808545424c9. The 16,181 bytes are the size that transaction was measured at.",
+            "shape": "all-around-sig",
+            "depth": 5383,
+            "script_bytes": 16181,
+            "script_hash": "04b1aa1c57c5a16feacb0116ce48bfd2780d5c5700a908d5919d508d",
+            "refused": false
+        },
+        {
+            "id": "rotating-at-the-node-depth",
+            "why": "Every container kind at the depth the chain has carried. An atLeast costs a fourth byte a level, so this one is larger than a transaction and could not be carried. What it exercises is the reader and the encoder at depth rather than what fits.",
+            "shape": "rotating-around-sig",
+            "depth": 5383,
+            "script_bytes": 17975,
+            "script_hash": "3328c89d358ef729d9c066df5988534cb583ee931a4d0ee3914263e9",
+            "refused": false
+        },
+        {
+            "id": "largest-sig-terminated",
+            "why": "The deepest nest around a sig that still fits maxTxSize, before the transaction around it is paid for: (16384 - 32) / 3.",
+            "shape": "all-around-sig",
+            "depth": 5450,
+            "script_bytes": 16382,
+            "script_hash": "d5f56bb860c270c424f33c1f553a581e6756707257c8c42e065ace85",
+            "refused": false
+        },
+        {
+            "id": "at-the-limit",
+            "why": "The deepest script of any shape that fits inside a 16,384 byte transaction, at 16,383 bytes, and so the deepest this package reads. Nothing can reach it: a script this long leaves no room for the transaction carrying it.",
+            "shape": "all-to-empty",
+            "depth": 5461,
+            "script_bytes": 16383,
+            "script_hash": "986f71f9c4fed1cff2598e334a29b834f886441d63351c8517e72b3d",
+            "refused": false
+        },
+        {
+            "id": "past-the-limit",
+            "why": "One level further, at 16,386 bytes, which is past what a transaction holds. Refused by name rather than read part way.",
+            "shape": "all-to-empty",
+            "depth": 5462,
+            "script_bytes": 16386,
+            "script_hash": null,
+            "refused": true
+        }
+    ]
+}

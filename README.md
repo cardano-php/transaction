@@ -70,6 +70,24 @@ cannot be spent by anybody.
 The one shape this package refuses is a threshold above the number of sub-scripts beside it, which can never be met.
 cardano-cli refuses it too.
 
+Nothing in the grammar bounds how deep a script nests. What bounds it is `maxTxSize`, 16,384 bytes. A script
+reaches the chain only inside a transaction: in a witness set, in an output that holds it as a reference script, or
+in the auxiliary data, and all three are weighed against that limit. A reference script is no exception, because the
+transaction that creates it carries the whole script in one of its outputs. One level of nesting costs three bytes,
+`82 01 81`, so the deepest script a transaction could physically carry is 5,461 levels, and the deepest a node has
+accepted is 5,383, in preprod transaction
+`f90dce5765108da976abdbb9fc618f9a6ffd9fa4d93b2f288eed1808545424c9`, with 5,384 refused for size.
+
+This package reads all 5,461 of them and refuses anything deeper with an exception that names the limit. Every walk
+over a script carries its own stack rather than PHP's, because a recursion that deep is a dead process rather than
+something to catch. Reading further would mean handing back scripts that PHP itself cannot free, since a tree of
+objects is released by recursing into it. The stack a process is given runs out somewhere near six thousand levels
+on a megabyte, and past fifty thousand on the eight megabytes a Linux process gets by default.
+
+The JSON form stops far earlier, at 255 levels, and says so rather than writing out a file that parses as nothing.
+That ceiling is PHP's, whose JSON reader and writer nest 512 levels by default and whose reader stops a few thousand
+levels in whatever allowance it is given. CBOR is what the chain carries and what to read a deep script from.
+
 ## The public surface
 
 Everything under `Cardano\Transaction\` is public except the classes whose docblock carries `@internal`. Those are

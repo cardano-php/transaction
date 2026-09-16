@@ -49,6 +49,17 @@ final class SequenceForm
     }
 
     /**
+     * An array written with no length in its head, which runs until a break byte.
+     *
+     * Reading is where this comes up. Both framings are on chain, and a container has to be put back the way it
+     * arrived or its hash moves, so an indefinite length list is recorded as one rather than normalized away.
+     */
+    public static function indefinite(): self
+    {
+        return new self(true, null);
+    }
+
+    /**
      * The form the ledger's own encoder writes an array of $itemCount items in.
      *
      * cardano-node and cardano-cli serialize through that encoder, so this is the framing a container has to take for
