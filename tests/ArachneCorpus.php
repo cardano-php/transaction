@@ -17,9 +17,12 @@ use RuntimeException;
  *
  * tests/fixtures/arachne/README.md records where the files came from and at which commit.
  *
- * Two of the six shapes the grammar admits cannot be built by this package at all, so seventeen vectors are listed
- * here as refused rather than checked. The list is exact and is asserted in both directions: a vector that starts
- * building, or one that stops, fails a test rather than quietly changing what the suite covers.
+ * Seventeen vectors hold a degenerate shape: a container with no sub-scripts, or a threshold outside the range its
+ * sub-script count allows. Ten of those this package builds, because cardano-cli builds them and the chain carries
+ * them. Seven it refuses, because a threshold above the number of sub-scripts beside it can never be met and
+ * cardano-cli refuses it in as many words. Both lists are written out here and derived a second way from the corpus's
+ * own remarks: a vector that starts building, or one that stops, fails a test rather than quietly changing what the
+ * suite covers.
  */
 final class ArachneCorpus
 {
@@ -32,53 +35,64 @@ final class ArachneCorpus
     public const FORMAT_VERSION = 2;
 
     /** A container holding no sub-scripts at all. */
-    public const GAP_EMPTY_CONTAINER = 'empty container';
+    public const SHAPE_EMPTY_CONTAINER = 'empty container';
 
     /** An atLeast threshold at or below zero. */
-    public const GAP_THRESHOLD_AT_OR_BELOW_ZERO = 'threshold at or below zero';
+    public const SHAPE_THRESHOLD_AT_OR_BELOW_ZERO = 'threshold at or below zero';
 
     /** An atLeast threshold above the number of sub-scripts beside it. */
-    public const GAP_THRESHOLD_ABOVE_CHILD_COUNT = 'threshold above the child count';
+    public const SHAPE_THRESHOLD_ABOVE_CHILD_COUNT = 'threshold above the child count';
 
     /**
      * The remark a vector carries when it holds one of the three shapes, and the shape it names.
      *
      * A vector's remarks are the corpus's own record of why it is unusual, written when the vector was generated.
-     * Reading the refusal list off them rather than off a judgement made here means the two cannot drift: a refreshed
-     * corpus that adds one of these shapes adds it to the list, and one that stops carrying them empties it.
+     * Reading the two lists below off them rather than off a judgement made here means they cannot drift: a refreshed
+     * corpus that adds one of these shapes adds it to a list, and one that stops carrying them empties both.
      */
-    private const REMARK_GAPS = [
-        'empty-all' => self::GAP_EMPTY_CONTAINER,
-        'empty-any' => self::GAP_EMPTY_CONTAINER,
-        'required-zero' => self::GAP_THRESHOLD_AT_OR_BELOW_ZERO,
-        'required-exceeds-children' => self::GAP_THRESHOLD_ABOVE_CHILD_COUNT,
+    private const REMARK_SHAPES = [
+        'empty-all' => self::SHAPE_EMPTY_CONTAINER,
+        'empty-any' => self::SHAPE_EMPTY_CONTAINER,
+        'required-zero' => self::SHAPE_THRESHOLD_AT_OR_BELOW_ZERO,
+        'required-exceeds-children' => self::SHAPE_THRESHOLD_ABOVE_CHILD_COUNT,
     ];
 
     /**
-     * The vectors this package cannot build, and which shape stops it.
+     * The degenerate vectors this package builds, and the shape each one holds.
      *
-     * The first two groups are shapes cardano-cli builds and this package refuses. The third is a shape cardano-cli
-     * refuses in the same words this package does, so refusing it is the ecosystem's position rather than this
-     * package's alone. tests/fixtures/arachne/README.md carries the cardano-cli output that says which is which.
+     * cardano-cli builds all ten and prints the hashes the corpus records, and two of them are on chain. They are
+     * listed here so that an assertion can name the vector that carries a shape rather than say only that some vector
+     * somewhere does.
+     */
+    private const DEGENERATE_BUILT = [
+        'degenerate/atleast-negative' => self::SHAPE_THRESHOLD_AT_OR_BELOW_ZERO,
+        'degenerate/empty-all' => self::SHAPE_EMPTY_CONTAINER,
+        'degenerate/empty-any' => self::SHAPE_EMPTY_CONTAINER,
+        'degenerate/empty-atleast-0' => self::SHAPE_THRESHOLD_AT_OR_BELOW_ZERO,
+        'degenerate/nested-empty-all' => self::SHAPE_EMPTY_CONTAINER,
+        'threshold-matrix/atleast-0-of-1' => self::SHAPE_THRESHOLD_AT_OR_BELOW_ZERO,
+        'threshold-matrix/atleast-0-of-2' => self::SHAPE_THRESHOLD_AT_OR_BELOW_ZERO,
+        'threshold-matrix/atleast-0-of-3' => self::SHAPE_THRESHOLD_AT_OR_BELOW_ZERO,
+        'threshold-matrix/atleast-0-of-5' => self::SHAPE_THRESHOLD_AT_OR_BELOW_ZERO,
+        'threshold-matrix/atleast-0-of-7' => self::SHAPE_THRESHOLD_AT_OR_BELOW_ZERO,
+    ];
+
+    /**
+     * The vectors this package refuses, and the shape that stops each one.
+     *
+     * All seven hold a threshold above the number of sub-scripts beside it, which can never be met. cardano-cli
+     * refuses the same seven, with "Required number of script signatures exceeds the number of scripts", so refusing
+     * them is the ecosystem's position rather than this package's alone. tests/fixtures/arachne/README.md carries the
+     * cardano-cli output that says which shapes it builds and which it refuses.
      */
     private const REFUSED = [
-        'degenerate/atleast-negative' => self::GAP_THRESHOLD_AT_OR_BELOW_ZERO,
-        'degenerate/empty-all' => self::GAP_EMPTY_CONTAINER,
-        'degenerate/empty-any' => self::GAP_EMPTY_CONTAINER,
-        'degenerate/empty-atleast-0' => self::GAP_THRESHOLD_AT_OR_BELOW_ZERO,
-        'degenerate/empty-atleast-1' => self::GAP_THRESHOLD_ABOVE_CHILD_COUNT,
-        'degenerate/nested-empty-all' => self::GAP_EMPTY_CONTAINER,
-        'duplicate-keys/dup-2x-need-3' => self::GAP_THRESHOLD_ABOVE_CHILD_COUNT,
-        'threshold-matrix/atleast-0-of-1' => self::GAP_THRESHOLD_AT_OR_BELOW_ZERO,
-        'threshold-matrix/atleast-0-of-2' => self::GAP_THRESHOLD_AT_OR_BELOW_ZERO,
-        'threshold-matrix/atleast-0-of-3' => self::GAP_THRESHOLD_AT_OR_BELOW_ZERO,
-        'threshold-matrix/atleast-0-of-5' => self::GAP_THRESHOLD_AT_OR_BELOW_ZERO,
-        'threshold-matrix/atleast-0-of-7' => self::GAP_THRESHOLD_AT_OR_BELOW_ZERO,
-        'threshold-matrix/atleast-2-of-1' => self::GAP_THRESHOLD_ABOVE_CHILD_COUNT,
-        'threshold-matrix/atleast-3-of-2' => self::GAP_THRESHOLD_ABOVE_CHILD_COUNT,
-        'threshold-matrix/atleast-4-of-3' => self::GAP_THRESHOLD_ABOVE_CHILD_COUNT,
-        'threshold-matrix/atleast-6-of-5' => self::GAP_THRESHOLD_ABOVE_CHILD_COUNT,
-        'threshold-matrix/atleast-8-of-7' => self::GAP_THRESHOLD_ABOVE_CHILD_COUNT,
+        'degenerate/empty-atleast-1' => self::SHAPE_THRESHOLD_ABOVE_CHILD_COUNT,
+        'duplicate-keys/dup-2x-need-3' => self::SHAPE_THRESHOLD_ABOVE_CHILD_COUNT,
+        'threshold-matrix/atleast-2-of-1' => self::SHAPE_THRESHOLD_ABOVE_CHILD_COUNT,
+        'threshold-matrix/atleast-3-of-2' => self::SHAPE_THRESHOLD_ABOVE_CHILD_COUNT,
+        'threshold-matrix/atleast-4-of-3' => self::SHAPE_THRESHOLD_ABOVE_CHILD_COUNT,
+        'threshold-matrix/atleast-6-of-5' => self::SHAPE_THRESHOLD_ABOVE_CHILD_COUNT,
+        'threshold-matrix/atleast-8-of-7' => self::SHAPE_THRESHOLD_ABOVE_CHILD_COUNT,
     ];
 
     /**
@@ -148,23 +162,44 @@ final class ArachneCorpus
     }
 
     /**
-     * The same list, read off the corpus's own remarks rather than off the list above.
+     * @return array<string, string> vector id => the degenerate shape it holds
+     */
+    public static function degenerateBuilt(): array
+    {
+        return self::DEGENERATE_BUILT;
+    }
+
+    /**
+     * Every degenerate vector, read off the corpus's own remarks rather than off the lists above.
+     *
+     * @return array<string, string> vector id => the degenerate shape it holds
+     */
+    public static function degenerateByRemark(): array
+    {
+        $degenerate = [];
+
+        foreach (self::ids() as $id) {
+            foreach (self::vector($id)['remarks'] as $remark) {
+                if (isset(self::REMARK_SHAPES[$remark['code']])) {
+                    $degenerate[$id] = self::REMARK_SHAPES[$remark['code']];
+                }
+            }
+        }
+
+        return $degenerate;
+    }
+
+    /**
+     * The refusal list, derived the same way: the degenerate vectors whose threshold is above their child count.
      *
      * @return array<string, string> vector id => the shape that stops it
      */
     public static function refusedByRemark(): array
     {
-        $refused = [];
-
-        foreach (self::ids() as $id) {
-            foreach (self::vector($id)['remarks'] as $remark) {
-                if (isset(self::REMARK_GAPS[$remark['code']])) {
-                    $refused[$id] = self::REMARK_GAPS[$remark['code']];
-                }
-            }
-        }
-
-        return $refused;
+        return array_filter(
+            self::degenerateByRemark(),
+            static fn (string $shape): bool => $shape === self::SHAPE_THRESHOLD_ABOVE_CHILD_COUNT
+        );
     }
 
     /**
@@ -182,8 +217,18 @@ final class ArachneCorpus
      */
     public static function refusedVectors(): iterable
     {
-        foreach (self::REFUSED as $id => $gap) {
-            yield $id => [$id, $gap];
+        foreach (self::REFUSED as $id => $shape) {
+            yield $id => [$id, $shape];
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string, string}>
+     */
+    public static function degenerateBuiltVectors(): iterable
+    {
+        foreach (self::DEGENERATE_BUILT as $id => $shape) {
+            yield $id => [$id, $shape];
         }
     }
 

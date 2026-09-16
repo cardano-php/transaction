@@ -23,6 +23,15 @@ use CBOR\Tag\SetTag;
  */
 final class SequenceForm
 {
+    /**
+     * The item count the ledger's own encoder switches framing at.
+     *
+     * cardano-ledger-binary writes an array of up to this many items with a definite-length head, and everything
+     * above it with an indefinite-length head and a break byte. The number is `lengthThreshold` in that encoder, and
+     * it is 23 because 23 is the largest count a CBOR head carries inline.
+     */
+    public const LENGTH_THRESHOLD = 23;
+
     private function __construct(
         public readonly bool $indefinite,
         public readonly ?int $setTagAdditionalInformation,
@@ -37,6 +46,18 @@ final class SequenceForm
     public static function definite(): self
     {
         return new self(false, null);
+    }
+
+    /**
+     * The form the ledger's own encoder writes an array of $itemCount items in.
+     *
+     * cardano-node and cardano-cli serialize through that encoder, so this is the framing a container has to take for
+     * its bytes to be the bytes those tools produce. Both framings are well formed and the ledger accepts either, but
+     * they are different bytes, and a script hash is an address.
+     */
+    public static function forLedgerLength(int $itemCount): self
+    {
+        return new self($itemCount > self::LENGTH_THRESHOLD, null);
     }
 
     /**

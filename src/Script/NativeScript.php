@@ -22,6 +22,7 @@ use Cardano\Transaction\Hash\Blake2b;
 use CBOR\ByteStringObject;
 use CBOR\CBORObject;
 use CBOR\ListObject;
+use CBOR\NegativeIntegerObject;
 use CBOR\UnsignedIntegerObject;
 
 /**
@@ -48,10 +49,19 @@ use CBOR\UnsignedIntegerObject;
  * the other way round, a minting policy either never mints at all or only starts minting once the campaign it was
  * built for has finished. isSatisfiedBy() is the same rule as an assertion rather than as a comment.
  *
- * Encoding is canonical: every head is the shortest that holds its value and every array is definite in length. That
- * is not a style choice. The hash is taken over these bytes, the hash is the address, and an address has no
- * migration, so a second encoder that agreed about the meaning and disagreed about the bytes would send funds
- * somewhere nobody is watching.
+ * Encoding follows the ledger's own encoder. Every head is the shortest that holds its value, and a list of
+ * sub-scripts is written definite in length up to 23 items and indefinite above that, which is where
+ * cardano-ledger-binary switches. That is not a style choice. The hash is taken over these bytes, the hash is the
+ * address, and an address has no migration, so a second encoder that agreed about the meaning and disagreed about the
+ * bytes would send funds somewhere nobody is watching. cardano-node and cardano-cli serialize through that encoder,
+ * so a script built here from the JSON of a script file hashes to the hash cardano-cli prints for it, at every width.
+ *
+ * The grammar admits a container holding no sub-scripts and a threshold at or below zero, the chain carries both, and
+ * cardano-cli builds both, so this class builds them too. What they mean is worth knowing before building one. An
+ * `all` with no sub-scripts has no condition left to fail, so every transaction satisfies it and anyone can spend what
+ * it guards; an `atLeast` whose threshold is zero or negative is the same script written differently. An `any` with no
+ * sub-scripts has no branch that can succeed, so nothing satisfies it and what it guards is frozen. A threshold above
+ * the number of sub-scripts beside it is refused, because cardano-cli refuses it too.
  */
 final class NativeScript
 {
@@ -115,29 +125,47 @@ final class NativeScript
         return new self(self::SIG, key: $key);
     }
 
+    /**
+     * An `all` clause, which is satisfied when every sub-script beside it is.
+     *
+     * With no sub-scripts there is nothing left to satisfy, so the script is satisfied by every transaction and
+     * anyone can spend what it guards. That script is on mainnet, cardano-cli builds it, and so does this.
+     */
     public static function all(self ...$scripts): self
     {
-        return new self(self::ALL, self::nonEmpty($scripts, self::ALL));
+        return new self(self::ALL, array_values($scripts));
     }
 
+    /**
+     * An `any` clause, which is satisfied when one sub-script beside it is.
+     *
+     * With no sub-scripts there is no branch that can succeed, so nothing satisfies it and what it guards cannot be
+     * spent at all.
+     */
     public static function any(self ...$scripts): self
     {
-        return new self(self::ANY, self::nonEmpty($scripts, self::ANY));
+        return new self(self::ANY, array_values($scripts));
     }
 
+    /**
+     * An `atLeast` clause, satisfied when $required of the sub-scripts beside it are.
+     *
+     * A threshold at or below zero is already met before anything is counted, which makes the script satisfied by
+     * every transaction. The ledger reads the threshold as a signed 64-bit integer and cardano-cli writes whatever it
+     * is given, so this does the same. A threshold above the number of sub-scripts is the one case the whole
+     * ecosystem refuses: it can never be met, and cardano-cli says so rather than building it.
+     */
     public static function atLeast(int $required, self ...$scripts): self
     {
-        $scripts = self::nonEmpty($scripts, self::AT_LEAST);
-
-        if ($required < 1 || $required > count($scripts)) {
+        if ($required > count($scripts)) {
             throw new ScriptException(sprintf(
-                'atLeast requires between 1 and %d signatures, got: %d',
-                count($scripts),
-                $required
+                'Required number of script signatures exceeds the number of scripts: %d of %d.',
+                $required,
+                count($scripts)
             ));
         }
 
-        return new self(self::AT_LEAST, $scripts, required: $required);
+        return new self(self::AT_LEAST, array_values($scripts), required: $required);
     }
 
     /**
@@ -233,10 +261,11 @@ final class NativeScript
     /**
      * A script from the bytes a witness set or a reference script carries.
      *
-     * The bytes have to be the canonical encoding. A script written any other way still hashes to whatever the chain
-     * knows it by, but this model would re-encode it canonically and produce a different hash, so it is refused here
-     * rather than silently rewritten. The hash of such a script is the hash of the bytes it arrived in, which is what
-     * WitnessSet::nativeScriptHashes() takes.
+     * The bytes have to be the encoding this class writes, which is the ledger's own. A script written any other way
+     * still hashes to whatever the chain knows it by, but this model would re-encode it and produce a different hash,
+     * so it is refused here rather than silently rewritten. That covers a wide container framed definite, which some
+     * other libraries write and the ledger accepts. The hash of such a script is the hash of the bytes it arrived in,
+     * which is what WitnessSet::nativeScriptHashes() takes.
      */
     public static function fromCbor(string $bytes): self
     {
@@ -248,8 +277,8 @@ final class NativeScript
 
         if ($script->cbor() !== $bytes) {
             throw new ScriptException(
-                'This script is not written in the canonical encoding, so re-encoding it would change its hash. '
-                .'Hash the bytes it arrived in instead.'
+                'This script is not written in the encoding this package produces, so re-encoding it would change '
+                .'its hash. Hash the bytes it arrived in instead.'
             );
         }
 
@@ -301,13 +330,10 @@ final class NativeScript
             $scripts[] = self::read($child, sprintf('%s script %d', $context, $i));
         }
 
-        if ($scripts === []) {
-            throw new DecodeException(sprintf('%s: a %s clause holds at least one script.', $context, $kind));
-        }
-
         if ($kind === self::AT_LEAST) {
+            // The threshold is a signed integer in the CDDL, and a negative one is a script the ledger accepts.
             return self::atLeast(
-                CborInteger::unsignedFromCbor($items[1], $context.' threshold')->toInt(),
+                CborInteger::fromCbor($items[1], $context.' threshold')->toInt(),
                 ...$scripts
             );
         }
@@ -356,7 +382,7 @@ final class NativeScript
             ]),
             self::AT_LEAST => ListObject::create([
                 $tag,
-                UnsignedIntegerObject::create((int) $this->required),
+                self::thresholdObject((int) $this->required),
                 $this->childList(),
             ]),
             default => ListObject::create([$tag, $this->childList()]),
@@ -568,22 +594,24 @@ final class NativeScript
         return $met;
     }
 
-    private function childList(): ListObject
+    /**
+     * The sub-scripts, framed the way the ledger's encoder frames a list of that many items.
+     */
+    private function childList(): CBORObject
     {
-        return ListObject::create(array_map(static fn (self $s): CBORObject => $s->toCbor(), $this->scripts));
+        return SequenceForm::forLedgerLength(count($this->scripts))->wrap(
+            array_map(static fn (self $s): CBORObject => $s->toCbor(), $this->scripts)
+        );
     }
 
     /**
-     * @param  list<self>  $scripts
-     * @return list<self>
+     * The threshold, written as the signed integer the CDDL says it is.
      */
-    private static function nonEmpty(array $scripts, string $kind): array
+    private static function thresholdObject(int $required): CBORObject
     {
-        if ($scripts === []) {
-            throw new ScriptException($kind.' needs at least one sub-script.');
-        }
-
-        return $scripts;
+        return $required < 0
+            ? NegativeIntegerObject::create($required)
+            : UnsignedIntegerObject::create($required);
     }
 
     private static function slot(int $slot): int

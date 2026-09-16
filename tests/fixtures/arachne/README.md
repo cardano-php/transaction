@@ -11,7 +11,7 @@ implementation, in another language, from a written specification, and none of i
 to check.
 
 The ten recorded mainnet scripts under `../cardano-scripts` prove the encoder at ten points the chain has already
-agreed with. These prove it at 109 more, on edges the chain's own scripts do not reach: containers of 400
+agreed with. These prove it at 119 more, on edges the chain's own scripts do not reach: containers of 400
 sub-scripts, nesting 65 levels deep, thresholds one either side of every boundary, and the same key hash named twice
 under one threshold.
 
@@ -47,29 +47,58 @@ neither the corpus nor this suite answers it.
 
 ## What the suite checks
 
-For each of the 109 vectors this package can build:
+For each of the 119 vectors this package can build:
 
 - the CBOR, as a byte comparison, and the preimage the hash is taken over;
 - the script hash, and the policy identifier and the credential that carry the same bytes;
 - the enterprise address, the base address with the script in both slots, and the reward address, on mainnet, preview
   and preprod;
 - the script read back from its own bytes, down to the structure;
-- every witness set the corpus sampled for it, 952 in all.
+- every witness set the corpus sampled for it, 1012 in all.
 
-## What the suite does not check
+## The degenerate shapes
 
-**Governance identifiers.** Every vector records a DRep, a constitutional committee cold and a constitutional
-committee hot identifier, in both the CIP-129 and the CIP-105 form. This package has no governance credential type, so
-nothing reads them.
+Seventeen vectors hold a container with no sub-scripts, or a threshold outside the range its sub-script count allows.
+The grammar admits every one of them. `script_all = (1, [* native_script])` is zero or more sub-scripts, and `n` in
+`script_n_of_k = (3, n : int64, [* native_script])` is a signed 64-bit integer, so an empty container and a threshold
+at or below zero both encode and both hash to a real script hash at a real address.
 
-**The encoding a node writes.** A container holding 24 or more sub-scripts has two valid encodings and therefore two
-valid script hashes. The ledger's own encoder, which cardano-node and cardano-cli serialize through, writes a
-definite-length array up to 23 elements and an indefinite-length array from 24. This package writes a definite-length
-array at every size. Both are well-formed, the ledger accepts both, and it hashes whichever bytes it was given. 15 of
-the 126 vectors hold a container that wide. This package computes the definite hash from JSON and has no way to ask
-for the other one, so a caller holding the JSON of a wide script that cardano-cli built derives a different address
-here than cardano-cli derives. Reading such a script from a transaction is unaffected, because a witness set hashes
-the bytes each script arrived in and never rebuilds them.
+cardano-cli builds ten of the seventeen and refuses the other seven:
+
+| Shape                             | Vectors | cardano-cli                                                                      |
+| --------------------------------- | ------- | -------------------------------------------------------------------------------- |
+| A container with no sub-scripts   | 3       | builds it and prints the hash the corpus records                                 |
+| A threshold at or below zero      | 7       | builds it and prints the hash the corpus records                                 |
+| A threshold above the child count | 7       | refuses it: "Required number of script signatures exceeds the number of scripts" |
+
+This package builds the same ten and refuses the same seven, as JSON and as CBOR, and `ArachneConformanceTest`
+asserts each case. A shape that starts or stops building fails a test rather than quietly changing what the suite
+covers. The 55 witness sets the seven refused vectors carry are counted in the suite and named as unreachable.
+
+Two of the ten are on chain. `{"type": "all", "scripts": []}` hashes to
+`d441227553a0f1a965fee7d60a0f724b368dd1bddbc208730fccebcf` and has been on mainnet since epoch 392, created by
+transaction `c6ae228099eabfebfadd325f8536e4b63ace258e3c1e1e666b89dd80a3573a4e`.
+`{"type": "all", "scripts": [{"type": "all", "scripts": []}]}` hashes to
+`60be8259acde0a72b76f36977223cac39432713a42bcfdf76a55dd7f` on preprod, created by transaction
+`976cf22d10afac84fc64895eb31c2d3142d1cfef4c7f6b1c2ff72c4ed8cafe61`. Both were read from Koios on 15 September 2026,
+at `eu-api.koios.rest` for mainnet and `preprod.koios.rest` for preprod.
+
+An empty `all` is satisfied by a transaction carrying no witnesses at all, so anyone can spend what it guards. The
+corpus records that answer for it and the suite asserts it.
+
+## The two encodings of a wide container
+
+A container holding 24 or more sub-scripts has two valid encodings and therefore two valid script hashes. The ledger's
+own encoder, which cardano-node and cardano-cli serialize through, writes a definite-length array up to 23 elements
+and an indefinite-length array from 24. cardano-serialization-lib and MeshJS write a definite-length array at every
+size. Both are well-formed, the ledger accepts both, and the ledger hashes whichever bytes it was given. 15 of the 126
+vectors hold a container that wide.
+
+This package writes what the ledger's encoder writes, so the CBOR, hash and address assertions run against the
+`cardanoBinary` half of every vector. The `definite` half of those 15 is checked in the two places it can still arrive.
+`NativeScript::fromCbor` refuses it rather than re-encoding it, because re-encoding would move its hash. A witness set
+carrying those bytes hashes them to the `definite` script hash the corpus records, because a witness set hashes the
+bytes each script arrived in and never rebuilds them. Both are asserted for all 15.
 
 The corpus records both hashes for every vector. cardano-cli 10.7.0.0 was run over a sample of them, and agreed with
 the corpus in every case:
@@ -82,29 +111,13 @@ the corpus in every case:
 | `breadth/all-w400`           | 400             | `c604f11a3c347c4b...`  | cardano-binary  |
 | `federation/m20-c20-s11`     | 20              | `400a818dace7a947...`  | both encodings  |
 
-**Seventeen vectors holding shapes this package refuses to build.** The grammar admits every one of them.
-`script_all = (1, [* native_script])` is zero or more sub-scripts, and `n` in
-`script_n_of_k = (3, n : int64, [* native_script])` is a signed 64-bit integer, so an empty container and a threshold
-at or below zero both encode and both hash to a real script hash at a real address. This package refuses them, and
-`ArachneConformanceTest` asserts each refusal, so a shape that starts building fails a test rather than quietly
-widening what the suite covers.
+This package prints the same hash as cardano-cli in every row, and `ArachneConformanceTest` asserts all five by
+their printed values.
 
-cardano-cli builds ten of the seventeen and refuses the other seven:
+## What the suite does not check
 
-| Shape                             | Vectors | cardano-cli                                                                      |
-| --------------------------------- | ------- | -------------------------------------------------------------------------------- |
-| A container with no sub-scripts   | 3       | builds it and prints the hash the corpus records                                 |
-| A threshold at or below zero      | 7       | builds it and prints the hash the corpus records                                 |
-| A threshold above the child count | 7       | refuses it: "Required number of script signatures exceeds the number of scripts" |
-
-The empty container is on chain. The script `{"type": "all", "scripts": []}` hashes to
-`d441227553a0f1a965fee7d60a0f724b368dd1bddbc208730fccebcf` and has been on mainnet since epoch 392, created by
-transaction `c6ae228099eabfebfadd325f8536e4b63ace258e3c1e1e666b89dd80a3573a4e`. `{"type": "all", "scripts": [{"type":
-"all", "scripts": []}]}` hashes to `60be8259acde0a72b76f36977223cac39432713a42bcfdf76a55dd7f` and is on preprod,
-created by transaction `976cf22d10afac84fc64895eb31c2d3142d1cfef4c7f6b1c2ff72c4ed8cafe61`. Both were read from Koios
-on 15 September 2026, at `eu-api.koios.rest` for mainnet and `preprod.koios.rest` for preprod.
-
-The 115 witness sets those seventeen vectors carry are counted in the suite and named as unreachable.
+Every vector records a DRep, a constitutional committee cold and a constitutional committee hot identifier, in both
+the CIP-129 and the CIP-105 form. This package has no governance credential type, so nothing reads them.
 
 ## Refreshing the copy
 

@@ -366,6 +366,147 @@ class NativeScriptTest extends TestCase
         ], $script->toArray());
     }
 
+    // ------------------------------------------------------ the degenerate shapes
+
+    /**
+     * A container with no sub-scripts, which the grammar admits and the chain carries.
+     *
+     * `{"type": "all", "scripts": []}` hashes to d441227553a0f1a965fee7d60a0f724b368dd1bddbc208730fccebcf and has
+     * been on mainnet since epoch 392, created by transaction
+     * c6ae228099eabfebfadd325f8536e4b63ace258e3c1e1e666b89dd80a3573a4e. There is no condition left to fail, so every
+     * transaction satisfies it and anyone who finds the address can spend what sits at it. cardano-cli builds it and
+     * the node accepted it, so this builds it too.
+     */
+    public function test_an_all_with_no_sub_scripts_is_built_and_satisfied_by_a_transaction_carrying_nothing(): void
+    {
+        $script = NativeScript::all();
+
+        $this->assertSame('820180', $script->cborHex());
+        $this->assertSame('d441227553a0f1a965fee7d60a0f724b368dd1bddbc208730fccebcf', $script->hashHex());
+        $this->assertTrue($script->isSatisfiedBy([]));
+        $this->assertSame([], $script->keyHashes());
+    }
+
+    /**
+     * The same script one level down, which is on preprod at
+     * 60be8259acde0a72b76f36977223cac39432713a42bcfdf76a55dd7f, created by transaction
+     * 976cf22d10afac84fc64895eb31c2d3142d1cfef4c7f6b1c2ff72c4ed8cafe61. The outer `all` has one sub-script, and that
+     * sub-script is satisfied by a transaction carrying nothing, so the outer one is too.
+     */
+    public function test_an_empty_all_nested_in_another_all_is_built_and_satisfied(): void
+    {
+        $script = NativeScript::all(NativeScript::all());
+
+        $this->assertSame('820181820180', $script->cborHex());
+        $this->assertSame('60be8259acde0a72b76f36977223cac39432713a42bcfdf76a55dd7f', $script->hashHex());
+        $this->assertTrue($script->isSatisfiedBy([]));
+    }
+
+    /**
+     * An `any` with no sub-scripts is the other end of it: no branch can succeed, so nothing satisfies it and what it
+     * guards cannot be spent by anybody.
+     */
+    public function test_an_any_with_no_sub_scripts_is_built_and_satisfied_by_nothing(): void
+    {
+        $script = NativeScript::any();
+
+        $this->assertSame('820280', $script->cborHex());
+        $this->assertFalse($script->isSatisfiedBy([]));
+        $this->assertFalse($script->isSatisfiedBy([self::ALICE, self::BOB]));
+    }
+
+    /**
+     * A threshold of zero is met before any sub-script is counted, which makes the sub-scripts beside it decoration.
+     */
+    public function test_a_threshold_of_zero_is_built_and_met_by_no_signatures(): void
+    {
+        $script = NativeScript::atLeast(0, NativeScript::sig(self::ALICE));
+
+        $this->assertSame('830300818200581c'.self::ALICE, $script->cborHex());
+        $this->assertTrue($script->isSatisfiedBy([]));
+    }
+
+    /**
+     * And a negative threshold, which the CDDL admits because `n` in `script_n_of_k` is a signed 64-bit integer.
+     * cardano-cli reads one out of a script file, so a script file holding one has to arrive here intact: written as
+     * a CBOR negative integer, read back as the number it was, and hashed to the same twenty-eight bytes either way.
+     */
+    public function test_a_negative_threshold_is_built_and_written_as_a_negative_integer(): void
+    {
+        $script = NativeScript::fromArray([
+            'type' => 'atLeast',
+            'required' => -1,
+            'scripts' => [['type' => 'sig', 'keyHash' => self::ALICE]],
+        ]);
+
+        $this->assertSame('830320818200581c'.self::ALICE, $script->cborHex());
+        $this->assertSame(-1, $script->toArray()['required']);
+        $this->assertTrue($script->isSatisfiedBy([]));
+        $this->assertSame($script->hashHex(), NativeScript::fromCbor($script->cbor())->hashHex());
+    }
+
+    // -------------------------------------------------- how a container is framed
+
+    /**
+     * The ledger's own encoder writes an array of up to 23 items definite in length and everything above that
+     * indefinite, with a break byte at the end. cardano-node and cardano-cli serialize through that encoder, so a
+     * container built here is framed the same way and the hash a caller derives from a script file is the hash
+     * cardano-cli prints for that file.
+     */
+    public function test_a_container_of_twenty_three_is_definite_and_one_of_twenty_four_is_indefinite(): void
+    {
+        $sig = NativeScript::sig(self::ALICE);
+        $sigHex = '8200581c'.self::ALICE;
+
+        $this->assertSame(
+            '820197'.str_repeat($sigHex, 23),
+            NativeScript::all(...array_fill(0, 23, $sig))->cborHex()
+        );
+        $this->assertSame(
+            '82019f'.str_repeat($sigHex, 24).'ff',
+            NativeScript::all(...array_fill(0, 24, $sig))->cborHex()
+        );
+        $this->assertSame(
+            '830318189f'.str_repeat($sigHex, 24).'ff',
+            NativeScript::atLeast(24, ...array_fill(0, 24, $sig))->cborHex()
+        );
+    }
+
+    /**
+     * The framing is per container rather than per script, so a narrow container holding a wide one keeps its own
+     * definite head. A script that reframed every container at once would agree with cardano-cli here and disagree
+     * one level up.
+     */
+    public function test_only_the_container_that_is_wide_changes_its_framing(): void
+    {
+        $sig = NativeScript::sig(self::ALICE);
+        $sigHex = '8200581c'.self::ALICE;
+
+        $this->assertSame(
+            '820181'.'82029f'.str_repeat($sigHex, 24).'ff',
+            NativeScript::all(NativeScript::any(...array_fill(0, 24, $sig)))->cborHex()
+        );
+    }
+
+    /**
+     * The same container framed definite is a script the ledger accepts, hashes to a different twenty-eight bytes,
+     * and is not what this package writes. Re-encoding it here would move its hash, so it is refused with a message
+     * saying where to get the hash instead.
+     */
+    public function test_a_wide_container_framed_definite_is_refused_rather_than_re_framed(): void
+    {
+        $sigHex = '8200581c'.self::ALICE;
+        $wide = NativeScript::all(...array_fill(0, 24, NativeScript::sig(self::ALICE)));
+        $definite = (string) hex2bin('82019818'.str_repeat($sigHex, 24));
+
+        $this->assertNotSame($wide->hashHex(), bin2hex(Blake2b::hash224("\x00".$definite)));
+
+        $this->expectException(ScriptException::class);
+        $this->expectExceptionMessage('re-encoding it would change');
+
+        NativeScript::fromCbor($definite);
+    }
+
     // ------------------------------------------------------------- bad inputs
 
     public static function unusableKeyHashes(): array
@@ -404,25 +545,18 @@ class NativeScriptTest extends TestCase
         NativeScript::before(-1);
     }
 
-    public function test_an_empty_branch_is_refused(): void
-    {
-        $this->expectException(ScriptException::class);
-
-        NativeScript::any();
-    }
-
+    /**
+     * The one degenerate shape the whole ecosystem refuses.
+     *
+     * A threshold above the number of sub-scripts beside it can never be met, and cardano-cli refuses it with
+     * "Required number of script signatures exceeds the number of scripts" rather than building it.
+     */
     public function test_an_unreachable_threshold_is_refused(): void
     {
         $this->expectException(ScriptException::class);
+        $this->expectExceptionMessage('exceeds the number of scripts');
 
         NativeScript::atLeast(3, NativeScript::sig(self::ALICE), NativeScript::sig(self::BOB));
-    }
-
-    public function test_a_threshold_below_one_is_refused(): void
-    {
-        $this->expectException(ScriptException::class);
-
-        NativeScript::atLeast(0, NativeScript::sig(self::ALICE));
     }
 
     public static function unusableJson(): array
@@ -434,7 +568,6 @@ class NativeScriptTest extends TestCase
             'a before with no slot' => [['type' => 'before']],
             'a slot written as a string' => [['type' => 'before', 'slot' => '1000']],
             'an all with no scripts' => [['type' => 'all']],
-            'an all with an empty list' => [['type' => 'all', 'scripts' => []]],
             'an atLeast with no threshold' => [['type' => 'atLeast', 'scripts' => [['type' => 'sig', 'keyHash' => self::ALICE]]]],
             'a scripts list holding a scalar' => [['type' => 'any', 'scripts' => ['sig']]],
         ];
@@ -466,7 +599,7 @@ class NativeScriptTest extends TestCase
     }
 
     #[DataProvider('unusableCbor')]
-    public function test_cbor_that_is_not_a_canonical_native_script_is_refused(string $hex): void
+    public function test_cbor_this_package_would_not_have_written_is_refused(string $hex): void
     {
         $this->expectException(ScriptException::class);
 
@@ -490,7 +623,7 @@ class NativeScriptTest extends TestCase
         );
 
         $this->expectException(ScriptException::class);
-        $this->expectExceptionMessage('canonical');
+        $this->expectExceptionMessage('re-encoding it would change');
 
         NativeScript::fromCbor($wider);
     }
