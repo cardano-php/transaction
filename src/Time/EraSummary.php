@@ -7,7 +7,9 @@ declare(strict_types=1);
 
 namespace Cardano\Transaction\Time;
 
+use Brick\Math\BigInteger;
 use Cardano\Transaction\Exception\TimeException;
+use Cardano\Transaction\Ledger\Slot;
 
 /**
  * One era's worth of slot arithmetic: where it starts, and how long a slot lasts inside it.
@@ -74,9 +76,12 @@ final class EraSummary
         return $unixTime >= $this->startTime && ($this->endTime === null || $unixTime < $this->endTime);
     }
 
-    public function containsSlot(int $slot): bool
+    public function containsSlot(int|string|BigInteger $slot): bool
     {
-        return $slot >= $this->startSlot && ($this->endSlot === null || $slot < $this->endSlot);
+        $value = self::slot($slot);
+
+        return $value->isGreaterThanOrEqualTo($this->startSlot)
+            && ($this->endSlot === null || $value->isLessThan($this->endSlot));
     }
 
     /**
@@ -88,43 +93,50 @@ final class EraSummary
      */
     public function slotAt(int $unixTime): int
     {
-        $elapsedMs = ($unixTime - $this->startTime) * 1000;
+        $elapsedMs = BigInteger::of($unixTime)->minus($this->startTime)->multipliedBy(1000);
 
-        if ($elapsedMs < 0) {
+        if ($elapsedMs->isNegative()) {
             throw new TimeException('That instant falls before this era began.');
         }
 
-        if ($elapsedMs % $this->slotLengthMs !== 0) {
+        if (! $elapsedMs->mod($this->slotLengthMs)->isZero()) {
             throw new TimeException(sprintf(
-                'That instant is %d ms into an era whose slots are %d ms long, so it falls between two slots.',
+                'That instant is %s ms into an era whose slots are %d ms long, so it falls between two slots.',
                 $elapsedMs,
                 $this->slotLengthMs
             ));
         }
 
-        return $this->startSlot + intdiv($elapsedMs, $this->slotLengthMs);
+        return self::asPhpInt($elapsedMs->dividedBy($this->slotLengthMs)->plus($this->startSlot), 'slot');
     }
 
     /**
      * The instant a slot begins.
+     *
+     * The multiplication is done in full width rather than in a PHP integer. A slot in the upper part of the range
+     * times a slot length overflows a signed 64-bit integer, and PHP answers an overflowed multiplication with a
+     * float rather than an error, so the arithmetic would quietly continue against a number that had lost its low
+     * bits. There are slots for which it comes back out looking like an ordinary answer.
      */
-    public function timeOfSlot(int $slot): int
+    public function timeOfSlot(int|string|BigInteger $slot): int
     {
-        if ($slot < $this->startSlot) {
+        $value = self::slot($slot);
+
+        if ($value->isLessThan($this->startSlot)) {
             throw new TimeException('That slot falls before this era began.');
         }
 
-        $elapsedMs = ($slot - $this->startSlot) * $this->slotLengthMs;
+        $elapsedMs = $value->minus($this->startSlot)->multipliedBy($this->slotLengthMs);
 
-        if ($elapsedMs % 1000 !== 0) {
+        if (! $elapsedMs->mod(1000)->isZero()) {
             throw new TimeException(sprintf(
-                'Slot %d begins %d ms after the era started, which is not a whole second.',
-                $slot,
+                'Slot %s begins %s ms after the era started, which is not a whole second.',
+                $value,
                 $elapsedMs
             ));
         }
 
-        return $this->startTime + intdiv($elapsedMs, 1000);
+        return self::asPhpInt($elapsedMs->dividedBy(1000)->plus($this->startTime), 'instant');
     }
 
     /**
@@ -150,26 +162,70 @@ final class EraSummary
     }
 
     /**
-     * A whole number, refusing a fractional one.
+     * A whole number, refusing a fractional one and refusing a negative one.
      *
      * JSON has one number type and providers write these as floats. A fraction here is not a rounding nuisance, it is
      * a value this arithmetic cannot represent, and pretending otherwise moves every slot derived from it.
+     *
+     * Every quantity read out of an era summary counts something: an offset in seconds from the system start, a slot,
+     * an epoch, a slot length, an epoch length. None of them can be below zero, and one that is would put an era
+     * before the network it belongs to.
      */
     private static function whole(mixed $value, int $index, string $what): int
     {
+        $whole = null;
+
         if (is_int($value)) {
-            return $value;
+            $whole = $value;
+        } elseif (is_float($value) && $value === floor($value) && abs($value) < (float) PHP_INT_MAX) {
+            $whole = (int) $value;
         }
 
-        if (is_float($value) && $value === floor($value) && abs($value) < (float) PHP_INT_MAX) {
-            return (int) $value;
+        if ($whole === null) {
+            throw new TimeException(sprintf(
+                'Era summary %d has a %s of %s, which is not a whole number.',
+                $index,
+                $what,
+                var_export($value, true)
+            ));
         }
 
-        throw new TimeException(sprintf(
-            'Era summary %d has a %s of %s, which is not a whole number.',
-            $index,
-            $what,
-            var_export($value, true)
-        ));
+        if ($whole < 0) {
+            throw new TimeException(sprintf(
+                'Era summary %d has a %s of %d, which counts nothing.',
+                $index,
+                $what,
+                $whole
+            ));
+        }
+
+        return $whole;
+    }
+
+    /**
+     * A slot as the number it is, refusing anything outside the range a slot takes.
+     */
+    private static function slot(int|string|BigInteger $slot): BigInteger
+    {
+        return Slot::parse($slot) ?? throw new TimeException(Slot::complaint($slot));
+    }
+
+    /**
+     * A result narrowed back to a PHP integer, refusing one that does not fit.
+     *
+     * Slots run to 2^64-1 and PHP's integer stops at 2^63-1, so the far end of the slot range names instants no PHP
+     * integer can hold. Saying so is the only honest answer; narrowing one would be a date.
+     */
+    private static function asPhpInt(BigInteger $value, string $what): int
+    {
+        if ($value->isGreaterThan(PHP_INT_MAX)) {
+            throw new TimeException(sprintf(
+                'That %s is past %d, which is as far as this platform counts.',
+                $what,
+                PHP_INT_MAX
+            ));
+        }
+
+        return $value->toInt();
     }
 }

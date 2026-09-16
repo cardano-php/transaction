@@ -11,6 +11,7 @@ use Cardano\Transaction\Address\RewardAddress;
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Exception\ScriptException;
 use Cardano\Transaction\Primitives\WitnessSet;
+use Cardano\Transaction\Script\Framing;
 use Cardano\Transaction\Script\NativeScript;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\TestCase;
@@ -32,9 +33,8 @@ use PHPUnit\Framework\TestCase;
  *   - Every vector records governance identifiers in two standards. This package has no governance credential, so
  *     nothing here reads them.
  *   - Fifteen vectors have two valid script hashes because a container holds twenty-four or more sub-scripts. Each
- *     vector records both, and this package writes the one the ledger's own encoder writes, which is the one
- *     cardano-cli prints. The tests below assert that framing and assert that the other one is refused rather than
- *     rewritten.
+ *     vector records both, and this package reproduces both: it writes the one the ledger's own encoder writes
+ *     unless the caller asks for the other, and it reads either without re-framing it.
  */
 class ArachneConformanceTest extends TestCase
 {
@@ -44,18 +44,29 @@ class ArachneConformanceTest extends TestCase
      */
     private const NETWORKS = ['mainnet', 'preview', 'preprod'];
 
+    /**
+     * The two framings, under the names the corpus records each encoding by.
+     *
+     * Neither is canonical. The corpus holds both for every vector and treats neither as the answer, and so does
+     * this suite: every assertion below that names one names the other beside it.
+     */
+    private const FRAMINGS = ['definite' => Framing::Definite, 'cardanoBinary' => Framing::CardanoBinary];
+
     // ------------------------------------------------------------------ encoding
 
     #[DataProviderExternal(ArachneCorpus::class, 'buildableVectors')]
     public function test_a_vector_encodes_to_the_bytes_the_corpus_recorded(string $id): void
     {
         $vector = ArachneCorpus::vector($id);
-        $script = NativeScript::fromArray($vector['script']);
-        $expected = $vector['encoding']['cardanoBinary'];
 
-        $this->assertSame($expected['cborHex'], $script->cborHex(), $id);
-        $this->assertSame($expected['preimageHex'], bin2hex("\x00".$script->cbor()), $id.' preimage');
-        $this->assertSame($expected['cborBytes'], strlen($script->cbor()), $id.' byte count');
+        foreach (self::FRAMINGS as $name => $framing) {
+            $script = NativeScript::fromArray($vector['script'], $framing);
+            $expected = $vector['encoding'][$name];
+
+            $this->assertSame($expected['cborHex'], $script->cborHex(), $id.' '.$name);
+            $this->assertSame($expected['preimageHex'], bin2hex("\x00".$script->cbor()), $id.' '.$name.' preimage');
+            $this->assertSame($expected['cborBytes'], strlen($script->cbor()), $id.' '.$name.' byte count');
+        }
     }
 
     /**
@@ -72,6 +83,12 @@ class ArachneConformanceTest extends TestCase
         $this->assertSame($expected, $script->policyId(), $id.' policy id');
         $this->assertSame($expected, $script->credential()->hex(), $id.' credential');
         $this->assertTrue($script->credential()->isScript(), $id.' credential kind');
+
+        $this->assertSame(
+            $vector['encoding']['definite']['scriptHash'],
+            $script->framed(Framing::Definite)->hashHex(),
+            $id.' definite'
+        );
     }
 
     /**
@@ -122,17 +139,19 @@ class ArachneConformanceTest extends TestCase
     public function test_a_vector_survives_a_round_trip_through_its_own_bytes(string $id): void
     {
         $vector = ArachneCorpus::vector($id);
-        $expected = $vector['encoding']['cardanoBinary'];
 
-        $decoded = NativeScript::fromCbor((string) hex2bin($expected['cborHex']));
+        foreach (array_keys(self::FRAMINGS) as $name) {
+            $expected = $vector['encoding'][$name];
+            $decoded = NativeScript::fromCbor((string) hex2bin($expected['cborHex']));
 
-        $this->assertSame($expected['cborHex'], $decoded->cborHex(), $id);
-        $this->assertSame($expected['scriptHash'], $decoded->hashHex(), $id.' hash');
-        $this->assertSame(
-            self::orderedByKey($vector['script']),
-            self::orderedByKey($decoded->toArray()),
-            $id.' structure'
-        );
+            $this->assertSame($expected['cborHex'], $decoded->cborHex(), $id.' '.$name);
+            $this->assertSame($expected['scriptHash'], $decoded->hashHex(), $id.' '.$name.' hash');
+            $this->assertSame(
+                self::orderedByKey($vector['script']),
+                self::orderedByKey($decoded->toArray()),
+                $id.' '.$name.' structure'
+            );
+        }
     }
 
     /**
@@ -229,14 +248,15 @@ class ArachneConformanceTest extends TestCase
      * write a definite-length array at every size. Both are well-formed, the ledger accepts both, and it hashes
      * whichever bytes it received.
      *
-     * This package writes what the ledger's encoder writes, at every width. A caller holding the JSON of a wide script
-     * that cardano-cli built derives here the address cardano-cli derives.
+     * A caller says which one it means. The default is what the ledger's encoder writes, so a caller holding the JSON
+     * of a wide script that cardano-cli built derives here the address cardano-cli derives, and a caller deriving the
+     * address a JavaScript wallet derives asks for the other. Both halves of every encoding-sensitive vector are
+     * reproduced from the same JSON.
      */
     #[DataProviderExternal(ArachneCorpus::class, 'encodingSensitiveVectors')]
-    public function test_a_wide_container_is_written_the_way_the_ledger_writes_it(string $id): void
+    public function test_a_wide_container_is_written_in_whichever_framing_the_caller_asked_for(string $id): void
     {
         $vector = ArachneCorpus::vector($id);
-        $script = NativeScript::fromArray($vector['script']);
         $definite = $vector['encoding']['definite'];
         $cardanoBinary = $vector['encoding']['cardanoBinary'];
 
@@ -245,9 +265,22 @@ class ArachneConformanceTest extends TestCase
             $cardanoBinary['cborHex'],
             $id.' is listed as encoding sensitive but the corpus records one encoding twice.'
         );
-        $this->assertSame($cardanoBinary['cborHex'], $script->cborHex(), $id);
-        $this->assertSame($cardanoBinary['scriptHash'], $script->hashHex(), $id);
-        $this->assertNotSame($definite['scriptHash'], $script->hashHex(), $id.' second hash');
+
+        $default = NativeScript::fromArray($vector['script']);
+
+        $this->assertSame($cardanoBinary['cborHex'], $default->cborHex(), $id.' by default');
+        $this->assertSame($cardanoBinary['scriptHash'], $default->hashHex(), $id.' by default');
+
+        foreach (self::FRAMINGS as $name => $framing) {
+            $asked = NativeScript::fromArray($vector['script'], $framing);
+
+            $this->assertSame($vector['encoding'][$name]['cborHex'], $asked->cborHex(), $id.' '.$name);
+            $this->assertSame($vector['encoding'][$name]['scriptHash'], $asked->hashHex(), $id.' '.$name.' hash');
+            $this->assertSame($asked->cborHex(), $default->framed($framing)->cborHex(), $id.' reframed to '.$name);
+            $this->assertSame([$framing], $asked->framings(), $id.' '.$name.' framings');
+        }
+
+        $this->assertNotSame($definite['scriptHash'], $cardanoBinary['scriptHash'], $id.' second hash');
     }
 
     /**
@@ -276,22 +309,29 @@ class ArachneConformanceTest extends TestCase
     }
 
     /**
-     * The other framing, arriving as bytes rather than as JSON.
+     * Either framing arriving as bytes rather than as JSON.
      *
-     * NativeScript::fromCbor refuses a wide container framed definite, because re-encoding it here would produce the
-     * ledger's framing and therefore a hash that is not the one those bytes carry. The refusal is the correct answer
-     * for a model that re-encodes what it decoded, and it is only safe because the package has another path for these
-     * bytes.
+     * Neither is canonical, and which one a wide script is written in is decided by whichever tool wrote it rather
+     * than by anything about the script. Most of the ecosystem's tooling writes the definite form, so that is the
+     * form most already on chain. NativeScript::fromCbor keeps the framing each container arrived in, so the script
+     * re-encodes to the bytes it was read from and its hash stays the hash those bytes carry.
      */
     #[DataProviderExternal(ArachneCorpus::class, 'encodingSensitiveVectors')]
-    public function test_the_framing_this_package_does_not_write_is_refused_rather_than_re_encoded(string $id): void
+    public function test_either_framing_is_read_and_written_back_as_it_arrived(string $id): void
     {
-        $bytes = (string) hex2bin(ArachneCorpus::vector($id)['encoding']['definite']['cborHex']);
+        $encoding = ArachneCorpus::vector($id)['encoding'];
 
-        $this->expectException(ScriptException::class);
-        $this->expectExceptionMessage('re-encoding it would change its hash');
+        foreach (self::FRAMINGS as $name => $framing) {
+            $decoded = NativeScript::fromCbor((string) hex2bin($encoding[$name]['cborHex']));
 
-        NativeScript::fromCbor($bytes);
+            $this->assertSame($encoding[$name]['cborHex'], $decoded->cborHex(), $id.' '.$name);
+            $this->assertSame($encoding[$name]['scriptHash'], $decoded->hashHex(), $id.' '.$name.' hash');
+            $this->assertSame(
+                [$framing],
+                $decoded->framings(),
+                $id.' '.$name.' was read as a framing it was not written in.'
+            );
+        }
     }
 
     /**
@@ -343,6 +383,14 @@ class ArachneConformanceTest extends TestCase
                 $sensitive++;
 
                 continue;
+            }
+
+            if (! isset(ArachneCorpus::refused()[$id])) {
+                $this->assertSame(
+                    Framing::cases(),
+                    NativeScript::fromCbor((string) hex2bin($encoding['definite']['cborHex']))->framings(),
+                    $id.' is under the boundary and was read as belonging to one encoder.'
+                );
             }
 
             $this->assertSame(

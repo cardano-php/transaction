@@ -10,6 +10,7 @@ use Cardano\Transaction\Address\Network;
 use Cardano\Transaction\Exception\AddressException;
 use Cardano\Transaction\Exception\ScriptException;
 use Cardano\Transaction\Hash\Blake2b;
+use Cardano\Transaction\Script\Framing;
 use Cardano\Transaction\Script\NativeScript;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -489,22 +490,215 @@ class NativeScriptTest extends TestCase
     }
 
     /**
-     * The same container framed definite is a script the ledger accepts, hashes to a different twenty-eight bytes,
-     * and is not what this package writes. Re-encoding it here would move its hash, so it is refused with a message
-     * saying where to get the hash instead.
+     * The same container framed definite is a script the ledger accepts and a different twenty-eight bytes.
+     *
+     * It is what cardano-serialization-lib and MeshJS write, which makes it the framing most already on chain, so it
+     * has to be readable. Re-framing it on the way through would move its hash and the address with it, so the
+     * framing each container arrived in is kept and the script re-encodes to the bytes it came from.
      */
-    public function test_a_wide_container_framed_definite_is_refused_rather_than_re_framed(): void
+    public function test_a_wide_container_framed_definite_is_read_and_written_back_as_it_arrived(): void
     {
         $sigHex = '8200581c'.self::ALICE;
         $wide = NativeScript::all(...array_fill(0, 24, NativeScript::sig(self::ALICE)));
         $definite = (string) hex2bin('82019818'.str_repeat($sigHex, 24));
 
-        $this->assertNotSame($wide->hashHex(), bin2hex(Blake2b::hash224("\x00".$definite)));
+        $read = NativeScript::fromCbor($definite);
 
+        $this->assertNotSame($wide->hashHex(), $read->hashHex());
+        $this->assertSame(bin2hex($definite), $read->cborHex());
+        $this->assertSame(bin2hex(Blake2b::hash224("\x00".$definite)), $read->hashHex());
+        $this->assertSame([Framing::Definite], $read->framings());
+        $this->assertSame([Framing::CardanoBinary], $wide->framings());
+    }
+
+    /**
+     * The framing a script was built in, asked for by name.
+     *
+     * A caller deriving an address that a JavaScript wallet will also derive wants the definite form at every width.
+     * The two are byte-identical below twenty-four sub-scripts, so a caller that says nothing is unaffected and a
+     * caller that says something only sees a difference where there is one.
+     */
+    public function test_a_caller_picks_the_framing_and_gets_it_at_every_width(): void
+    {
+        $sig = NativeScript::sig(self::ALICE);
+        $sigHex = '8200581c'.self::ALICE;
+
+        $wide = NativeScript::all(...array_fill(0, 24, $sig));
+        $narrow = NativeScript::all(...array_fill(0, 23, $sig));
+
+        $this->assertSame('82019818'.str_repeat($sigHex, 24), $wide->framed(Framing::Definite)->cborHex());
+        $this->assertSame('82019f'.str_repeat($sigHex, 24).'ff', $wide->framed(Framing::CardanoBinary)->cborHex());
+
+        $this->assertSame($narrow->cborHex(), $narrow->framed(Framing::Definite)->cborHex());
+        $this->assertSame(Framing::cases(), $narrow->framings());
+        $this->assertSame($narrow->hashHex(), $narrow->framed(Framing::Definite)->hashHex());
+
+        $this->assertNotSame($wide->hashHex(), $wide->framed(Framing::Definite)->hashHex());
+    }
+
+    /**
+     * The framing reaches every container rather than only the one the caller can see.
+     *
+     * cardano-binary frames each list independently, so a script whose root holds two children still diverges if one
+     * of those children holds twenty-four. An implementation that looked only at the root would call such a script
+     * safe when it is not.
+     */
+    public function test_asking_for_a_framing_reframes_every_container_under_it(): void
+    {
+        $sigHex = '8200581c'.self::ALICE;
+        $nested = NativeScript::all(NativeScript::any(...array_fill(0, 24, NativeScript::sig(self::ALICE))));
+
+        $this->assertSame('820181'.'82029818'.str_repeat($sigHex, 24), $nested->framed(Framing::Definite)->cborHex());
+        $this->assertSame([Framing::CardanoBinary], $nested->framings());
+        $this->assertSame([Framing::Definite], $nested->framed(Framing::Definite)->framings());
+    }
+
+    /**
+     * A script framed in a way neither encoder writes is read back as belonging to neither.
+     *
+     * The mixture is what a hand-built encoder produces, and it is still a native script the ledger accepts and
+     * hashes. It round trips, because the framing of each container is kept one container at a time, and framings()
+     * says that no standard encoder would have written it.
+     */
+    public function test_a_script_framed_both_ways_at_once_belongs_to_neither_encoder(): void
+    {
+        $sigHex = '8200581c'.self::ALICE;
+        // A root of one child, framed indefinite where both encoders write definite, holding a wide container framed
+        // definite where cardano-binary writes indefinite.
+        $mixed = (string) hex2bin('82019f'.'82029818'.str_repeat($sigHex, 24).'ff');
+
+        $read = NativeScript::fromCbor($mixed);
+
+        $this->assertSame(bin2hex($mixed), $read->cborHex());
+        $this->assertSame(bin2hex(Blake2b::hash224("\x00".$mixed)), $read->hashHex());
+        $this->assertSame([], $read->framings());
+    }
+
+    // ----------------------------------------------------------- the whole of a slot
+
+    /**
+     * A slot is a uint64, and the upper half of that range is past what a PHP integer holds.
+     *
+     * The ledger's `slot` is `uint`, which runs to 2^64-1, and a script carrying one of those is a script the node
+     * accepts: `all [ sig(k), before(18446744073709551615) ]` was submitted to preprod and spent. An encoder that
+     * cannot represent such a slot cannot build that script, and one that narrows it produces a different hash and
+     * therefore a different address, with nothing raised.
+     */
+    public function test_a_slot_above_what_a_php_integer_holds_is_carried_whole(): void
+    {
+        $script = NativeScript::before(NativeScript::SLOT_MAX);
+
+        $this->assertSame('8205'.'1bffffffffffffffff', $script->cborHex());
+        $this->assertSame(NativeScript::SLOT_MAX, (string) $script->slot());
+        $this->assertSame(NativeScript::SLOT_MAX, $script->toArray()['slot']);
+        $this->assertSame($script->cborHex(), NativeScript::fromCbor($script->cbor())->cborHex());
+        $this->assertSame($script->hashHex(), NativeScript::fromArray($script->toArray())->hashHex());
+    }
+
+    /**
+     * The boundary PHP puts in the middle of the range, either side of it.
+     */
+    public function test_the_slot_either_side_of_the_php_integer_boundary_encodes_and_reads_back(): void
+    {
+        $largestInt = NativeScript::after(PHP_INT_MAX);
+        $oneMore = NativeScript::after('9223372036854775808');
+
+        $this->assertSame('8204'.'1b7fffffffffffffff', $largestInt->cborHex());
+        $this->assertSame('8204'.'1b8000000000000000', $oneMore->cborHex());
+
+        $this->assertSame(PHP_INT_MAX, $largestInt->toArray()['slot']);
+        $this->assertSame('9223372036854775808', $oneMore->toArray()['slot']);
+
+        foreach ([$largestInt, $oneMore] as $script) {
+            $this->assertSame($script->cborHex(), NativeScript::fromCbor($script->cbor())->cborHex());
+        }
+    }
+
+    /**
+     * A slot given as a string is the same slot given as a number, and the model holds one thing either way.
+     */
+    public function test_a_slot_written_as_a_decimal_string_is_the_slot_that_number_names(): void
+    {
+        $this->assertSame(NativeScript::before(1000)->cborHex(), NativeScript::before('1000')->cborHex());
+        $this->assertSame(
+            NativeScript::before(1000)->hashHex(),
+            NativeScript::fromArray(['type' => 'before', 'slot' => '1000'])->hashHex()
+        );
+        $this->assertSame(1000, NativeScript::before('1000')->toArray()['slot']);
+    }
+
+    /**
+     * A script file carrying a slot past 2^63-1 survives json_decode, which turns a larger literal into a float.
+     */
+    public function test_a_slot_past_the_php_integer_range_survives_the_json_a_script_file_holds(): void
+    {
+        $script = NativeScript::fromJson('{"type":"before","slot":18446744073709551615}');
+
+        $this->assertSame(NativeScript::SLOT_MAX, (string) $script->slot());
+        $this->assertSame('8205'.'1bffffffffffffffff', $script->cborHex());
+    }
+
+    /**
+     * Whether a timelock is met is decided over the whole range too, on both sides of the comparison.
+     */
+    public function test_a_timelock_at_the_top_of_the_range_is_evaluated_rather_than_narrowed(): void
+    {
+        $before = NativeScript::before(NativeScript::SLOT_MAX);
+        $after = NativeScript::after(NativeScript::SLOT_MAX);
+
+        // A ttl below the largest slot meets a `before` at it. 2^64-1 slots is longer than the universe has run, so
+        // the clause constrains nothing except that a ttl be set at all.
+        $this->assertTrue($before->isSatisfiedBy([], null, PHP_INT_MAX));
+        $this->assertTrue($before->isSatisfiedBy([], null, NativeScript::SLOT_MAX));
+        $this->assertFalse($before->isSatisfiedBy([], null, null));
+
+        // An `after` at the largest slot needs a validity start at it, which no transaction will ever have.
+        $this->assertFalse($after->isSatisfiedBy([], PHP_INT_MAX, null));
+        $this->assertTrue($after->isSatisfiedBy([], NativeScript::SLOT_MAX, null));
+        $this->assertFalse($after->isSatisfiedBy([], '18446744073709551614', null));
+    }
+
+    public static function unusableSlots(): array
+    {
+        return [
+            'negative' => [-1],
+            'negative as a string' => ['-1'],
+            'one past the top of the range' => ['18446744073709551616'],
+            'far past the top of the range' => ['99999999999999999999999999'],
+            'not a number' => ['soon'],
+            'empty' => [''],
+            'with a leading zero' => ['01000'],
+            'with a plus sign' => ['+1000'],
+            'in hex' => ['0x3e8'],
+            'with a decimal point' => ['1000.0'],
+        ];
+    }
+
+    /**
+     * A slot outside the range, or written in a way that is not a slot.
+     *
+     * Outside `0` to `2^64-1` the script is undecodable rather than merely unsatisfiable, and that is the worse of
+     * the two. It still encodes, it still hashes to a real twenty-eight bytes, and the address it yields is one a
+     * wallet will pay. Only a transaction trying to spend it fails, and it fails in the node's decoder rather than at
+     * script validation, so the error does not even name the script. The funds are in by then.
+     */
+    #[DataProvider('unusableSlots')]
+    public function test_a_slot_outside_the_range_is_refused(int|string $slot): void
+    {
         $this->expectException(ScriptException::class);
-        $this->expectExceptionMessage('re-encoding it would change');
 
-        NativeScript::fromCbor($definite);
+        NativeScript::before($slot);
+    }
+
+    /**
+     * The same bound on the other side of the comparison, so an interval bound cannot be a slot a transaction could
+     * never carry.
+     */
+    public function test_an_interval_bound_outside_the_slot_range_is_refused(): void
+    {
+        $this->expectException(ScriptException::class);
+
+        NativeScript::after(1000)->isSatisfiedBy([], -1);
     }
 
     // ------------------------------------------------------------- bad inputs
@@ -538,13 +732,6 @@ class NativeScriptTest extends TestCase
         NativeScript::signedBy(Credential::scriptHash(self::ALICE));
     }
 
-    public function test_a_negative_slot_is_refused(): void
-    {
-        $this->expectException(ScriptException::class);
-
-        NativeScript::before(-1);
-    }
-
     /**
      * The one degenerate shape the whole ecosystem refuses.
      *
@@ -566,7 +753,9 @@ class NativeScriptTest extends TestCase
             'a type nobody defined' => [['type' => 'RequireSignature', 'keyHash' => self::ALICE]],
             'a sig with no key hash' => [['type' => 'sig']],
             'a before with no slot' => [['type' => 'before']],
-            'a slot written as a string' => [['type' => 'before', 'slot' => '1000']],
+            'a slot written as a float' => [['type' => 'before', 'slot' => 1000.0]],
+            'a slot written as null' => [['type' => 'before', 'slot' => null]],
+            'a slot that is not a number' => [['type' => 'before', 'slot' => 'soon']],
             'an all with no scripts' => [['type' => 'all']],
             'an atLeast with no threshold' => [['type' => 'atLeast', 'scripts' => [['type' => 'sig', 'keyHash' => self::ALICE]]]],
             'a scripts list holding a scalar' => [['type' => 'any', 'scripts' => ['sig']]],
@@ -598,8 +787,16 @@ class NativeScriptTest extends TestCase
         ];
     }
 
+    /**
+     * Bytes that are refused, for the two reasons left once framing is no longer one of them.
+     *
+     * Most of these are not a native script at all: a constructor nobody defined, a clause of the wrong length, a key
+     * hash of the wrong size, a slot written as a negative integer, bytes trailing a complete script. The last is a
+     * script whose own node array is framed indefinite, which is well-formed CBOR that no encoder writes, so it
+     * cannot be reproduced and the hash of those bytes has to be taken over the bytes themselves.
+     */
     #[DataProvider('unusableCbor')]
-    public function test_cbor_this_package_would_not_have_written_is_refused(string $hex): void
+    public function test_cbor_that_is_not_a_script_this_package_can_reproduce_is_refused(string $hex): void
     {
         $this->expectException(ScriptException::class);
 

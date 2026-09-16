@@ -13,7 +13,7 @@ to check.
 The ten recorded mainnet scripts under `../cardano-scripts` prove the encoder at ten points the chain has already
 agreed with. These prove it at 119 more, on edges the chain's own scripts do not reach: containers of 400
 sub-scripts, nesting 65 levels deep, thresholds one either side of every boundary, and the same key hash named twice
-under one threshold.
+under one threshold. Each of the 119 is proved in both of its encodings, so the count of byte comparisons is 238.
 
 ## Where these came from
 
@@ -49,11 +49,11 @@ neither the corpus nor this suite answers it.
 
 For each of the 119 vectors this package can build:
 
-- the CBOR, as a byte comparison, and the preimage the hash is taken over;
-- the script hash, and the policy identifier and the credential that carry the same bytes;
+- the CBOR of both encodings, as byte comparisons, and the preimage each hash is taken over;
+- both script hashes, and the policy identifier and the credential that carry the same bytes;
 - the enterprise address, the base address with the script in both slots, and the reward address, on mainnet, preview
   and preprod;
-- the script read back from its own bytes, down to the structure;
+- the script read back from its own bytes, in both framings, down to the structure;
 - every witness set the corpus sampled for it, 1012 in all.
 
 ## The degenerate shapes
@@ -94,11 +94,12 @@ and an indefinite-length array from 24. cardano-serialization-lib and MeshJS wri
 size. Both are well-formed, the ledger accepts both, and the ledger hashes whichever bytes it was given. 15 of the 126
 vectors hold a container that wide.
 
-This package writes what the ledger's encoder writes, so the CBOR, hash and address assertions run against the
-`cardanoBinary` half of every vector. The `definite` half of those 15 is checked in the two places it can still arrive.
-`NativeScript::fromCbor` refuses it rather than re-encoding it, because re-encoding would move its hash. A witness set
-carrying those bytes hashes them to the `definite` script hash the corpus records, because a witness set hashes the
-bytes each script arrived in and never rebuilds them. Both are asserted for all 15.
+This package reproduces both halves of every vector. Building takes a framing, defaulting to the one the ledger's own
+encoder writes, so a caller that says nothing gets the bytes cardano-cli produces and a caller that asks for
+`Framing::Definite` gets the bytes cardano-serialization-lib produces. `NativeScript::fromCbor` keeps the framing each
+container arrived in, so either half decodes and re-encodes to the bytes it came from. A witness set hashes the bytes
+each script arrived in and never rebuilds them at all, which is the path a transaction takes. All three are asserted
+for all 15.
 
 The corpus records both hashes for every vector. cardano-cli 10.7.0.0 was run over a sample of them, and agreed with
 the corpus in every case:

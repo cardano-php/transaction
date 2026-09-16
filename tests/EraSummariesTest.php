@@ -142,6 +142,75 @@ class EraSummariesTest extends TestCase
     }
 
     /**
+     * A slot is the same uint64 here as it is in a script, and it is converted at full width.
+     *
+     * A slot times a slot length passes 2^63-1 long before the slot itself does, and PHP answers an overflowed
+     * multiplication with a float rather than an error, so the arithmetic would carry on against a number that had
+     * lost its low bits. The two slots below are where that showed. The first is the distance at which the wrapped
+     * product came back as zero, which is the era's own start time for an instant seventy-three billion years after
+     * it; the second fell over inside intdiv, because the float never narrowed back.
+     */
+    public function test_a_slot_whose_arithmetic_passes_a_php_integer_converts_exactly(): void
+    {
+        $eras = self::eras('mainnet');
+        $era = $eras->current();
+
+        $this->assertSame(1000, $era->slotLengthMs);
+        $this->assertSame($era->startTime + (1 << 61), $eras->timeOfSlot($era->startSlot + (1 << 61)));
+        $this->assertSame(
+            $era->startTime + (4611686018427387904 - $era->startSlot),
+            $eras->timeOfSlot(4611686018427387904)
+        );
+    }
+
+    /**
+     * Where it genuinely cannot answer, it says so.
+     *
+     * Slots run to 2^64-1 and a PHP integer stops at 2^63-1, so the top of the slot range names instants no PHP
+     * integer holds. Narrowing one would be a date, and a date is what a caller would then act on.
+     */
+    public function test_a_slot_whose_instant_is_past_what_a_php_integer_holds_is_refused(): void
+    {
+        $this->expectException(TimeException::class);
+
+        self::eras('mainnet')->timeOfSlot('18446744073709551615');
+    }
+
+    public function test_a_slot_past_the_top_of_the_range_is_not_a_slot(): void
+    {
+        $this->expectException(TimeException::class);
+
+        self::eras('mainnet')->timeOfSlot('18446744073709551616');
+    }
+
+    /**
+     * An ordinary slot given as a decimal string, which is how one above 2^63-1 has to arrive.
+     */
+    public function test_a_slot_given_as_a_decimal_string_converts_to_the_same_instant(): void
+    {
+        $eras = self::eras('mainnet');
+
+        $this->assertSame($eras->timeOfSlot(150000000), $eras->timeOfSlot('150000000'));
+        $this->assertSame($eras->eraForSlot(150000000), $eras->eraForSlot('150000000'));
+    }
+
+    /**
+     * Every number in an era summary counts something, so none of them can be below zero.
+     */
+    public function test_an_era_summary_with_a_negative_quantity_is_refused(): void
+    {
+        $era = [
+            'start' => ['time' => ['seconds' => 0], 'slot' => -1, 'epoch' => 0],
+            'end' => null,
+            'parameters' => ['epochLength' => 21600, 'slotLength' => ['milliseconds' => 1000]],
+        ];
+
+        $this->expectException(TimeException::class);
+
+        EraSummaries::fromOgmios([$era], 1506203091);
+    }
+
+    /**
      * Byron slots are twenty seconds long, so nineteen instants out of twenty in that era fall between two slots.
      * Rounding either way would move a script's expiry, and with it its address, so they are refused.
      */

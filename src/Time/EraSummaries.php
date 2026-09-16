@@ -7,7 +7,9 @@ declare(strict_types=1);
 
 namespace Cardano\Transaction\Time;
 
+use Brick\Math\BigInteger;
 use Cardano\Transaction\Exception\TimeException;
+use Cardano\Transaction\Ledger\Slot;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
@@ -114,10 +116,16 @@ final class EraSummaries
 
     /**
      * The instant a slot begins.
+     *
+     * A slot runs to 2^64-1, which is past what a PHP integer holds, so one above 2^63-1 is given as a decimal string
+     * or as a BigInteger. The instants at that end of the range are past what a PHP integer holds as well, and are
+     * refused rather than narrowed to a date that is not the one asked about.
      */
-    public function timeOfSlot(int $slot): int
+    public function timeOfSlot(int|string|BigInteger $slot): int
     {
-        return $this->eraForSlot($slot)->timeOfSlot($slot);
+        $value = self::slot($slot);
+
+        return $this->eraForSlot($value)->timeOfSlot($value);
     }
 
     public function eraForTime(DateTimeInterface|int $time): EraSummary
@@ -139,14 +147,16 @@ final class EraSummaries
         return $this->current();
     }
 
-    public function eraForSlot(int $slot): EraSummary
+    public function eraForSlot(int|string|BigInteger $slot): EraSummary
     {
-        if ($slot < $this->eras[0]->startSlot) {
+        $value = self::slot($slot);
+
+        if ($value->isLessThan($this->eras[0]->startSlot)) {
             throw new TimeException('That slot falls before the network began.');
         }
 
         foreach ($this->eras as $era) {
-            if ($era->containsSlot($slot)) {
+            if ($era->containsSlot($value)) {
                 return $era;
             }
         }
@@ -157,6 +167,14 @@ final class EraSummaries
     private static function unix(DateTimeInterface|int $time): int
     {
         return is_int($time) ? $time : $time->getTimestamp();
+    }
+
+    /**
+     * A slot as the number it is, refusing anything outside the range a slot takes.
+     */
+    private static function slot(int|string|BigInteger $slot): BigInteger
+    {
+        return Slot::parse($slot) ?? throw new TimeException(Slot::complaint($slot));
     }
 
     private static function systemStart(DateTimeInterface|int|string $systemStart): int

@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Cardano\Transaction\Script;
 
+use Brick\Math\BigInteger;
 use Cardano\Transaction\Address\Address;
 use Cardano\Transaction\Address\BaseAddress;
 use Cardano\Transaction\Address\Credential;
@@ -19,6 +20,7 @@ use Cardano\Transaction\Cbor\Shape;
 use Cardano\Transaction\Exception\DecodeException;
 use Cardano\Transaction\Exception\ScriptException;
 use Cardano\Transaction\Hash\Blake2b;
+use Cardano\Transaction\Ledger\Slot;
 use CBOR\ByteStringObject;
 use CBOR\CBORObject;
 use CBOR\ListObject;
@@ -49,12 +51,11 @@ use CBOR\UnsignedIntegerObject;
  * the other way round, a minting policy either never mints at all or only starts minting once the campaign it was
  * built for has finished. isSatisfiedBy() is the same rule as an assertion rather than as a comment.
  *
- * Encoding follows the ledger's own encoder. Every head is the shortest that holds its value, and a list of
- * sub-scripts is written definite in length up to 23 items and indefinite above that, which is where
- * cardano-ledger-binary switches. That is not a style choice. The hash is taken over these bytes, the hash is the
- * address, and an address has no migration, so a second encoder that agreed about the meaning and disagreed about the
- * bytes would send funds somewhere nobody is watching. cardano-node and cardano-cli serialize through that encoder,
- * so a script built here from the JSON of a script file hashes to the hash cardano-cli prints for it, at every width.
+ * A list of sub-scripts has two valid framings and neither is canonical, so a container holding 24 or more of them
+ * has two valid hashes and two valid addresses. Framing says which side a script is on. Building takes the framing
+ * cardano-binary writes, so a hash derived here from a script file is the hash cardano-cli prints for it, and a
+ * caller talking to the JavaScript ecosystem asks for the other. Reading keeps the framing the bytes arrived in, so
+ * a script decoded here re-encodes to the bytes it came from and keeps the hash the chain published for it.
  *
  * The grammar admits a container holding no sub-scripts and a threshold at or below zero, the chain carries both, and
  * cardano-cli builds both, so this class builds them too. What they mean is worth knowing before building one. An
@@ -95,15 +96,23 @@ final class NativeScript
      */
     public const LANGUAGE_TAG = "\x00";
 
+    /** The largest slot number that exists, which is 2^64-1. Slot says why that is the bound. */
+    public const SLOT_MAX = Slot::MAX;
+
+    /** The framing a script gets when the caller does not say, which is the one cardano-cli writes. */
+    public const DEFAULT_FRAMING = Framing::CardanoBinary;
+
     /**
      * @param  list<self>  $scripts
+     * @param  SequenceForm|null  $childForm  how the list of sub-scripts is framed, and null for a leaf
      */
     private function __construct(
         public readonly string $kind,
         private readonly array $scripts = [],
         private readonly ?Credential $key = null,
-        private readonly ?int $slot = null,
+        private readonly ?BigInteger $slot = null,
         private readonly ?int $required = null,
+        private readonly ?SequenceForm $childForm = null,
     ) {}
 
     // ------------------------------------------------------------------ building
@@ -133,7 +142,7 @@ final class NativeScript
      */
     public static function all(self ...$scripts): self
     {
-        return new self(self::ALL, array_values($scripts));
+        return self::container(self::ALL, array_values($scripts));
     }
 
     /**
@@ -144,7 +153,7 @@ final class NativeScript
      */
     public static function any(self ...$scripts): self
     {
-        return new self(self::ANY, array_values($scripts));
+        return self::container(self::ANY, array_values($scripts));
     }
 
     /**
@@ -157,31 +166,67 @@ final class NativeScript
      */
     public static function atLeast(int $required, self ...$scripts): self
     {
-        if ($required > count($scripts)) {
-            throw new ScriptException(sprintf(
-                'Required number of script signatures exceeds the number of scripts: %d of %d.',
-                $required,
-                count($scripts)
-            ));
-        }
+        $children = array_values($scripts);
+        self::checkThreshold($required, count($children));
 
-        return new self(self::AT_LEAST, array_values($scripts), required: $required);
+        return self::container(self::AT_LEAST, $children, $required);
     }
 
     /**
      * Satisfied only by a transaction whose validity interval ends at or before $slot. Encodes as invalid_hereafter.
+     *
+     * A slot is a uint64, which runs past what a PHP integer holds, so one above 2^63-1 is given as a decimal string
+     * or as a BigInteger. An ordinary slot is an ordinary integer and none of this has to be thought about.
      */
-    public static function before(int $slot): self
+    public static function before(int|string|BigInteger $slot): self
     {
-        return new self(self::BEFORE, slot: self::slot($slot));
+        return new self(self::BEFORE, slot: self::checkedSlot($slot));
     }
 
     /**
      * Satisfied only by a transaction whose validity interval starts at or after $slot. Encodes as invalid_before.
      */
-    public static function after(int $slot): self
+    public static function after(int|string|BigInteger $slot): self
     {
-        return new self(self::AFTER, slot: self::slot($slot));
+        return new self(self::AFTER, slot: self::checkedSlot($slot));
+    }
+
+    /**
+     * The same script with every container framed the way $framing frames it.
+     *
+     * This is how a caller building from the builders picks a side. Below 24 sub-scripts the two framings are
+     * byte-identical and this changes nothing; at or above it the bytes move, and the hash and the address with them.
+     */
+    public function framed(Framing $framing): self
+    {
+        if ($this->childForm === null) {
+            return $this;
+        }
+
+        return new self(
+            $this->kind,
+            array_map(static fn (self $script): self => $script->framed($framing), $this->scripts),
+            required: $this->required,
+            childForm: $framing->formFor(count($this->scripts)),
+        );
+    }
+
+    /**
+     * The framings that would reproduce this script's bytes, which is the question to ask of a script that was read.
+     *
+     * Both of them means every container holds fewer than 24 sub-scripts, so the two encoders agree and there is one
+     * hash. One of them names the encoder these bytes came from. Neither of them means the bytes are framed in a way
+     * no standard encoder produces, which a script built here never is and a script read here can only be if it
+     * arrived that way.
+     *
+     * @return list<Framing>
+     */
+    public function framings(): array
+    {
+        return array_values(array_filter(
+            Framing::cases(),
+            fn (Framing $framing): bool => $this->isFramedAs($framing)
+        ));
     }
 
     // ------------------------------------------------------------------- reading
@@ -189,9 +234,14 @@ final class NativeScript
     /**
      * A script in the JSON form cardano-cli reads from a script file and providers return from /script_info.
      *
+     * The JSON says nothing about framing, because framing is a property of the bytes rather than of the script, so
+     * the caller says which encoder it is standing in for. A slot may be written as a JSON number or as a decimal
+     * string; a string is the only way to carry one above 2^63-1 through PHP, where json_decode turns a larger
+     * literal into a float and loses it.
+     *
      * @param  array<string, mixed>  $json
      */
-    public static function fromArray(array $json): self
+    public static function fromArray(array $json, Framing $framing = self::DEFAULT_FRAMING): self
     {
         $kind = $json['type'] ?? null;
 
@@ -212,7 +262,7 @@ final class NativeScript
         if ($kind === self::BEFORE || $kind === self::AFTER) {
             $slot = $json['slot'] ?? null;
 
-            if (! is_int($slot)) {
+            if (! is_int($slot) && ! is_string($slot)) {
                 throw new ScriptException(sprintf('A %s clause carries a slot number.', $kind));
             }
 
@@ -231,7 +281,7 @@ final class NativeScript
                 throw new ScriptException(sprintf('A %s clause holds scripts, not scalars.', $kind));
             }
 
-            $scripts[] = self::fromArray($child);
+            $scripts[] = self::fromArray($child, $framing);
         }
 
         if ($kind === self::AT_LEAST) {
@@ -241,31 +291,38 @@ final class NativeScript
                 throw new ScriptException('An atLeast clause carries a required count.');
             }
 
-            return self::atLeast($required, ...$scripts);
+            self::checkThreshold($required, count($scripts));
+
+            return self::container(self::AT_LEAST, $scripts, $required, $framing);
         }
 
-        return $kind === self::ALL ? self::all(...$scripts) : self::any(...$scripts);
+        return self::container($kind, $scripts, null, $framing);
     }
 
-    public static function fromJson(string $json): self
+    public static function fromJson(string $json, Framing $framing = self::DEFAULT_FRAMING): self
     {
-        $decoded = json_decode($json, true);
+        // A slot above 2^63-1 is a JSON number PHP cannot hold. Reading it as a string keeps every digit of it, and
+        // the slot check turns it back into a number rather than leaving a string in the model.
+        $decoded = json_decode($json, true, 512, JSON_BIGINT_AS_STRING);
 
         if (! is_array($decoded)) {
             throw new ScriptException('A native script file holds a JSON object.');
         }
 
-        return self::fromArray($decoded);
+        return self::fromArray($decoded, $framing);
     }
 
     /**
      * A script from the bytes a witness set or a reference script carries.
      *
-     * The bytes have to be the encoding this class writes, which is the ledger's own. A script written any other way
-     * still hashes to whatever the chain knows it by, but this model would re-encode it and produce a different hash,
-     * so it is refused here rather than silently rewritten. That covers a wide container framed definite, which some
-     * other libraries write and the ledger accepts. The hash of such a script is the hash of the bytes it arrived in,
-     * which is what WitnessSet::nativeScriptHashes() takes.
+     * The framing each container arrived in is kept, so re-encoding the script reproduces the bytes it was read from
+     * and the hash stays the hash whoever wrote it published. That covers both framings in circulation, which is the
+     * whole of what the ecosystem writes, and a script mixing the two as well.
+     *
+     * What is left is bytes that are a native script but are written in a way no encoder produces, an integer carried
+     * in a wider head than it needs being the usual one. Those are refused rather than rewritten, because rewriting
+     * them would move the hash and the address with it. They still have a hash, and WitnessSet::nativeScriptHashes()
+     * takes it over the bytes as they arrived without decoding them at all.
      */
     public static function fromCbor(string $bytes): self
     {
@@ -277,8 +334,8 @@ final class NativeScript
 
         if ($script->cbor() !== $bytes) {
             throw new ScriptException(
-                'This script is not written in the encoding this package produces, so re-encoding it would change '
-                .'its hash. Hash the bytes it arrived in instead.'
+                'This script is written in a way this package cannot reproduce, so re-encoding it would change its '
+                .'hash. Hash the bytes it arrived in instead.'
             );
         }
 
@@ -287,6 +344,8 @@ final class NativeScript
 
     private static function read(CBORObject $object, string $context): self
     {
+        // A script node is an array of two or three items and every encoder writes that array definite in length, so
+        // the form it was written in is not kept. A node framed any other way fails the byte comparison in fromCbor().
         [, $items] = SequenceForm::unwrap($object, $context, allowSetTag: false);
 
         if ($items === []) {
@@ -317,13 +376,15 @@ final class NativeScript
         }
 
         if ($kind === self::BEFORE || $kind === self::AFTER) {
-            $slot = CborInteger::unsignedFromCbor($items[1], $context.' slot')->toInt();
+            // A CBOR unsigned integer stops at 2^64-1, and a bignum above it is a tag rather than an integer and is
+            // refused here. Reading the value as a decimal string keeps the half of the range PHP cannot hold.
+            $slot = CborInteger::unsignedFromCbor($items[1], $context.' slot')->value;
 
             return $kind === self::BEFORE ? self::before($slot) : self::after($slot);
         }
 
         $listIndex = $kind === self::AT_LEAST ? 2 : 1;
-        [, $children] = SequenceForm::unwrap($items[$listIndex], $context.' scripts', allowSetTag: false);
+        [$childForm, $children] = SequenceForm::unwrap($items[$listIndex], $context.' scripts', allowSetTag: false);
 
         $scripts = [];
         foreach ($children as $i => $child) {
@@ -332,13 +393,13 @@ final class NativeScript
 
         if ($kind === self::AT_LEAST) {
             // The threshold is a signed integer in the CDDL, and a negative one is a script the ledger accepts.
-            return self::atLeast(
-                CborInteger::fromCbor($items[1], $context.' threshold')->toInt(),
-                ...$scripts
-            );
+            $required = CborInteger::fromCbor($items[1], $context.' threshold')->toInt();
+            self::checkThreshold($required, count($scripts));
+
+            return new self(self::AT_LEAST, $scripts, required: $required, childForm: $childForm);
         }
 
-        return $kind === self::ALL ? self::all(...$scripts) : self::any(...$scripts);
+        return new self($kind, $scripts, childForm: $childForm);
     }
 
     // ------------------------------------------------------------------ encoding
@@ -346,13 +407,16 @@ final class NativeScript
     /**
      * The structure cardano-cli reads from a script file, ready for json_encode.
      *
+     * A slot comes back as an integer when one holds it and as a decimal string when it does not, which is only ever
+     * above 2^63-1. fromArray() reads both.
+     *
      * @return array<string, mixed>
      */
     public function toArray(): array
     {
         return match ($this->kind) {
             self::SIG => ['type' => self::SIG, 'keyHash' => $this->key?->hex()],
-            self::BEFORE, self::AFTER => ['type' => $this->kind, 'slot' => $this->slot],
+            self::BEFORE, self::AFTER => ['type' => $this->kind, 'slot' => self::slotForJson($this->slot)],
             self::AT_LEAST => [
                 'type' => self::AT_LEAST,
                 'required' => $this->required,
@@ -378,7 +442,7 @@ final class NativeScript
             self::SIG => ListObject::create([$tag, ByteStringObject::create((string) $this->key?->hash)]),
             self::BEFORE, self::AFTER => ListObject::create([
                 $tag,
-                UnsignedIntegerObject::create((int) $this->slot),
+                CborInteger::of((string) $this->slot)->toCbor(),
             ]),
             self::AT_LEAST => ListObject::create([
                 $tag,
@@ -457,22 +521,31 @@ final class NativeScript
      *
      * $signers are the key hashes whose signatures the transaction carries, as hex. $intervalStart is the
      * transaction's validity interval start and $intervalEnd its end, both as the body writes them, and either may be
-     * absent. The ledger's own rule for the two time constructors is that an absent bound satisfies nothing: a
-     * transaction that sets no upper bound has not shown that it will be applied before any particular slot, so a
-     * `before` clause above it fails.
+     * absent. Each of those is a slot, so each takes the values a slot takes and is refused outside them. The
+     * ledger's own rule for the two time constructors is that an absent bound satisfies nothing: a transaction that
+     * sets no upper bound has not shown that it will be applied before any particular slot, so a `before` clause
+     * above it fails.
      *
      * @param  list<string>  $signers
      */
-    public function isSatisfiedBy(array $signers, ?int $intervalStart = null, ?int $intervalEnd = null): bool
+    public function isSatisfiedBy(
+        array $signers,
+        int|string|BigInteger|null $intervalStart = null,
+        int|string|BigInteger|null $intervalEnd = null,
+    ): bool {
+        return $this->satisfied(
+            $signers,
+            $intervalStart === null ? null : self::checkedSlot($intervalStart),
+            $intervalEnd === null ? null : self::checkedSlot($intervalEnd),
+        );
+    }
+
+    /**
+     * The slot a `before` or an `after` names, and null for every other kind.
+     */
+    public function slot(): ?BigInteger
     {
-        return match ($this->kind) {
-            self::SIG => in_array($this->key?->hex(), $signers, true),
-            self::AFTER => $intervalStart !== null && $intervalStart >= $this->slot,
-            self::BEFORE => $intervalEnd !== null && $intervalEnd <= $this->slot,
-            self::ALL => $this->satisfiedCount($signers, $intervalStart, $intervalEnd) === count($this->scripts),
-            self::ANY => $this->satisfiedCount($signers, $intervalStart, $intervalEnd) > 0,
-            default => $this->satisfiedCount($signers, $intervalStart, $intervalEnd) >= (int) $this->required,
-        };
+        return $this->slot;
     }
 
     /**
@@ -540,6 +613,59 @@ final class NativeScript
     // -------------------------------------------------------------------- detail
 
     /**
+     * A container, framed the way $framing frames a list of that many sub-scripts.
+     *
+     * @param  list<self>  $scripts
+     */
+    private static function container(
+        string $kind,
+        array $scripts,
+        ?int $required = null,
+        Framing $framing = self::DEFAULT_FRAMING,
+    ): self {
+        return new self(
+            $kind,
+            $scripts,
+            required: $required,
+            childForm: $framing->formFor(count($scripts)),
+        );
+    }
+
+    private function isFramedAs(Framing $framing): bool
+    {
+        if ($this->childForm === null) {
+            return true;
+        }
+
+        if (! $framing->frames($this->childForm, count($this->scripts))) {
+            return false;
+        }
+
+        foreach ($this->scripts as $script) {
+            if (! $script->isFramedAs($framing)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param  list<string>  $signers
+     */
+    private function satisfied(array $signers, ?BigInteger $intervalStart, ?BigInteger $intervalEnd): bool
+    {
+        return match ($this->kind) {
+            self::SIG => in_array($this->key?->hex(), $signers, true),
+            self::AFTER => $intervalStart !== null && $intervalStart->isGreaterThanOrEqualTo((string) $this->slot),
+            self::BEFORE => $intervalEnd !== null && $intervalEnd->isLessThanOrEqualTo((string) $this->slot),
+            self::ALL => $this->satisfiedCount($signers, $intervalStart, $intervalEnd) === count($this->scripts),
+            self::ANY => $this->satisfiedCount($signers, $intervalStart, $intervalEnd) > 0,
+            default => $this->satisfiedCount($signers, $intervalStart, $intervalEnd) >= (int) $this->required,
+        };
+    }
+
+    /**
      * @return array{list<string>, list<string>}
      */
     private function partitionSigners(): array
@@ -581,12 +707,12 @@ final class NativeScript
     /**
      * @param  list<string>  $signers
      */
-    private function satisfiedCount(array $signers, ?int $intervalStart, ?int $intervalEnd): int
+    private function satisfiedCount(array $signers, ?BigInteger $intervalStart, ?BigInteger $intervalEnd): int
     {
         $met = 0;
 
         foreach ($this->scripts as $script) {
-            if ($script->isSatisfiedBy($signers, $intervalStart, $intervalEnd)) {
+            if ($script->satisfied($signers, $intervalStart, $intervalEnd)) {
                 $met++;
             }
         }
@@ -595,11 +721,11 @@ final class NativeScript
     }
 
     /**
-     * The sub-scripts, framed the way the ledger's encoder frames a list of that many items.
+     * The sub-scripts, framed the way this container was built or read.
      */
     private function childList(): CBORObject
     {
-        return SequenceForm::forLedgerLength(count($this->scripts))->wrap(
+        return ($this->childForm ?? SequenceForm::definite())->wrap(
             array_map(static fn (self $s): CBORObject => $s->toCbor(), $this->scripts)
         );
     }
@@ -614,12 +740,39 @@ final class NativeScript
             : UnsignedIntegerObject::create($required);
     }
 
-    private static function slot(int $slot): int
+    /**
+     * The one degenerate shape the whole ecosystem refuses, checked wherever a threshold arrives.
+     */
+    private static function checkThreshold(int $required, int $childCount): void
     {
-        if ($slot < 0) {
-            throw new ScriptException('A slot number cannot be negative, got: '.$slot);
+        if ($required > $childCount) {
+            throw new ScriptException(sprintf(
+                'Required number of script signatures exceeds the number of scripts: %d of %d.',
+                $required,
+                $childCount
+            ));
+        }
+    }
+
+    /**
+     * A slot, as the number it is rather than as whatever PHP can hold of it.
+     *
+     * The range is the CDDL's: an integer from 0 to 2^64-1. Outside it the script is undecodable, which is worse than
+     * unsatisfiable, because it still has an address and whatever is sent there can never be moved by anybody. A slot
+     * above 2^63-1 does not fit a PHP integer, so it is given as a decimal string or as a BigInteger and is carried
+     * as a BigInteger from here on.
+     */
+    private static function checkedSlot(int|string|BigInteger $slot): BigInteger
+    {
+        return Slot::parse($slot) ?? throw new ScriptException(Slot::complaint($slot));
+    }
+
+    private static function slotForJson(?BigInteger $slot): int|string|null
+    {
+        if ($slot === null) {
+            return null;
         }
 
-        return $slot;
+        return $slot->isLessThanOrEqualTo(PHP_INT_MAX) ? $slot->toInt() : (string) $slot;
     }
 }
