@@ -159,6 +159,61 @@ class WitnessAssemblyTest extends TestCase
     }
 
     /**
+     * Two parties signing in turn end up with both signatures on the transaction.
+     *
+     * This is the whole of what a multi-signature branch needs, and it is the case that replacing the witness set
+     * rather than adding to it got wrong: the second signer handed back a transaction carrying only their own
+     * witness, which a node refuses, and nothing said a signature had been dropped.
+     */
+    public function test_a_second_signer_does_not_drop_the_first_signature(): void
+    {
+        $first = SigningKey::generate();
+        $second = SigningKey::generate();
+        $body = $this->body();
+
+        $unsigned = Transaction::assemble($body, WitnessSet::of(WitnessPlan::forSignatures(2)->dummyWitnesses()));
+
+        $signedOnce = TransactionSigner::sign($unsigned, $first);
+        $this->assertCount(1, $signedOnce->witnessSet->vkeyWitnesses());
+
+        $signedTwice = TransactionSigner::sign($signedOnce, $second);
+
+        $keys = array_map(
+            static fn (VkeyWitness $witness): string => $witness->vkeyHex(),
+            $signedTwice->witnessSet->vkeyWitnesses()
+        );
+
+        $this->assertCount(2, $keys, 'A second signature replaced the first instead of joining it.');
+        $this->assertContains($first->publicKeyHex(), $keys, 'The first signature was dropped by the second signer.');
+        $this->assertContains($second->publicKeyHex(), $keys);
+
+        $this->assertTrue(
+            TransactionSigner::witnessesVerify($signedTwice),
+            'A witness on the twice-signed transaction does not verify against its body.'
+        );
+        $this->assertSame($unsigned->hashHex(), $signedTwice->hashHex(), 'Signing moved the transaction hash.');
+    }
+
+    /**
+     * A key that has already witnessed the transaction is refused rather than witnessing it again.
+     */
+    public function test_a_key_that_already_witnessed_the_transaction_is_refused(): void
+    {
+        $key = SigningKey::generate();
+        $unsigned = Transaction::assemble(
+            $this->body(),
+            WitnessSet::of(WitnessPlan::forSignatures(1)->dummyWitnesses())
+        );
+
+        $signed = TransactionSigner::sign($unsigned, $key);
+
+        $this->expectException(SigningException::class);
+        $this->expectExceptionMessage('has already witnessed this transaction');
+
+        TransactionSigner::sign($signed, $key);
+    }
+
+    /**
      * Swapping measuring witnesses for real ones changes the witness set and nothing else.
      */
     public function test_signing_replaces_the_dummies_and_leaves_the_body_alone(): void
