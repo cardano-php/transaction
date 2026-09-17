@@ -56,7 +56,34 @@ final class AuxiliaryData
         private readonly ?int $tagAdditionalInformation,
     ) {}
 
+    /**
+     * Auxiliary data, refusing anything this package cannot write back as it arrived.
+     *
+     * The same promise Transaction and TransactionBody make, made here for the same reason. This
+     * method is public, it is where a caller who decoded the CBOR themselves arrives, and what it
+     * returns answers hash(). Body field 7 carries that hash, so a value that rebuilds differently
+     * would put a hash in the body for bytes nobody submitted, and nothing downstream could tell.
+     */
     public static function fromCbor(CborValue $object, string $context = 'auxiliary data'): self
+    {
+        $data = self::read($object, $context);
+        $arrived = CborCodec::encode($object);
+        $rebuilt = $data->encode();
+
+        if ($rebuilt !== $arrived) {
+            throw new DecodeException(sprintf(
+                '%s: this auxiliary data is written in a way this package cannot write back, so its hash would '
+                .'not be the hash of the bytes it arrived as. It arrived as %d bytes and rebuilds as %d.',
+                $context,
+                strlen($arrived),
+                strlen($rebuilt)
+            ));
+        }
+
+        return $data;
+    }
+
+    private static function read(CborValue $object, string $context): self
     {
         if ($object->isTag()) {
             return self::fromAlonzo($object, $context);

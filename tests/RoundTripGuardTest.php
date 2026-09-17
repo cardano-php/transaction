@@ -10,6 +10,7 @@ use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Codec\TransactionDecoder;
 use Cardano\Transaction\Exception\DecodeException;
 use Cardano\Transaction\Hash\Blake2b;
+use Cardano\Transaction\Primitives\AuxiliaryData;
 use Cardano\Transaction\Primitives\Transaction;
 use Cardano\Transaction\Primitives\TransactionBody;
 use Cardano\Transaction\Primitives\WitnessSet;
@@ -153,6 +154,113 @@ class RoundTripGuardTest extends TestCase
     private static function body(): CborValue
     {
         return self::transaction()->items()[0];
+    }
+
+    /**
+     * A transaction whose witness set writes one field twice is refused by the transaction's own check.
+     *
+     * The body is untouched here, so the body's check passes and says nothing. What rebuilds differently is the
+     * witness set, and the witness set is not hashed, which is exactly why this needs its own guard: the body hash
+     * is right, so every corpus assertion about hashes still holds, and the transaction that goes back out is a
+     * different byte string from the one that arrived. Re-broadcasting or counter-signing then sends bytes nobody
+     * handed over.
+     */
+    public function test_a_transaction_whose_witness_set_writes_one_field_twice_is_refused(): void
+    {
+        $tampered = self::transactionWithAWitnessFieldWrittenTwice();
+
+        $thrown = null;
+
+        try {
+            Transaction::fromCbor($tampered);
+        } catch (Throwable $e) {
+            $thrown = $e;
+        }
+
+        $this->assertInstanceOf(
+            DecodeException::class,
+            $thrown,
+            'A transaction whose witness set collapses on rebuild was accepted, so what goes back out is not what '
+            .'came in.'
+        );
+        $this->assertStringContainsString('cannot write back', $thrown->getMessage());
+
+        // The body is untouched, which is what makes this the transaction's own check rather than the body's:
+        // TransactionBody::fromCbor accepts the very same body without complaint.
+        $this->assertSame(
+            Blake2b::hash256(CborCodec::encode(self::body())),
+            TransactionBody::fromCbor(self::body())->hash(),
+            'The body was changed, so this test is not holding the layer it claims to.'
+        );
+    }
+
+    /**
+     * Auxiliary data that writes one slot twice is refused rather than hashed.
+     *
+     * Body field 7 carries the hash of this data. A value that rebuilds an entry shorter hashes to a different
+     * arrangement of the same labels, so the body would carry a hash for bytes nobody submitted and the transaction
+     * would be refused by a node for a reason nothing in the package could explain.
+     */
+    public function test_auxiliary_data_that_writes_one_slot_twice_is_refused(): void
+    {
+        $duplicated = self::auxiliaryDataWithASlotWrittenTwice();
+
+        $thrown = null;
+
+        try {
+            AuxiliaryData::fromCbor($duplicated);
+        } catch (Throwable $e) {
+            $thrown = $e;
+        }
+
+        $this->assertInstanceOf(
+            DecodeException::class,
+            $thrown,
+            'Auxiliary data that collapses on rebuild was accepted, so hash() would answer for other bytes.'
+        );
+        $this->assertStringContainsString('cannot write back', $thrown->getMessage());
+    }
+
+    /** The fixture's witness set with its vkey field written a second time, at a wider head for the key. */
+    private static function transactionWithAWitnessFieldWrittenTwice(): CborValue
+    {
+        $transaction = self::transaction();
+        $items = $transaction->items();
+
+        $entries = $items[1]->entries();
+        $vkeys = null;
+
+        foreach ($entries as [$key, $value]) {
+            if ($key->integerText() === (string) WitnessSet::FIELD_VKEY_WITNESSES) {
+                $vkeys = $value;
+            }
+        }
+
+        if ($vkeys === null) {
+            throw new DecodeException('The fixture witness set carries no vkey witnesses to repeat.');
+        }
+
+        $entries[] = [CborValue::integerAs(false, 24, chr(WitnessSet::FIELD_VKEY_WITNESSES)), $vkeys];
+        $items[1] = CborValue::map($entries);
+
+        return CborValue::sequence($items);
+    }
+
+    /**
+     * The Alonzo form with slot key 0 written a second time, at a wider head.
+     *
+     * A repeated label inside the 721 or 674 metadata map is held as a list of pairs and survives the rebuild
+     * exactly, so it is not the shape that reaches this. The slot map above it is keyed, and two heads for the
+     * number nought are one slot to it.
+     */
+    private static function auxiliaryDataWithASlotWrittenTwice(): CborValue
+    {
+        $metadata = CborCodec::decode(hex2bin('a11902a2a1636d7367816b4a756465206d6f76696e67'));
+
+        return CborValue::tagged(259, CborValue::map([
+            [CborValue::unsigned(0), $metadata],
+            [CborValue::integerAs(false, 24, chr(0)), $metadata],
+        ]));
     }
 
     private static function transaction(): CborValue
