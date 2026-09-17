@@ -50,7 +50,7 @@ final class CborReader
         /**
          * @var list<array{
          *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
-         *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
+         *   items: list<CborValue>|list<array{CborValue, CborValue}>, key: ?CborValue,
          *   identities: array<string, true>
          * }> $stack
          */
@@ -67,7 +67,7 @@ final class CborReader
 
                 $text .= match ($frame['major']) {
                     CborHead::MAJOR_ARRAY => ' item '.count($frame['items']),
-                    CborHead::MAJOR_MAP => ($frame['key'] === null ? ' key ' : ' value ').count($frame['entries']),
+                    CborHead::MAJOR_MAP => ($frame['key'] === null ? ' key ' : ' value ').count($frame['items']),
                     CborHead::MAJOR_TAG => ' tagged item',
                     default => ' chunk '.count($frame['items']),
                 };
@@ -147,7 +147,7 @@ final class CborReader
      * @param  Closure(): string  $context
      * @return CborValue|array{
      *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
-     *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
+     *   items: list<CborValue>|list<array{CborValue, CborValue}>, key: ?CborValue,
      *   identities: array<string, true>
      * }
      */
@@ -202,9 +202,14 @@ final class CborReader
     }
 
     /**
+     * A map's entries go in 'items' as key and value pairs, because no frame is ever both a map and something else
+     * and a ninth slot is not free. PHP sizes an array's hashtable in powers of two, so the ninth key doubles the
+     * table from eight slots to sixteen, and a frame is allocated once per level of nesting: at MAX_DEPTH that ninth
+     * key costs several megabytes for nothing.
+     *
      * @return array{
      *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
-     *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
+     *   items: list<CborValue>|list<array{CborValue, CborValue}>, key: ?CborValue,
      *   identities: array<string, true>
      * }
      */
@@ -217,7 +222,6 @@ final class CborReader
             'count' => $count,
             'start' => $start,
             'items' => [],
-            'entries' => [],
             'key' => null,
             'identities' => [],
         ];
@@ -250,7 +254,7 @@ final class CborReader
      * An item written with no count in its head is never finished this way: it runs until a break byte, and that is
      * the only thing that closes it.
      *
-     * @param  array{major: int, count: ?int, items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue}  $frame
+     * @param  array{major: int, count: ?int, items: list<CborValue>|list<array{CborValue, CborValue}>, key: ?CborValue}  $frame
      */
     private static function isFinished(array $frame): bool
     {
@@ -259,7 +263,7 @@ final class CborReader
         }
 
         if ($frame['major'] === CborHead::MAJOR_MAP) {
-            return $frame['key'] === null && count($frame['entries']) === $frame['count'];
+            return $frame['key'] === null && count($frame['items']) === $frame['count'];
         }
 
         return count($frame['items']) === $frame['count'];
@@ -270,7 +274,7 @@ final class CborReader
      *
      * @param  array{
      *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
-     *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
+     *   items: list<CborValue>|list<array{CborValue, CborValue}>, key: ?CborValue,
      *   identities: array<string, true>
      * }  $frame
      * @param  Closure(): string  $context
@@ -300,7 +304,7 @@ final class CborReader
                 return;
             }
 
-            $frame['entries'][] = [$frame['key'], $value];
+            $frame['items'][] = [$frame['key'], $value];
             $frame['key'] = null;
 
             return;
@@ -327,7 +331,7 @@ final class CborReader
      *
      * @param  list<array{
      *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
-     *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
+     *   items: list<CborValue>|list<array{CborValue, CborValue}>, key: ?CborValue,
      *   identities: array<string, true>
      * }>  $stack
      * @param  Closure(): string  $context
@@ -365,7 +369,7 @@ final class CborReader
      *
      * @param  array{
      *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
-     *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
+     *   items: list<CborValue>|list<array{CborValue, CborValue}>, key: ?CborValue,
      *   identities: array<string, true>
      * }  $frame
      */
@@ -380,7 +384,7 @@ final class CborReader
             CborHead::MAJOR_MAP => CborValue::mapAs(
                 $frame['additionalInformation'],
                 $frame['argument'],
-                $frame['entries'],
+                $frame['items'],
             ),
             CborHead::MAJOR_TAG => CborValue::taggedAs(
                 $frame['additionalInformation'],
@@ -403,10 +407,20 @@ final class CborReader
      *
      * Those bytes are the slice of the input the key was read from, not a re-encoding of it. The two are the same
      * string, because a value read here writes back exactly what it was read from, and taking the slice costs one
-     * copy where re-encoding costs a walk of the whole key. That is the difference between linear and quadratic
-     * when containers are nested as keys: a key nested d deep was re-encoded once at every level above it, so a
-     * document that fits inside maxTxSize could spend over a minute being accepted, and a hostile one could not be
-     * refused cheaply either.
+     * memory copy where re-encoding costs a walk of the whole key and a fresh string built a node at a time. That is
+     * what took a transaction-sized document from twenty-one seconds to eighty-three milliseconds.
+     *
+     * What it did not do is make the cost linear in the input, and nothing here can. Naming a key costs its own
+     * length whichever way the name is taken, and a key nested inside another key has its bytes counted again by
+     * every key above it. So the work is the sum of the lengths of every map key in the document, which for keys
+     * nested one inside the next runs as the square of how deep they go: a chain of container keys 16,383 deep is
+     * 32,767 bytes of input and 268 MB of copying. Written as a bound, it is the smaller of CborCodec::MAX_DEPTH and
+     * the input length, times the input length.
+     *
+     * Both of those bounds are therefore load bearing, and that is worth knowing before either is moved. At the
+     * present values the worst shape costs about half a second, most of which is reading the document at all. Raising
+     * MAX_INPUT_BYTES raises this as its square until MAX_DEPTH catches it, and raising MAX_DEPTH does the same until
+     * MAX_INPUT_BYTES catches it. Neither is a change that only costs memory.
      */
     private static function keyIdentity(CborValue $key, string $bytes, int $start, int $end): string
     {
