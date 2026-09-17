@@ -113,6 +113,11 @@ final class WitnessSet
      * from a model of it, because a set may carry Plutus data or redeemers this package does not model and dropping
      * them here would produce a transaction that no longer matches its own script data hash.
      *
+     * A set that already carries vkey witnesses keeps them where they were, at the key they were written with, so
+     * the set that comes back differs from the one that went in by the witnesses and by nothing else. A set that
+     * does not carries them in ascending key order beside its other fields, which is the order the chain writes.
+     * Placing them anywhere else would reorder the map, and map order is part of the bytes that get submitted.
+     *
      * @param  list<VkeyWitness>  $witnesses
      */
     public function withVkeyWitnesses(array $witnesses): self
@@ -122,29 +127,40 @@ final class WitnessSet
             array_values($witnesses)
         ));
 
-        $entries = [];
-        $written = false;
+        // Where the vkey witnesses go when the set does not already carry them: before the first field with a
+        // higher key, and at the end when there is none. Working this out first, rather than while writing the
+        // entries out, is what keeps it from being written twice. A set whose fields arrived out of ascending order
+        // has a field with a higher key before the position the vkey witnesses belong at, and a loop that decided
+        // as it went would put them there and then again at their own key.
+        $insertBefore = $this->has(self::FIELD_VKEY_WITNESSES) ? null : count($this->fields);
+        $position = 0;
 
-        foreach ($this->fields as $key => $field) {
-            if (! $written && $key > self::FIELD_VKEY_WITNESSES) {
-                $entries[] = [CborInteger::of(self::FIELD_VKEY_WITNESSES)->toCbor(), $replacement];
-                $written = true;
+        foreach (array_keys($this->fields) as $key) {
+            if ($insertBefore !== null && $key > self::FIELD_VKEY_WITNESSES) {
+                $insertBefore = min($insertBefore, $position);
             }
 
-            if ($key === self::FIELD_VKEY_WITNESSES) {
-                $entries[] = [$this->keys[$key]->toCbor(), $replacement];
-                $written = true;
+            $position++;
+        }
 
-                continue;
+        $entries = [];
+        $position = 0;
+
+        foreach ($this->fields as $key => $field) {
+            if ($position === $insertBefore) {
+                $entries[] = [CborInteger::of(self::FIELD_VKEY_WITNESSES)->toCbor(), $replacement];
             }
 
             $entries[] = [$this->keys[$key]->toCbor(), match ($key) {
+                self::FIELD_VKEY_WITNESSES => $replacement,
                 self::FIELD_NATIVE_SCRIPTS => $this->nativeScriptForm?->wrap($this->nativeScripts) ?? $field,
                 default => $field,
             }];
+
+            $position++;
         }
 
-        if (! $written) {
+        if ($insertBefore === count($this->fields)) {
             $entries[] = [CborInteger::of(self::FIELD_VKEY_WITNESSES)->toCbor(), $replacement];
         }
 

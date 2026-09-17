@@ -214,6 +214,59 @@ class WitnessAssemblyTest extends TestCase
     }
 
     /**
+     * Swapping the witnesses on a set whose fields arrived out of ascending order leaves the order alone.
+     *
+     * This is the way a value the model could not write back was reaching fromCbor from inside the package. The
+     * ledger takes a witness set with its fields in any order, and swapping measuring witnesses for real ones used
+     * to decide where the vkey field went as it walked the map: a field with a higher key came first, so the vkey
+     * witnesses were written there and then again at their own key. The set that came back had a different field
+     * order from the one that went in, and the map it was built from wrote one key twice.
+     */
+    public function test_swapping_witnesses_keeps_the_field_order_the_set_arrived_in(): void
+    {
+        $vkey = str_repeat("\x01", 32);
+        $signature = str_repeat("\x02", 64);
+
+        // A witness set writing the native scripts field before the vkey witnesses field.
+        $bytes = "\xa2"
+            ."\x01"."\x80"
+            ."\x00"."\x81"."\x82"."\x58\x20".$vkey."\x58\x40".$signature;
+
+        $set = WitnessSet::fromCbor(CborCodec::decode($bytes));
+
+        $this->assertSame([1, 0], $set->fieldKeys());
+        $this->assertSame(bin2hex($bytes), bin2hex(CborCodec::encode($set->toCbor())));
+
+        $swapped = $set->withVkeyWitnesses([
+            VkeyWitness::of(str_repeat("\x03", 32), str_repeat("\x04", 64)),
+        ]);
+
+        $this->assertSame([1, 0], $swapped->fieldKeys(), 'Swapping the witnesses reordered the witness set.');
+        $this->assertCount(1, $swapped->vkeyWitnesses());
+        $this->assertSame(
+            strlen($bytes),
+            strlen(CborCodec::encode($swapped->toCbor())),
+            'The swapped set is a different length from the set it replaced.'
+        );
+    }
+
+    /**
+     * And a set with no vkey witnesses at all gets them in ascending key order.
+     */
+    public function test_a_set_with_no_witnesses_gets_them_in_ascending_key_order(): void
+    {
+        $set = WitnessSet::fromCbor(CborCodec::decode("\xa1\x01\x80"));
+
+        $this->assertSame([1], $set->fieldKeys());
+
+        $swapped = $set->withVkeyWitnesses([
+            VkeyWitness::of(str_repeat("\x03", 32), str_repeat("\x04", 64)),
+        ]);
+
+        $this->assertSame([0, 1], $swapped->fieldKeys());
+    }
+
+    /**
      * Swapping measuring witnesses for real ones changes the witness set and nothing else.
      */
     public function test_signing_replaces_the_dummies_and_leaves_the_body_alone(): void
