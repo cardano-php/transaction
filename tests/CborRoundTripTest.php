@@ -97,7 +97,7 @@ class CborRoundTripTest extends TestCase
 
             try {
                 $decoded = CborCodec::decode($bytes);
-            } catch (DecodeException $e) {
+            } catch (DecodeException) {
                 $refused++;
 
                 continue;
