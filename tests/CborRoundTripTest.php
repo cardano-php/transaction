@@ -8,6 +8,7 @@ namespace Cardano\Transaction\Tests;
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Codec\TransactionDecoder;
 use Cardano\Transaction\Exception\DecodeException;
+use Cardano\Transaction\Hash\Blake2b;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Throwable;
@@ -25,8 +26,15 @@ use Throwable;
  * document that can be reproduced. They deliberately write heads wider than they need to, mix definite and
  * indefinite framings at every level, and nest maps, arrays, tags and chunked strings inside one another.
  *
- * The second half is the other property: a decoder handed bytes that are not CBOR refuses them. Anything else, from
- * a truncated structure handed back as if it were whole to an error that is not a DecodeException, is a failure.
+ * Two shapes are generated, because the two layers need different documents. Arbitrary::document is a document of
+ * no particular shape, which is what holds the CBOR layer to reading and writing anything well formed. Nothing of
+ * that shape is ever a transaction, so the transaction layer gets GeneratedTransaction, which fixes the shape and
+ * varies the writing; a case that fed the first kind to the second layer would count two thousand refusals and
+ * never reach the question it was asked.
+ *
+ * The other property is the refusals: a decoder handed bytes that are not CBOR, or a transaction with one thing
+ * about it wrong, says so. Anything else, from a truncated structure handed back as if it were whole to an error
+ * that is not a DecodeException, is a failure.
  */
 class CborRoundTripTest extends TestCase
 {
@@ -56,7 +64,7 @@ class CborRoundTripTest extends TestCase
         mt_srand($seed);
 
         for ($index = 0; $index < self::DOCUMENTS; $index++) {
-            $bytes = self::document(0);
+            $bytes = Arbitrary::document(0);
 
             $this->assertSame(
                 bin2hex($bytes),
@@ -75,7 +83,7 @@ class CborRoundTripTest extends TestCase
         mt_srand($seed + 1000);
 
         for ($index = 0; $index < self::DOCUMENTS; $index++) {
-            $bytes = self::document(0);
+            $bytes = Arbitrary::document(0);
             $once = CborCodec::encode(CborCodec::decode($bytes));
             $twice = CborCodec::encode(CborCodec::decode($once));
 
@@ -94,7 +102,7 @@ class CborRoundTripTest extends TestCase
         $refused = 0;
 
         for ($index = 0; $index < self::DOCUMENTS; $index++) {
-            $bytes = self::corrupted(self::document(0));
+            $bytes = Arbitrary::corrupted(Arbitrary::document(0));
 
             try {
                 $decoded = CborCodec::decode($bytes);
@@ -125,29 +133,87 @@ class CborRoundTripTest extends TestCase
     }
 
     /**
-     * The same documents through the transaction layer, which is where the hash is computed.
+     * Transaction-shaped documents through the transaction layer, which is where the hash is computed.
      *
      * The three cases above stop at CborCodec, and CborCodec is the layer with nothing in it that takes a
      * transaction apart: it holds the head of every item it reads and hands all of them back. The layer above it
      * reads fields out into a model and rebuilds them, and a document that the codec reproduces can still come back
-     * from there as different bytes. Anything a generated document reaches has to hold at both layers, so the
-     * decoder either refuses it by name or answers with exactly what it was given.
+     * from there as different bytes.
      *
-     * Almost every document here is refused, because almost nothing shaped at random is a transaction. What the
-     * count at the end says is that the case is wired to the transaction layer at all.
+     * Reaching that layer needs documents that are transactions. A document shaped at random is a four item array
+     * with a map body about as often as never, so routing one through here exercises the refusal and nothing else.
+     * These are built to the shape instead and varied in the writing: every head at a width chosen from the ones
+     * that hold it, containers definite or indefinite, sets with and without tag 258, body and witness fields in
+     * arbitrary order, and arbitrary CBOR in the fields this package carries through rather than models. All of that
+     * is in the bytes the ledger hashed and none of it changes what the transaction says, which is exactly the set
+     * of differences a decoder is most likely to normalise away.
+     *
+     * So the assertion is the strong one: every document is accepted, and every one comes back byte for byte.
      */
     #[DataProvider('seeds')]
-    public function test_a_generated_document_reaching_the_transaction_layer_is_refused_or_reproduced(int $seed): void
+    public function test_a_generated_transaction_is_accepted_and_written_back_the_way_it_arrived(int $seed): void
     {
         mt_srand($seed + 3000);
+
+        $accepted = 0;
+
+        for ($index = 0; $index < self::DOCUMENTS; $index++) {
+            $bytes = GeneratedTransaction::bytes();
+
+            try {
+                $transaction = TransactionDecoder::decode($bytes);
+            } catch (Throwable $e) {
+                $this->fail(sprintf(
+                    'Seed %d document %d is a transaction and was refused with %s: %s. The document was %s.',
+                    $seed,
+                    $index,
+                    $e::class,
+                    $e->getMessage(),
+                    bin2hex($bytes)
+                ));
+            }
+
+            $accepted++;
+
+            $this->assertSame(
+                bin2hex($bytes),
+                bin2hex($transaction->encode()),
+                sprintf('Seed %d document %d was accepted and written back as different bytes.', $seed, $index)
+            );
+
+            $this->assertSame(
+                bin2hex(Blake2b::hash256(CborCodec::encode(CborCodec::decode($bytes)->items()[0]))),
+                $transaction->hashHex(),
+                sprintf('Seed %d document %d hashed to a transaction other than the one handed in.', $seed, $index)
+            );
+        }
+
+        $this->assertSame(
+            self::DOCUMENTS,
+            $accepted,
+            'Not every generated transaction reached the assertion, so the count below says less than it looks.'
+        );
+    }
+
+    /**
+     * And the same documents with one thing about them wrong are refused rather than read.
+     *
+     * A generator that only ever produces valid documents says nothing about the refusals, and a case whose only
+     * executed assertion is that something was refused says nothing about the acceptances. Both halves are here and
+     * each is counted, so neither can quietly stop running.
+     */
+    #[DataProvider('seeds')]
+    public function test_a_generated_transaction_with_one_thing_wrong_is_refused(int $seed): void
+    {
+        mt_srand($seed + 4000);
 
         $refused = 0;
 
         for ($index = 0; $index < self::DOCUMENTS; $index++) {
-            $bytes = self::document(0);
+            $bytes = GeneratedTransaction::spoiled();
 
             try {
-                $transaction = TransactionDecoder::decode($bytes);
+                TransactionDecoder::decode($bytes);
             } catch (DecodeException) {
                 $refused++;
 
@@ -162,168 +228,14 @@ class CborRoundTripTest extends TestCase
                 ));
             }
 
-            $this->assertSame(bin2hex($bytes), bin2hex($transaction->encode()));
+            $this->fail(sprintf(
+                'Seed %d document %d is not a transaction and was accepted: %s',
+                $seed,
+                $index,
+                bin2hex($bytes)
+            ));
         }
 
-        $this->assertGreaterThan(0, $refused, 'Nothing was refused, so this case is not reaching the decoder.');
-    }
-
-    // ------------------------------------------------------------------ the generator
-
-    /**
-     * One random CBOR document, written straight out as bytes so that what it should decode to is already known.
-     */
-    private static function document(int $depth): string
-    {
-        $leafOnly = $depth >= 4;
-        $kind = mt_rand(0, $leafOnly ? 5 : 10);
-
-        return match ($kind) {
-            0 => self::head(0, mt_rand(0, 100000)),
-            1 => self::head(1, mt_rand(0, 100000)),
-            2 => self::definiteString(2),
-            3 => self::definiteString(3),
-            4 => self::simple(),
-            5 => self::chunkedString(mt_rand(0, 1) === 0 ? 2 : 3),
-            6 => self::sequence($depth, false),
-            7 => self::sequence($depth, true),
-            8 => self::map($depth, false),
-            9 => self::map($depth, true),
-            default => self::head(6, self::tagNumber()).self::document($depth + 1),
-        };
-    }
-
-    /**
-     * A head for $major carrying $argument, at a width chosen from the ones that hold it.
-     *
-     * The shortest is what every encoder in the ecosystem writes and the widest is what nothing writes, which is
-     * exactly why both belong here.
-     */
-    private static function head(int $major, int $argument): string
-    {
-        $widths = [];
-
-        if ($argument <= 23) {
-            $widths[] = -1;
-        }
-
-        if ($argument <= 0xFF) {
-            $widths[] = 1;
-        }
-
-        if ($argument <= 0xFFFF) {
-            $widths[] = 2;
-        }
-
-        $widths[] = 4;
-        $widths[] = 8;
-
-        $width = $widths[mt_rand(0, count($widths) - 1)];
-
-        return match ($width) {
-            -1 => chr($major << 5 | $argument),
-            1 => chr($major << 5 | 24).chr($argument),
-            2 => chr($major << 5 | 25).pack('n', $argument),
-            4 => chr($major << 5 | 26).pack('N', $argument),
-            default => chr($major << 5 | 27).pack('J', $argument),
-        };
-    }
-
-    private static function definiteString(int $major): string
-    {
-        $length = mt_rand(0, 12);
-        $payload = '';
-
-        for ($index = 0; $index < $length; $index++) {
-            // Text strings stay inside printable ASCII, which is valid UTF-8 whatever bytes land next to it.
-            $payload .= $major === 3 ? chr(mt_rand(0x20, 0x7E)) : chr(mt_rand(0, 255));
-        }
-
-        return self::head($major, $length).$payload;
-    }
-
-    private static function chunkedString(int $major): string
-    {
-        $bytes = chr($major << 5 | 31);
-
-        for ($index = 0, $chunks = mt_rand(0, 3); $index < $chunks; $index++) {
-            $bytes .= self::definiteString($major);
-        }
-
-        return $bytes."\xff";
-    }
-
-    private static function sequence(int $depth, bool $indefinite): string
-    {
-        $count = mt_rand(0, 4);
-        $items = '';
-
-        for ($index = 0; $index < $count; $index++) {
-            $items .= self::document($depth + 1);
-        }
-
-        return $indefinite
-            ? chr(4 << 5 | 31).$items."\xff"
-            : self::head(4, $count).$items;
-    }
-
-    /**
-     * A map whose keys are distinct integers, so the document is one a decoder is allowed to accept.
-     */
-    private static function map(int $depth, bool $indefinite): string
-    {
-        $count = mt_rand(0, 4);
-        $entries = '';
-
-        for ($index = 0; $index < $count; $index++) {
-            $entries .= self::head(0, $index).self::document($depth + 1);
-        }
-
-        return $indefinite
-            ? chr(5 << 5 | 31).$entries."\xff"
-            : self::head(5, $count).$entries;
-    }
-
-    private static function simple(): string
-    {
-        return match (mt_rand(0, 6)) {
-            0 => "\xf4",
-            1 => "\xf5",
-            2 => "\xf6",
-            3 => "\xf7",
-            4 => chr(7 << 5 | mt_rand(0, 19)),
-            5 => "\xf9".pack('n', mt_rand(0, 0xFFFF)),
-            default => "\xfa".pack('N', mt_rand(0, 0x7FFFFFFF)),
-        };
-    }
-
-    private static function tagNumber(): int
-    {
-        return [0, 2, 18, 24, 121, 258, 1004, 100000][mt_rand(0, 7)];
-    }
-
-    /**
-     * The same document with one byte changed, truncated or added to.
-     */
-    private static function corrupted(string $bytes): string
-    {
-        return match (mt_rand(0, 3)) {
-            0 => $bytes.chr(mt_rand(0, 255)),
-            1 => substr($bytes, 0, max(0, strlen($bytes) - mt_rand(1, 3))),
-            2 => self::withByteChanged($bytes),
-            default => substr($bytes, mt_rand(1, 2)),
-        };
-    }
-
-    private static function withByteChanged(string $bytes): string
-    {
-        if ($bytes === '') {
-            return "\x00";
-        }
-
-        $position = mt_rand(0, strlen($bytes) - 1);
-        $bytes[$position] = chr(mt_rand(0, 255));
-
-        return $bytes;
+        $this->assertSame(self::DOCUMENTS, $refused);
     }
 }
