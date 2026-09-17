@@ -440,8 +440,15 @@ final class CborValue
     /**
      * The argument this head carries as a PHP integer, and null when it does not fit one.
      *
-     * A CBOR argument is unsigned, so a negative result cannot be one: it says the argument sits above PHP_INT_MAX,
-     * which only the eighth byte of an eight byte argument can put it.
+     * A CBOR argument is unsigned and a PHP integer is signed, so the question is whether the next byte still fits
+     * and it has to be asked before the shift rather than after it. Reading all the bytes and then looking at the
+     * sign only works where the integer is exactly eight bytes wide, which is the build this happened to be written
+     * on: a four byte argument on a 32-bit build overflows without ever setting the sign bit, and comes back as a
+     * quietly wrong number rather than as the null that sends the caller to brick/math.
+     *
+     * So the width is compared against PHP_INT_SIZE rather than against eight, and each byte is checked against the
+     * room left before it is shifted in. Nothing above PHP_INT_MAX can be returned and nothing below it is refused,
+     * on either word size.
      */
     private static function nativeArgument(int $additionalInformation, ?string $argument): ?int
     {
@@ -451,17 +458,22 @@ final class CborValue
 
         $length = strlen($argument);
 
-        if ($length > 8) {
+        if ($length > PHP_INT_SIZE) {
             return null;
         }
 
         $value = 0;
+        $roomForAnotherByte = PHP_INT_MAX >> 8;
 
         for ($index = 0; $index < $length; $index++) {
+            if ($value > $roomForAnotherByte) {
+                return null;
+            }
+
             $value = ($value << 8) | ord($argument[$index]);
         }
 
-        return $value >= 0 ? $value : null;
+        return $value;
     }
 
     /**

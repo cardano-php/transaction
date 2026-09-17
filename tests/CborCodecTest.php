@@ -5,6 +5,7 @@
 
 namespace Cardano\Transaction\Tests;
 
+use Brick\Math\BigInteger;
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
 use Cardano\Transaction\Exception\DecodeException;
@@ -368,6 +369,73 @@ class CborCodecTest extends TestCase
             $elapsed,
             sprintf('A %d byte document took %.2f seconds to refuse.', strlen($bytes), $elapsed)
         );
+    }
+
+    /**
+     * Every head argument reads back as the number it holds, at every width and across every boundary.
+     *
+     * The argument is built with native shifts because every integer in a transaction comes through here, and
+     * brick/math is reached for only where native arithmetic stops being an answer. Where that is depends on the
+     * word size of the build, so the answer is checked against arbitrary precision arithmetic rather than against a
+     * list, across the values on either side of each width boundary and on either side of PHP_INT_MAX.
+     */
+    public function test_a_head_argument_reads_back_as_the_number_it_holds(): void
+    {
+        $arguments = ['0', '1', '23', '24', '255', '256', '65535', '65536', '4294967295', '4294967296'];
+
+        foreach ([PHP_INT_MAX, '9223372036854775808', '18446744073709551615'] as $wide) {
+            $arguments[] = (string) $wide;
+        }
+
+        foreach ($arguments as $argument) {
+            $number = BigInteger::of($argument);
+
+            foreach (self::headsHolding($number) as $hex) {
+                $value = CborCodec::decode(hex2bin($hex));
+
+                $this->assertSame(
+                    (string) $number,
+                    $value->integerText(),
+                    $hex.' does not read back as '.$number.'.'
+                );
+                $this->assertSame(
+                    (string) BigInteger::of(-1)->minus($number),
+                    CborCodec::decode(hex2bin(self::asNegative($hex)))->integerText(),
+                    $hex.' does not read back as a negative integer either.'
+                );
+                $this->assertSame($hex, bin2hex(CborCodec::encode($value)));
+            }
+        }
+    }
+
+    /**
+     * Every unsigned head that can state $number, from the narrowest to the widest.
+     *
+     * @return list<string>
+     */
+    private static function headsHolding(BigInteger $number): array
+    {
+        $heads = [];
+
+        if ($number->isLessThanOrEqualTo(23)) {
+            $heads[] = sprintf('%02x', $number->toInt());
+        }
+
+        foreach ([24 => 1, 25 => 2, 26 => 4, 27 => 8] as $additionalInformation => $width) {
+            if ($number->isGreaterThan(BigInteger::of(256)->power($width)->minus(1))) {
+                continue;
+            }
+
+            $heads[] = sprintf('%02x', $additionalInformation).str_pad($number->toBase(16), $width * 2, '0', STR_PAD_LEFT);
+        }
+
+        return $heads;
+    }
+
+    /** The same head written as a major type 1 item, which is the same argument meaning -1 minus itself. */
+    private static function asNegative(string $hex): string
+    {
+        return sprintf('%02x', hexdec(substr($hex, 0, 2)) + 0x20).substr($hex, 2);
     }
 
     /**
