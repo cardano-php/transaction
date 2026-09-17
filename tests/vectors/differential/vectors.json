@@ -1,0 +1,661 @@
+{
+  "cases": [
+    {
+      "id": "plain-ada-payment",
+      "mesh": {
+        "auxiliary_data_cbor": null,
+        "body_cbor": "a300818258201111111111111111111111111111111111111111111111111111111111111111000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a000f4240021a00029810",
+        "body_hash": "f226fc9356004d3e2ebf8edb745be5fc672a20f85c51e59d750ee2150cc2b132",
+        "transaction_cbor": "84a300818258201111111111111111111111111111111111111111111111111111111111111111000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a000f4240021a00029810a0f5f6",
+        "transaction_id": "f226fc9356004d3e2ebf8edb745be5fc672a20f85c51e59d750ee2150cc2b132",
+        "witness_set_cbor": "a0"
+      },
+      "metadata": null,
+      "note": "One input, one output, a fee. The smallest thing the claim path can send.",
+      "spec": {
+        "fee": "170000",
+        "inputs": [
+          {
+            "index": 0,
+            "transaction_id": "1111111111111111111111111111111111111111111111111111111111111111"
+          }
+        ],
+        "outputs": [
+          {
+            "address": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "coin": "1000000"
+          }
+        ]
+      },
+      "witnesses": {
+        "dummy_signatures": 0,
+        "native_scripts": []
+      }
+    },
+    {
+      "id": "two-inputs-change-and-ttl",
+      "mesh": {
+        "auxiliary_data_cbor": null,
+        "body_cbor": "a40082825820111111111111111111111111111111111111111111111111111111111111111100825820222222222222222222222222222222222222222222222222222222222222222207018282581d609493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e1a001e8480825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a02e8e3c9021a0002ca77031a075bcd15",
+        "body_hash": "480272217c4ae205189e1835022732e4ac17d1c4d7f6f6b55f1a4da383a087b2",
+        "transaction_cbor": "84a40082825820111111111111111111111111111111111111111111111111111111111111111100825820222222222222222222222222222222222222222222222222222222222222222207018282581d609493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e1a001e8480825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a02e8e3c9021a0002ca77031a075bcd15a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f5f6",
+        "transaction_id": "480272217c4ae205189e1835022732e4ac17d1c4d7f6f6b55f1a4da383a087b2",
+        "witness_set_cbor": "a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "metadata": null,
+      "note": "Two inputs paying one recipient with change back, under an upper validity bound.",
+      "spec": {
+        "fee": "182903",
+        "inputs": [
+          {
+            "index": 0,
+            "transaction_id": "1111111111111111111111111111111111111111111111111111111111111111"
+          },
+          {
+            "index": 7,
+            "transaction_id": "2222222222222222222222222222222222222222222222222222222222222222"
+          }
+        ],
+        "outputs": [
+          {
+            "address": "609493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e",
+            "coin": "2000000"
+          },
+          {
+            "address": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "coin": "48817097"
+          }
+        ],
+        "ttl": "123456789"
+      },
+      "witnesses": {
+        "dummy_signatures": 1,
+        "native_scripts": []
+      }
+    },
+    {
+      "id": "single-multi-asset-output",
+      "mesh": {
+        "auxiliary_data_cbor": null,
+        "body_cbor": "a300818258203333333333333333333333333333333333333333333333333333333333333333010181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a00155cc0a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1464f4e424f415201021a0002b251",
+        "body_hash": "4931b5dd4997ea123c105c3641c22093b2474a6cca7743975d2a590e9fafc01d",
+        "transaction_cbor": "84a300818258203333333333333333333333333333333333333333333333333333333333333333010181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a00155cc0a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1464f4e424f415201021a0002b251a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f5f6",
+        "transaction_id": "4931b5dd4997ea123c105c3641c22093b2474a6cca7743975d2a590e9fafc01d",
+        "witness_set_cbor": "a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "metadata": null,
+      "note": "The airdrop shape: one output carrying lovelace and one token of one policy.",
+      "spec": {
+        "fee": "176721",
+        "inputs": [
+          {
+            "index": 1,
+            "transaction_id": "3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "outputs": [
+          {
+            "address": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "assets": [
+              {
+                "assets": [
+                  {
+                    "name": "4f4e424f4152",
+                    "quantity": "1"
+                  }
+                ],
+                "policy_id": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+              }
+            ],
+            "coin": "1400000"
+          }
+        ]
+      },
+      "witnesses": {
+        "dummy_signatures": 1,
+        "native_scripts": []
+      }
+    },
+    {
+      "id": "many-assets-one-policy",
+      "mesh": {
+        "auxiliary_data_cbor": null,
+        "body_cbor": "a300818258204444444444444444444444444444444444444444444444444444444444444444000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a00186a00a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa44007410001427a7a05464f4e424f41521863021a0002e703",
+        "body_hash": "73614c8c6a3814d847b959b2a41561ced8d6058f8cee6fbff8fb8fc312fb3b15",
+        "transaction_cbor": "84a300818258204444444444444444444444444444444444444444444444444444444444444444000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a00186a00a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa44007410001427a7a05464f4e424f41521863021a0002e703a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f5f6",
+        "transaction_id": "73614c8c6a3814d847b959b2a41561ced8d6058f8cee6fbff8fb8fc312fb3b15",
+        "witness_set_cbor": "a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "metadata": null,
+      "note": "Several asset names under one policy, declared out of byte order so any reordering shows up.",
+      "spec": {
+        "fee": "190211",
+        "inputs": [
+          {
+            "index": 0,
+            "transaction_id": "4444444444444444444444444444444444444444444444444444444444444444"
+          }
+        ],
+        "outputs": [
+          {
+            "address": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "assets": [
+              {
+                "assets": [
+                  {
+                    "name": "7a7a",
+                    "quantity": "5"
+                  },
+                  {
+                    "name": "00",
+                    "quantity": "1"
+                  },
+                  {
+                    "name": "4f4e424f4152",
+                    "quantity": "99"
+                  },
+                  {
+                    "name": "",
+                    "quantity": "7"
+                  }
+                ],
+                "policy_id": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+              }
+            ],
+            "coin": "1600000"
+          }
+        ]
+      },
+      "witnesses": {
+        "dummy_signatures": 1,
+        "native_scripts": []
+      }
+    },
+    {
+      "id": "many-policies",
+      "mesh": {
+        "auxiliary_data_cbor": null,
+        "body_cbor": "a300818258205555555555555555555555555555555555555555555555555555555555555555000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a0019f0a0a2581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d5400a14354574f02581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1434f4e4501021a0002fbcd",
+        "body_hash": "3c24877ea1064f84b4c0f779874d4c600ae4509146346d14d02743c1779f22f9",
+        "transaction_cbor": "84a300818258205555555555555555555555555555555555555555555555555555555555555555000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a0019f0a0a2581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d5400a14354574f02581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1434f4e4501021a0002fbcda100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f5f6",
+        "transaction_id": "3c24877ea1064f84b4c0f779874d4c600ae4509146346d14d02743c1779f22f9",
+        "witness_set_cbor": "a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "metadata": null,
+      "note": "Two policies in one output, the higher-sorting one declared first.",
+      "spec": {
+        "fee": "195533",
+        "inputs": [
+          {
+            "index": 0,
+            "transaction_id": "5555555555555555555555555555555555555555555555555555555555555555"
+          }
+        ],
+        "outputs": [
+          {
+            "address": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "assets": [
+              {
+                "assets": [
+                  {
+                    "name": "4f4e45",
+                    "quantity": "1"
+                  }
+                ],
+                "policy_id": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+              },
+              {
+                "assets": [
+                  {
+                    "name": "54574f",
+                    "quantity": "2"
+                  }
+                ],
+                "policy_id": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d5400"
+              }
+            ],
+            "coin": "1700000"
+          }
+        ]
+      },
+      "witnesses": {
+        "dummy_signatures": 1,
+        "native_scripts": []
+      }
+    },
+    {
+      "id": "both-validity-bounds",
+      "mesh": {
+        "auxiliary_data_cbor": null,
+        "body_cbor": "a500818258206666666666666666666666666666666666666666666666666666666666666666020181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a002dc6c0021a00029db1031a050ae4c0081a05095e20",
+        "body_hash": "bb88a35091687634016b2a2a131a7cbe1313dddbec02dde3a02b23d180dbfca7",
+        "transaction_cbor": "84a500818258206666666666666666666666666666666666666666666666666666666666666666020181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a002dc6c0021a00029db1031a050ae4c0081a05095e20a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f5f6",
+        "transaction_id": "bb88a35091687634016b2a2a131a7cbe1313dddbec02dde3a02b23d180dbfca7",
+        "witness_set_cbor": "a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "metadata": null,
+      "note": "A lower and an upper bound, which is the shape a campaign transaction is built with.",
+      "spec": {
+        "fee": "171441",
+        "inputs": [
+          {
+            "index": 2,
+            "transaction_id": "6666666666666666666666666666666666666666666666666666666666666666"
+          }
+        ],
+        "outputs": [
+          {
+            "address": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "coin": "3000000"
+          }
+        ],
+        "ttl": "84600000",
+        "validity_interval_start": "84500000"
+      },
+      "witnesses": {
+        "dummy_signatures": 1,
+        "native_scripts": []
+      }
+    },
+    {
+      "id": "mint-required-signers-network-id",
+      "mesh": {
+        "auxiliary_data_cbor": null,
+        "body_cbor": "a80081825820777777777777777777777777777777777777777777777777777777777777777703018182583910c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a001e8480a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1464f4e424f415201021a00031b2f031a050ae4c0081a05095e2009a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1464f4e424f4152010e81581c9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e0f00",
+        "body_hash": "62f619e453c3ed7ed8b4f1c5ba7c3d75710ec7166d60f9d9170d7c6c40f48aae",
+        "transaction_cbor": "84a80081825820777777777777777777777777777777777777777777777777777777777777777703018182583910c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a001e8480a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1464f4e424f415201021a00031b2f031a050ae4c0081a05095e2009a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1464f4e424f4152010e81581c9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e0f00a20081825820000000000000000000000000000000000000000000000000000000000000000058400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001818202828200581c9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e8201828200581c337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c4725182041a050ae4c0f5f6",
+        "transaction_id": "62f619e453c3ed7ed8b4f1c5ba7c3d75710ec7166d60f9d9170d7c6c40f48aae",
+        "witness_set_cbor": "a20081825820000000000000000000000000000000000000000000000000000000000000000058400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001818202828200581c9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e8201828200581c337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c4725182041a050ae4c0"
+      },
+      "metadata": null,
+      "note": "A mint with a required signer and an explicit network id, exercising the high body fields.",
+      "spec": {
+        "fee": "203567",
+        "inputs": [
+          {
+            "index": 3,
+            "transaction_id": "7777777777777777777777777777777777777777777777777777777777777777"
+          }
+        ],
+        "mint": [
+          {
+            "assets": [
+              {
+                "name": "4f4e424f4152",
+                "quantity": "1"
+              }
+            ],
+            "policy_id": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+          }
+        ],
+        "network_id": 0,
+        "outputs": [
+          {
+            "address": "10c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "assets": [
+              {
+                "assets": [
+                  {
+                    "name": "4f4e424f4152",
+                    "quantity": "1"
+                  }
+                ],
+                "policy_id": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+              }
+            ],
+            "coin": "2000000"
+          }
+        ],
+        "required_signers": [
+          "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e"
+        ],
+        "ttl": "84600000",
+        "validity_interval_start": "84500000"
+      },
+      "witnesses": {
+        "dummy_signatures": 1,
+        "native_scripts": [
+          {
+            "type": "any",
+            "scripts": [
+              {
+                "keyHash": "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e",
+                "type": "sig"
+              },
+              {
+                "scripts": [
+                  {
+                    "keyHash": "337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+                    "type": "sig"
+                  },
+                  {
+                    "slot": 84600000,
+                    "type": "after"
+                  }
+                ],
+                "type": "all"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "collateral-and-reference-inputs",
+      "mesh": {
+        "auxiliary_data_cbor": null,
+        "body_cbor": "a500818258209999999999999999999999999999999999999999999999999999999999999999000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a004c4b40021a000334500d818258208888888888888888888888888888888888888888888888888888888888888888001281825820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa04",
+        "body_hash": "250f07a60d71ca298ec940a0c29d9f1d881801ee0cd26c8a98fe134f4ef6f296",
+        "transaction_cbor": "84a500818258209999999999999999999999999999999999999999999999999999999999999999000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a004c4b40021a000334500d818258208888888888888888888888888888888888888888888888888888888888888888001281825820aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa04a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f5f6",
+        "transaction_id": "250f07a60d71ca298ec940a0c29d9f1d881801ee0cd26c8a98fe134f4ef6f296",
+        "witness_set_cbor": "a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "metadata": null,
+      "note": "The two input sets that are not the spend set, which land in fields 13 and 18.",
+      "spec": {
+        "collateral": [
+          {
+            "index": 0,
+            "transaction_id": "8888888888888888888888888888888888888888888888888888888888888888"
+          }
+        ],
+        "fee": "210000",
+        "inputs": [
+          {
+            "index": 0,
+            "transaction_id": "9999999999999999999999999999999999999999999999999999999999999999"
+          }
+        ],
+        "outputs": [
+          {
+            "address": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "coin": "5000000"
+          }
+        ],
+        "reference_inputs": [
+          {
+            "index": 4,
+            "transaction_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        ]
+      },
+      "witnesses": {
+        "dummy_signatures": 1,
+        "native_scripts": []
+      }
+    },
+    {
+      "id": "max-uint64-asset-quantity",
+      "mesh": {
+        "auxiliary_data_cbor": null,
+        "body_cbor": "a30081825820bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a0016e360a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1434d41581bffffffffffffffff021a0002b7cb",
+        "body_hash": "6399f21e30a5bb8aa0b57f921802be248bad2f38214381cb40d178a5dfddeb84",
+        "transaction_cbor": "84a30081825820bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a0016e360a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1434d41581bffffffffffffffff021a0002b7cba100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f5f6",
+        "transaction_id": "6399f21e30a5bb8aa0b57f921802be248bad2f38214381cb40d178a5dfddeb84",
+        "witness_set_cbor": "a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "metadata": null,
+      "note": "A token quantity at the ledger ceiling, which is larger than a PHP signed integer holds.",
+      "spec": {
+        "fee": "178123",
+        "inputs": [
+          {
+            "index": 0,
+            "transaction_id": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          }
+        ],
+        "outputs": [
+          {
+            "address": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "assets": [
+              {
+                "assets": [
+                  {
+                    "name": "4d4158",
+                    "quantity": "18446744073709551615"
+                  }
+                ],
+                "policy_id": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+              }
+            ],
+            "coin": "1500000"
+          }
+        ]
+      },
+      "witnesses": {
+        "dummy_signatures": 1,
+        "native_scripts": []
+      }
+    },
+    {
+      "id": "cip20-message",
+      "mesh": {
+        "auxiliary_data_cbor": "a11902a2a1636d736781781a436c61696d65642077697468206f6e626f6172642e6e696e6a61",
+        "body_cbor": "a50081825820cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a002625a0021a0002d3df031a050ae4c00758201274ce72f6101a4e34c32fa097995ee429edb2534fe67fd18603c5f5b97fbe86",
+        "body_hash": "3a1bfc57b1bfdb4c20dd98283ba29301402019a4ead9f3e33b8b06928f81b297",
+        "transaction_cbor": "84a50081825820cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a002625a0021a0002d3df031a050ae4c00758201274ce72f6101a4e34c32fa097995ee429edb2534fe67fd18603c5f5b97fbe86a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f5a11902a2a1636d736781781a436c61696d65642077697468206f6e626f6172642e6e696e6a61",
+        "transaction_id": "3a1bfc57b1bfdb4c20dd98283ba29301402019a4ead9f3e33b8b06928f81b297",
+        "witness_set_cbor": "a100818258200000000000000000000000000000000000000000000000000000000000000000584000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "metadata": [
+        {
+          "label": "674",
+          "value": {
+            "map": [
+              [
+                "msg",
+                [
+                  "Claimed with onboard.ninja"
+                ]
+              ]
+            ]
+          }
+        }
+      ],
+      "note": "A transaction message under label 674, hashed into the body and attached to the transaction.",
+      "spec": {
+        "fee": "185311",
+        "inputs": [
+          {
+            "index": 0,
+            "transaction_id": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+          }
+        ],
+        "outputs": [
+          {
+            "address": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "coin": "2500000"
+          }
+        ],
+        "ttl": "84600000",
+        "auxiliary_data_hash": "1274ce72f6101a4e34c32fa097995ee429edb2534fe67fd18603c5f5b97fbe86"
+      },
+      "witnesses": {
+        "dummy_signatures": 1,
+        "native_scripts": []
+      }
+    },
+    {
+      "id": "cip25-mint-metadata",
+      "mesh": {
+        "auxiliary_data_cbor": "a11902d1a178386333376231623564633036363966316433633631613666646462326538666465393662653837623838316336306263653865386435343266a1674f4e424f415244a2646e616d656d4f6e626f617264204e696e6a6165696d6167656d697066733a2f2f516d54657374",
+        "body_cbor": "a60081825820dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a00155cc0a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1474f4e424f41524401021a0003632f031a050ae4c007582066908736b59ab0465b396b69b2ad9f970505e8a6548ec7161087c9aa9c14516909a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1474f4e424f41524401",
+        "body_hash": "97bb24f5991337e53b1d6c0460b08745e43a1c0faf203b95d6afd675ef8affac",
+        "transaction_cbor": "84a60081825820dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251821a00155cc0a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1474f4e424f41524401021a0003632f031a050ae4c007582066908736b59ab0465b396b69b2ad9f970505e8a6548ec7161087c9aa9c14516909a1581cc37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542fa1474f4e424f41524401a20081825820000000000000000000000000000000000000000000000000000000000000000058400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001818202828200581c9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e8201828200581c337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c4725182041a050ae4c0f5a11902d1a178386333376231623564633036363966316433633631613666646462326538666465393662653837623838316336306263653865386435343266a1674f4e424f415244a2646e616d656d4f6e626f617264204e696e6a6165696d6167656d697066733a2f2f516d54657374",
+        "transaction_id": "97bb24f5991337e53b1d6c0460b08745e43a1c0faf203b95d6afd675ef8affac",
+        "witness_set_cbor": "a20081825820000000000000000000000000000000000000000000000000000000000000000058400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001818202828200581c9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e8201828200581c337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c4725182041a050ae4c0"
+      },
+      "metadata": [
+        {
+          "label": "721",
+          "value": {
+            "map": [
+              [
+                "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f",
+                {
+                  "map": [
+                    [
+                      "ONBOARD",
+                      {
+                        "map": [
+                          [
+                            "name",
+                            "Onboard Ninja"
+                          ],
+                          [
+                            "image",
+                            "ipfs://QmTest"
+                          ]
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
+            ]
+          }
+        }
+      ],
+      "note": "A CIP-25 mint: the metadata under label 721 and the mint field describing the same token.",
+      "spec": {
+        "fee": "221999",
+        "inputs": [
+          {
+            "index": 0,
+            "transaction_id": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+          }
+        ],
+        "mint": [
+          {
+            "assets": [
+              {
+                "name": "4f4e424f415244",
+                "quantity": "1"
+              }
+            ],
+            "policy_id": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+          }
+        ],
+        "outputs": [
+          {
+            "address": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+            "assets": [
+              {
+                "assets": [
+                  {
+                    "name": "4f4e424f415244",
+                    "quantity": "1"
+                  }
+                ],
+                "policy_id": "c37b1b5dc0669f1d3c61a6fddb2e8fde96be87b881c60bce8e8d542f"
+              }
+            ],
+            "coin": "1400000"
+          }
+        ],
+        "ttl": "84600000",
+        "auxiliary_data_hash": "66908736b59ab0465b396b69b2ad9f970505e8a6548ec7161087c9aa9c145169"
+      },
+      "witnesses": {
+        "dummy_signatures": 1,
+        "native_scripts": [
+          {
+            "type": "any",
+            "scripts": [
+              {
+                "keyHash": "9493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e",
+                "type": "sig"
+              },
+              {
+                "scripts": [
+                  {
+                    "keyHash": "337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+                    "type": "sig"
+                  },
+                  {
+                    "slot": 84600000,
+                    "type": "after"
+                  }
+                ],
+                "type": "all"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "fee_field_widths": {
+    "base": {
+      "inputs": [
+        {
+          "index": 0,
+          "transaction_id": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        }
+      ],
+      "outputs": [
+        {
+          "address": "009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c47251",
+          "coin": "1000000"
+        }
+      ]
+    },
+    "cases": [
+      {
+        "body_cbor": "a30081825820eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a000f42400200",
+        "body_hash": "7fe9381e7d27ccccc7891936883ce524ce30612379b827948dc7a3402096ec73",
+        "fee": "0"
+      },
+      {
+        "body_cbor": "a30081825820eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a000f42400217",
+        "body_hash": "b53b72a70d1886d03c304ad5b92ee96870cfe966aac39a3dcab223796998e513",
+        "fee": "23"
+      },
+      {
+        "body_cbor": "a30081825820eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a000f4240021818",
+        "body_hash": "c17470dfbd700a42bd44f69b6e859032ec2a94383d8a935a6174adf6513fa256",
+        "fee": "24"
+      },
+      {
+        "body_cbor": "a30081825820eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a000f42400218ff",
+        "body_hash": "d979bbe9050dd3a43a40d77dcbfa604faf5ef49bee6c7e16988e3aab9b9afdcc",
+        "fee": "255"
+      },
+      {
+        "body_cbor": "a30081825820eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a000f424002190100",
+        "body_hash": "860bd628b3674abd99a6fb864cb3f881cb041c802282dfbccde720ecca6a594d",
+        "fee": "256"
+      },
+      {
+        "body_cbor": "a30081825820eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a000f42400219ffff",
+        "body_hash": "1694100f0352e72861c71bef63c29075ec3082b2a260012fb5345201b6b3a9c9",
+        "fee": "65535"
+      },
+      {
+        "body_cbor": "a30081825820eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a000f4240021a00010000",
+        "body_hash": "7bb19c72f8c37d62cad1e24f9547bda7b071eb1b81386f56c6d28ac4c7bc2531",
+        "fee": "65536"
+      },
+      {
+        "body_cbor": "a30081825820eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a000f4240021affffffff",
+        "body_hash": "16168aeae34fe8385653223b2560458811401a8b499bc269c5dadbd068f1bd0a",
+        "fee": "4294967295"
+      },
+      {
+        "body_cbor": "a30081825820eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000181825839009493315cd92eb5d8c4304e67b7e16ae36d61d34502694657811a2c8e337b62cfff6403a06a3acbc34f8c46003c69fe79a3628cefa9c472511a000f4240021b0000000100000000",
+        "body_hash": "4e1f624203ef09651770df5ebf3a32ff8d4cc97d278a69598fd5bee20f5fb4bd",
+        "fee": "4294967296"
+      }
+    ]
+  },
+  "generator": {
+    "addresses": "tests/fixtures/cardano-addresses/cip19-vectors.json, the published CIP-19 test vectors",
+    "generated_at": "2026-09-15",
+    "node": "v24.21.0",
+    "packages": {
+      "@cardano-sdk/core": "0.46.12",
+      "@meshsdk/core-cst": "1.9.1"
+    },
+    "script": "tests/vectors/differential/generate.mjs"
+  }
+}

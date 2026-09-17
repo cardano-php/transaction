@@ -32,6 +32,48 @@ final class Transaction
         private readonly SequenceForm $form,
     ) {}
 
+    /**
+     * A whole transaction put together from a body, its witnesses and whatever auxiliary data it carries.
+     *
+     * Four items are written, which is the Alonzo-and-later shape and the only one a node accepts today. The three
+     * item form stays in the decoder because mainnet history is full of it.
+     *
+     * The body's auxiliary data hash and the auxiliary data itself have to agree, and this method does not check
+     * that itself: it hands the assembled CBOR back to the decoder, which already refuses a body that claims a hash
+     * with nothing attached and data attached with no hash. Assembling through the decoder is what makes every
+     * transaction this package emits one it will also read.
+     */
+    public static function assemble(
+        TransactionBody $body,
+        WitnessSet $witnessSet,
+        ?AuxiliaryData $auxiliaryData = null,
+        bool $isValid = true,
+    ): self {
+        return self::fromCbor(
+            SequenceForm::definite()->wrap([
+                $body->toCbor(),
+                $witnessSet->toCbor(),
+                $isValid ? TrueObject::create() : FalseObject::create(),
+                $auxiliaryData?->toCbor() ?? NullObject::create(),
+            ]),
+            'assembled transaction'
+        );
+    }
+
+    /**
+     * The same transaction carrying a different witness set.
+     *
+     * Building, measuring and signing happen in that order and cannot happen in any other, because the fee is a
+     * field of the body the signatures are taken over. So a transaction is assembled with witnesses of the right
+     * size holding zeroes, its length is measured, its fee is settled against that length, and the zeroes are
+     * swapped for real signatures here. The body is untouched and therefore so is its hash, which is the whole
+     * reason the swap is safe.
+     */
+    public function withWitnessSet(WitnessSet $witnessSet): self
+    {
+        return new self($this->body, $witnessSet, $this->isValid, $this->auxiliaryData, $this->form);
+    }
+
     public static function fromCbor(CBORObject $object, string $context = 'transaction'): self
     {
         [$form, $items] = SequenceForm::unwrap($object, $context, allowSetTag: false);

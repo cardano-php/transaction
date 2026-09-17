@@ -64,6 +64,33 @@ final class AssetBundle
         return new self($policyId, MapForm::definite(), $decoded);
     }
 
+    /**
+     * The same assets, ordered the way canonical CBOR orders map keys, with duplicate names refused.
+     *
+     * MultiAsset::canonical calls this for every policy it holds. The ordering rule is there; what is here is the
+     * duplicate check, which has to happen per policy because an asset is only named inside one.
+     */
+    public function canonical(): self
+    {
+        $seen = [];
+        foreach ($this->assets as [$name]) {
+            if (isset($seen[$name])) {
+                throw new DecodeException(sprintf(
+                    'The asset name %s appears twice under policy %s.',
+                    $name === '' ? '(empty)' : bin2hex($name),
+                    $this->policyIdHex()
+                ));
+            }
+
+            $seen[$name] = true;
+        }
+
+        $ordered = $this->assets;
+        usort($ordered, static fn (array $a, array $b): int => MultiAsset::compareKeys($a[0], $b[0]));
+
+        return new self($this->policyId, MapForm::definite(), $ordered);
+    }
+
     public static function fromCbor(CBORObject $policyId, CBORObject $assets, string $context, bool $signed): self
     {
         $policy = Shape::bytes($policyId, $context.' policy id', 28);

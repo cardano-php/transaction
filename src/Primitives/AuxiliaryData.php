@@ -7,11 +7,13 @@ declare(strict_types=1);
 
 namespace Cardano\Transaction\Primitives;
 
+use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
 use Cardano\Transaction\Cbor\MapForm;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Cbor\TagPayload;
 use Cardano\Transaction\Exception\DecodeException;
+use Cardano\Transaction\Hash\Blake2b;
 use CBOR\CBORObject;
 use CBOR\IndefiniteLengthMapObject;
 use CBOR\MapObject;
@@ -159,6 +161,29 @@ final class AuxiliaryData
             TagPayload::forTagNumber(self::ALONZO_TAG, (int) $this->tagAdditionalInformation),
             $this->container->wrap($entries)
         );
+    }
+
+    /** The bytes the auxiliary data hash is taken over, rebuilt from the model rather than sliced out of the input. */
+    public function encode(): string
+    {
+        return CborCodec::encode($this->toCbor());
+    }
+
+    /**
+     * Blake2b-256 over those bytes, which is what field 7 of the body has to hold.
+     *
+     * The two live in different halves of the transaction and the ledger checks that they agree, so a builder that
+     * takes the hash from anywhere other than the data it is about to attach has an error it will not find until a
+     * node refuses the transaction.
+     */
+    public function hash(): string
+    {
+        return Blake2b::hash256($this->encode());
+    }
+
+    public function hashHex(): string
+    {
+        return bin2hex($this->hash());
     }
 
     private function metadataCbor(): ?CBORObject

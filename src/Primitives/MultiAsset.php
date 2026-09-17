@@ -7,7 +7,9 @@ declare(strict_types=1);
 
 namespace Cardano\Transaction\Primitives;
 
+use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\MapForm;
+use Cardano\Transaction\Exception\DecodeException;
 use CBOR\ByteStringObject;
 use CBOR\CBORObject;
 
@@ -38,6 +40,67 @@ final class MultiAsset
     public static function of(array $bundles): self
     {
         return new self(MapForm::definite(), array_values($bundles));
+    }
+
+    /**
+     * The same bundles, written in the order canonical CBOR puts them in.
+     *
+     * The ledger does not ask for canonical ordering and accepts a multiasset map written any way round, so nothing
+     * here is about validity. Two other things are.
+     *
+     * A map key is ordered by its encoded bytes, which for a byte string means shorter keys first and then
+     * lexicographically. That is not the same as sorting the raw names: a one byte name beginning 0x7a sorts before
+     * a six byte name beginning 0x4f under the encoded rule and after it under the raw one, so the two orderings
+     * disagree the moment a policy holds names of different lengths. Sorting here is the encoded rule, taken from
+     * the encoding rather than argued about, so it cannot drift from what the encoder does.
+     *
+     * The reason to have it at all is what else reads these bytes. Every other builder emits the canonical order,
+     * which is what makes a byte comparison against one meaningful, and a hardware wallet asked to sign a
+     * transaction whose multiasset maps are out of canonical order refuses it. A transaction this application signs
+     * with its own key does not care; one handed to a customer's wallet to sign does.
+     *
+     * Duplicates are refused rather than merged. Two entries for one policy make a CBOR map with a repeated key,
+     * which is not a map, and quietly adding the quantities together would turn a caller's mistake into a different
+     * transaction from the one they asked for.
+     *
+     * @param  list<AssetBundle>  $bundles
+     */
+    public static function canonical(array $bundles): self
+    {
+        $ordered = array_values($bundles);
+
+        $seen = [];
+        foreach ($ordered as $bundle) {
+            if (isset($seen[$bundle->policyId])) {
+                throw new DecodeException(sprintf(
+                    'The policy %s appears twice; a multiasset map holds each policy once.',
+                    $bundle->policyIdHex()
+                ));
+            }
+
+            $seen[$bundle->policyId] = true;
+        }
+
+        usort(
+            $ordered,
+            static fn (AssetBundle $a, AssetBundle $b): int => self::compareKeys($a->policyId, $b->policyId)
+        );
+
+        return new self(
+            MapForm::definite(),
+            array_map(static fn (AssetBundle $bundle): AssetBundle => $bundle->canonical(), $ordered)
+        );
+    }
+
+    /**
+     * Order two map keys the way canonical CBOR does: by the bytes they encode to, not by the bytes they hold.
+     */
+    public static function compareKeys(string $a, string $b): int
+    {
+        return strcmp(
+            CborCodec::encode(ByteStringObject::create($a)),
+            CborCodec::encode(ByteStringObject::create($b))
+        );
     }
 
     public static function fromCbor(CBORObject $object, string $context, bool $signed): self

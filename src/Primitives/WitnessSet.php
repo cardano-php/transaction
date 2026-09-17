@@ -12,6 +12,7 @@ use Cardano\Transaction\Cbor\CborInteger;
 use Cardano\Transaction\Cbor\MapForm;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Hash\Blake2b;
+use Cardano\Transaction\Script\NativeScript;
 use CBOR\CBORObject;
 
 /**
@@ -58,6 +59,97 @@ final class WitnessSet
         private readonly array $nativeScripts,
         private readonly ?SequenceForm $nativeScriptForm,
     ) {}
+
+    /**
+     * A witness set built rather than decoded.
+     *
+     * It is assembled as CBOR and then read back through the decoder, so a set this method produces is one the
+     * decoder accepts by construction rather than by inspection. That costs one encode and one decode per
+     * transaction and removes a whole class of builder that emits something nothing else will read.
+     *
+     * Fields are written in ascending key order and an empty field is left out rather than written as an empty
+     * array. A witness set carrying an empty vkey list is legal and is two wasted bytes that also read, to anything
+     * scanning for unsigned transactions, as a deliberate claim that this one has no signatures.
+     *
+     * @param  list<VkeyWitness>  $vkeyWitnesses
+     * @param  list<NativeScript|CBORObject>  $nativeScripts
+     */
+    public static function of(array $vkeyWitnesses, array $nativeScripts = []): self
+    {
+        $form = SequenceForm::definite();
+        $entries = [];
+
+        if ($vkeyWitnesses !== []) {
+            $entries[] = [
+                CborInteger::of(self::FIELD_VKEY_WITNESSES)->toCbor(),
+                $form->wrap(array_map(
+                    static fn (VkeyWitness $witness): CBORObject => $witness->toCbor(),
+                    array_values($vkeyWitnesses)
+                )),
+            ];
+        }
+
+        if ($nativeScripts !== []) {
+            $entries[] = [
+                CborInteger::of(self::FIELD_NATIVE_SCRIPTS)->toCbor(),
+                $form->wrap(array_map(
+                    static fn (NativeScript|CBORObject $script): CBORObject => $script instanceof NativeScript
+                        ? $script->toCbor()
+                        : $script,
+                    array_values($nativeScripts)
+                )),
+            ];
+        }
+
+        return self::fromCbor(MapForm::definite()->wrap($entries), 'assembled witness set');
+    }
+
+    /**
+     * The same witness set carrying different vkey witnesses, with every other field untouched.
+     *
+     * This is the step that turns a measured transaction into a submittable one. A fee is charged on the witnessed
+     * size, so the transaction is built with witnesses of the right length holding zeroes, measured, and only then
+     * signed; this is where the zeroes are replaced. Every other field is rebuilt from what was decoded rather than
+     * from a model of it, because a set may carry Plutus data or redeemers this package does not model and dropping
+     * them here would produce a transaction that no longer matches its own script data hash.
+     *
+     * @param  list<VkeyWitness>  $witnesses
+     */
+    public function withVkeyWitnesses(array $witnesses): self
+    {
+        $replacement = ($this->vkeyForm ?? SequenceForm::definite())->wrap(array_map(
+            static fn (VkeyWitness $witness): CBORObject => $witness->toCbor(),
+            array_values($witnesses)
+        ));
+
+        $entries = [];
+        $written = false;
+
+        foreach ($this->fields as $key => $field) {
+            if (! $written && $key > self::FIELD_VKEY_WITNESSES) {
+                $entries[] = [CborInteger::of(self::FIELD_VKEY_WITNESSES)->toCbor(), $replacement];
+                $written = true;
+            }
+
+            if ($key === self::FIELD_VKEY_WITNESSES) {
+                $entries[] = [$this->keys[$key]->toCbor(), $replacement];
+                $written = true;
+
+                continue;
+            }
+
+            $entries[] = [$this->keys[$key]->toCbor(), match ($key) {
+                self::FIELD_NATIVE_SCRIPTS => $this->nativeScriptForm?->wrap($this->nativeScripts) ?? $field,
+                default => $field,
+            }];
+        }
+
+        if (! $written) {
+            $entries[] = [CborInteger::of(self::FIELD_VKEY_WITNESSES)->toCbor(), $replacement];
+        }
+
+        return self::fromCbor($this->form->wrap($entries), 'witness set');
+    }
 
     public static function fromCbor(CBORObject $object, string $context = 'witness set'): self
     {
