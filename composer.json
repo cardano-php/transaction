@@ -3,7 +3,6 @@
     "description": "Cardano transaction serialization, addresses, native scripts, slot arithmetic, fees, minimum UTxO, coin selection, transaction building and witness assembly.",
     "type": "library",
     "license": "Apache-2.0",
-    "version": "0.1.0",
     "keywords": [
         "cardano",
         "transaction",
