@@ -260,6 +260,46 @@ class CborCodecTest extends TestCase
     }
 
     /**
+     * The whole of the two byte simple value range that is not well formed, and the first one that is.
+     *
+     * RFC 8949 section 3.3 gives major type 7 with additional information 24 the simple values 32 to 255 and says a
+     * two byte sequence continuing with a byte below 32 is not well formed. The thirty-two values below that have a
+     * one byte head of their own, and four of them are false, true, null and undefined, so taking the two byte
+     * spelling would mean holding a second encoding of a value that already has one: `f814` would come back as a
+     * boolean that re-encodes to either two bytes or one, and a transaction carrying one would hash to whichever
+     * the encoder picked.
+     */
+    public function test_every_two_byte_simple_value_below_thirty_two_is_refused(): void
+    {
+        for ($value = 0; $value < 32; $value++) {
+            $bytes = "\xf8".chr($value);
+            $thrown = null;
+
+            try {
+                CborCodec::decode($bytes);
+            } catch (DecodeException $e) {
+                $thrown = $e;
+            }
+
+            $this->assertInstanceOf(
+                DecodeException::class,
+                $thrown,
+                sprintf('f8%02x was accepted; RFC 8949 section 3.3 says it is not well formed.', $value)
+            );
+        }
+
+        for ($value = 32; $value < 256; $value++) {
+            $bytes = "\xf8".chr($value);
+
+            $this->assertSame(
+                bin2hex($bytes),
+                bin2hex(CborCodec::encode(CborCodec::decode($bytes))),
+                sprintf('f8%02x is a simple value this decoder should read.', $value)
+            );
+        }
+    }
+
+    /**
      * Documents that are not CBOR, each refused for its own reason rather than read part way.
      */
     public static function documentsThatAreRefused(): array
@@ -281,6 +321,12 @@ class CborCodecTest extends TestCase
             'a map shorter than it says it is' => ['a20001'],
             'a byte string shorter than it says it is' => ['4401'],
             'a reserved additional information value' => ['1d'],
+            'the two byte form of the simple value 0' => ['f800'],
+            'the two byte form of false' => ['f814'],
+            'the two byte form of true' => ['f815'],
+            'the two byte form of null' => ['f816'],
+            'the two byte form of undefined' => ['f817'],
+            'the two byte form of the last one byte simple value' => ['f81f'],
             'bytes after a nested item' => ['810000'],
         ];
     }

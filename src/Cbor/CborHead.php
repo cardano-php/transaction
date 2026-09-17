@@ -61,6 +61,13 @@ final class CborHead
      * The three additional information values CBOR reserves for future use are refused here rather than carried
      * forward, because there is nothing a caller could do with one.
      *
+     * So are the two byte simple values below 32. RFC 8949 section 3.3 gives major type 7 with additional
+     * information 24 the simple values 32 to 255, and says in as many words that a two byte sequence starting 0xf8
+     * and continuing with a byte below 0x20 is not well formed. Those thirty-two values already have a one byte
+     * head, and false, true, null and undefined are four of them, so the second spelling is a second encoding of
+     * something that already has one. A decoder that took it would hand back a value that re-encodes to different
+     * bytes or hashes to a different transaction depending on which spelling it chose to write.
+     *
      * $context may be given as a closure, which is called only when something is wrong. A reader walking a deeply
      * nested structure names each position from the path that reached it, and building that name for every item it
      * reads costs more than reading the bytes does.
@@ -114,6 +121,14 @@ final class CborHead
 
         $argument = substr($bytes, $offset, $width);
         $offset += $width;
+
+        if ($major === self::MAJOR_SIMPLE && $additionalInformation === 24 && ord($argument) < 32) {
+            throw new DecodeException(sprintf(
+                '%s: the simple value %d is written in one byte, so the two byte form of it is not well formed.',
+                self::named($context),
+                ord($argument)
+            ));
+        }
 
         return new self($major, $additionalInformation, $argument);
     }
