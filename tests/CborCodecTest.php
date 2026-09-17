@@ -8,6 +8,7 @@ namespace Cardano\Transaction\Tests;
 use Brick\Math\BigInteger;
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Exception\DecodeException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -406,6 +407,68 @@ class CborCodecTest extends TestCase
                 $this->assertSame($hex, bin2hex(CborCodec::encode($value)));
             }
         }
+    }
+
+    /**
+     * A freshly built value takes the narrowest head that holds its argument, whichever way the argument arrived.
+     *
+     * Two things reach CborHead::headFor: a PHP integer, which is what a length or a count is, and a BigInteger,
+     * which is what an argument that may outrun the word size arrives as. Both have to choose the same width for
+     * the same number, because the width is a fact about CBOR and not about the machine, and because the bytes are
+     * what a script hash and a transaction hash are taken over.
+     *
+     * The branch that took a BigInteger used to decide by asking whether the number fitted a PHP integer. On a
+     * 64-bit build that gives the right answer by coincidence, because everything that does not fit needs eight
+     * bytes anyway. On a 32-bit build every argument from 2^31 to 2^32-1 is above PHP_INT_MAX and inside the four
+     * byte width, so each one would have been written at an eight byte head: the same script built on two builds
+     * would have hashed to two different things. This build cannot show that failure, and what it can do is hold
+     * the widths to the table CBOR gives rather than to anything about the word size.
+     */
+    public function test_a_built_head_takes_the_narrowest_width_that_holds_its_argument(): void
+    {
+        $widths = [
+            '0' => 0, '1' => 0, '23' => 0, '24' => 1, '255' => 1,
+            '256' => 2, '65535' => 2, '65536' => 4, '2147483647' => 4, '2147483648' => 4,
+            '4294967295' => 4, '4294967296' => 8, '9223372036854775807' => 8,
+            '9223372036854775808' => 8, '18446744073709551615' => 8,
+        ];
+
+        foreach ($widths as $argument => $width) {
+            $number = BigInteger::of((string) $argument);
+
+            $bytes = CborCodec::encode(CborValue::unsigned((string) $argument));
+
+            $this->assertSame(
+                $width + 1,
+                strlen($bytes),
+                sprintf('The argument %s was written at a head of %d bytes rather than %d.', $argument, strlen($bytes) - 1, $width + 1)
+            );
+
+            $this->assertSame((string) $number, CborCodec::decode($bytes)->integerText());
+
+            // The head a byte string of that many bytes would be written with is the same head, so a length and a
+            // count choose the same widths a bare argument does.
+            if ($number->isLessThanOrEqualTo(4096)) {
+                $string = CborCodec::encode(CborValue::byteString(str_repeat("\x00", (int) $argument)));
+
+                $this->assertSame(
+                    $width + 1 + (int) $argument,
+                    strlen($string),
+                    sprintf('A byte string of %s bytes was written at a different head width.', $argument)
+                );
+            }
+        }
+    }
+
+    /**
+     * An argument past what a CBOR head can carry is refused rather than written at a head that cannot hold it.
+     */
+    public function test_an_argument_past_what_a_head_can_carry_is_refused(): void
+    {
+        $this->expectException(DecodeException::class);
+        $this->expectExceptionMessage('18446744073709551615');
+
+        CborValue::unsigned('18446744073709551616');
     }
 
     /**

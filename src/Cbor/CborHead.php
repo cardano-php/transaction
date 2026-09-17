@@ -193,6 +193,9 @@ final class CborHead
         return $value->toInt();
     }
 
+    /** The largest argument each head width states: one, two, four and eight bytes. */
+    private const WIDTH_BOUNDS = [24 => '255', 25 => '65535', 26 => '4294967295', 27 => '18446744073709551615'];
+
     /**
      * The head an item of $major carrying $argument is written with, at the narrowest width that holds it.
      *
@@ -200,22 +203,17 @@ final class CborHead
      * is what every encoder in the ecosystem writes, so it is what this package writes when it has no arrived bytes
      * to reproduce. The bounds are inclusive: 255 is the largest one byte argument, not the first two byte one.
      *
+     * Which width holds a number is a fact about CBOR and not about the machine, so the bounds are the CBOR ones on
+     * both branches. An argument given as a PHP integer is at most PHP_INT_MAX and cannot reach the four byte bound
+     * on a 32-bit build, which is why that branch may compare against native integers; an argument given as a
+     * BigInteger is whatever the caller has and is compared against the widths themselves.
+     *
      * @return array{int, ?string} the additional information, and the bytes that follow it
      */
     public static function headFor(int|BigInteger $argument): array
     {
         if ($argument instanceof BigInteger) {
-            if ($argument->isGreaterThan(PHP_INT_MAX)) {
-                $payload = hex2bin(str_pad($argument->toBase(16), 16, '0', STR_PAD_LEFT));
-
-                if ($payload === false) {
-                    throw new DecodeException('Unable to write the argument '.$argument.'.');
-                }
-
-                return [27, $payload];
-            }
-
-            $argument = $argument->toInt();
+            return self::wideHeadFor($argument);
         }
 
         if ($argument < 0) {
@@ -229,6 +227,54 @@ final class CborHead
             $argument <= 0xFFFFFFFF => [26, pack('N', $argument)],
             default => [27, pack('J', $argument)],
         };
+    }
+
+    /**
+     * The same, for an argument that arrived as arbitrary precision arithmetic.
+     *
+     * Deciding the width by whether the number fits a PHP integer is the wrong question asked twice. On a 64-bit
+     * build it happens to give the right answer, because everything that does not fit a PHP integer needs eight
+     * bytes anyway. On a 32-bit build it does not: every argument from 2^31 to 2^32-1 is above PHP_INT_MAX and
+     * below the four byte bound, so each one would be written at an eight byte head instead of the shortest one.
+     * Those bytes are what a script hash and a transaction hash are taken over, so the same script built on two
+     * builds would hash to two different things.
+     *
+     * The payload is built from the number's own hexadecimal rather than through pack(), because pack('J') is an
+     * eight byte format on a four byte integer and there is nothing useful for it to do with an argument that
+     * outruns the word size.
+     *
+     * @return array{int, ?string}
+     */
+    private static function wideHeadFor(BigInteger $argument): array
+    {
+        if ($argument->isNegative()) {
+            throw new DecodeException('A CBOR head argument is never negative, got '.$argument.'.');
+        }
+
+        if ($argument->isLessThanOrEqualTo(23)) {
+            return [$argument->toInt(), null];
+        }
+
+        foreach (self::WIDTH_BOUNDS as $additionalInformation => $bound) {
+            if (! $argument->isLessThanOrEqualTo(BigInteger::of($bound))) {
+                continue;
+            }
+
+            $width = 2 ** ($additionalInformation - 24);
+            $payload = hex2bin(str_pad($argument->toBase(16), $width * 2, '0', STR_PAD_LEFT));
+
+            if ($payload === false) {
+                throw new DecodeException('Unable to write the argument '.$argument.'.');
+            }
+
+            return [$additionalInformation, $payload];
+        }
+
+        throw new DecodeException(sprintf(
+            'A CBOR head argument stops at %s, got %s.',
+            self::WIDTH_BOUNDS[27],
+            $argument
+        ));
     }
 
     /**
