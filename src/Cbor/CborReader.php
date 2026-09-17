@@ -157,8 +157,7 @@ final class CborReader
         int &$offset,
         int $start,
         Closure $context
-    ): CborValue|array
-    {
+    ): CborValue|array {
         $indefinite = $head->isIndefinite();
 
         if ($head->major === CborHead::MAJOR_UNSIGNED_INTEGER || $head->major === CborHead::MAJOR_NEGATIVE_INTEGER) {
@@ -283,8 +282,7 @@ final class CborReader
         int $start,
         int $end,
         Closure $context
-    ): void
-    {
+    ): void {
         if ($frame['major'] === CborHead::MAJOR_MAP) {
             if ($frame['key'] === null) {
                 $identity = self::keyIdentity($value, $bytes, $start, $end);

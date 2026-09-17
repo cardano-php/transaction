@@ -100,12 +100,14 @@ final class HeadWidths
     }
 
     /**
-     * The same document with every head of $majors rewritten at a width chosen by $width, widest heads rewritten
-     * first so that the offsets of the ones still to come do not move.
+     * The same document with every head of $majors rewritten at a width chosen by $width.
+     *
+     * The widest heads are rewritten first, so the offsets of the ones still to come do not move under the rewrite.
+     * $width is handed one head and answers with the additional information to write it at, which may be the one it
+     * already has.
      *
      * @param  list<int>  $majors
      * @param  callable(array{offset: int, headLength: int, major: int, additionalInformation: int, argument: int}): int  $width
-     *                          the additional information to write the head at, or the one it already has
      */
     public static function rewritten(string $bytes, array $majors, callable $width): string
     {
