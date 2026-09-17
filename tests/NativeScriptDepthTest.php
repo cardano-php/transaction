@@ -218,6 +218,11 @@ class NativeScriptDepthTest extends TestCase
     {
         $atTheLimit = str_repeat("\x81", CborCodec::MAX_DEPTH)."\x00";
 
+        // The depth ceiling is reached well inside the bound on how long an input may be, because one level of
+        // nesting costs one byte. A caller reading the input bound as cover for the depth ceiling is reading it
+        // wrong, and this is the document that says so.
+        $this->assertLessThan(CborCodec::MAX_INPUT_BYTES, strlen($atTheLimit));
+
         $this->assertSame(
             bin2hex($atTheLimit),
             bin2hex(CborCodec::encode(CborCodec::decode($atTheLimit))),

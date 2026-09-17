@@ -49,12 +49,16 @@ final class CborCodec
      *
      * What it does not do is make the whole of that depth free of the call stack. Reading and writing a tree do not
      * recurse; releasing one does, inside the engine's own reference counting, where no PHP code runs and nothing
-     * can be caught. The cost is around 160 bytes of C stack a level on PHP 8.3 on 64-bit Linux: freeing a tree at
-     * MAX_DEPTH wants about 2.6 MB, and a transaction carrying a native script at NativeScript::MAX_DEPTH, which is
-     * 10,924 CBOR levels, wants about 1.8 MB. The usual 8 MB main thread stack covers both with room to spare, and a
-     * SAPI, container or thread configured below that does not: the process ends on SIGSEGV when the tree goes out
-     * of scope, with nothing thrown and nothing to catch. A caller running with a small stack should hold the
-     * decoder to a depth it has measured on its own build rather than to this one.
+     * can be caught. Measured on PHP 8.3 on 64-bit Linux, freeing a tree at MAX_DEPTH needs between 2.5 and 3 MB of
+     * C stack, which is around 170 bytes a level; a transaction carrying a native script at NativeScript::MAX_DEPTH,
+     * which is 10,924 CBOR levels, needs a little under 2 MB. The usual 8 MB main thread stack covers both with room
+     * to spare, and a SAPI, container or thread configured below that does not: the process ends on SIGSEGV when the
+     * tree goes out of scope, with nothing thrown and nothing to catch. A caller running with a small stack should
+     * hold the decoder to a depth it has measured on its own build rather than to this one.
+     *
+     * MAX_INPUT_BYTES is no help here and should not be read as any. One level of nesting costs as little as one
+     * byte, so a document of 16,384 bytes reaches MAX_DEPTH exactly, and that is a quarter of what the input bound
+     * allows. A document that ends the process this way is well inside every limit this class states.
      */
     public const MAX_DEPTH = 16384;
 
