@@ -9,16 +9,12 @@ namespace Cardano\Transaction\Primitives;
 
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\MapForm;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Cbor\TagPayload;
 use Cardano\Transaction\Exception\DecodeException;
 use Cardano\Transaction\Hash\Blake2b;
-use CBOR\CBORObject;
-use CBOR\IndefiniteLengthMapObject;
-use CBOR\MapObject;
-use CBOR\Tag;
-use CBOR\Tag\GenericTag;
 
 /**
  * The metadata block, in the three forms the chain carries.
@@ -46,8 +42,8 @@ final class AuxiliaryData
     private const ALONZO_FIELDS = [0, 1, 2, 3, 4];
 
     /**
-     * @param  list<array{CborInteger, CBORObject}>  $metadata
-     * @param  list<CBORObject>|array<int, CBORObject>  $slots
+     * @param  list<array{CborInteger, CborValue}>  $metadata
+     * @param  list<CborValue>|array<int, CborValue>  $slots
      * @param  array<int, CborInteger>  $slotKeys
      */
     private function __construct(
@@ -60,13 +56,13 @@ final class AuxiliaryData
         private readonly ?int $tagAdditionalInformation,
     ) {}
 
-    public static function fromCbor(CBORObject $object, string $context = 'auxiliary data'): self
+    public static function fromCbor(CborValue $object, string $context = 'auxiliary data'): self
     {
-        if ($object instanceof Tag) {
+        if ($object->isTag()) {
             return self::fromAlonzo($object, $context);
         }
 
-        if ($object instanceof MapObject || $object instanceof IndefiniteLengthMapObject) {
+        if ($object->isMap()) {
             [$form, $metadata] = self::readMetadata($object, $context);
 
             return new self(self::FORM_SHELLEY, $form, $metadata, null, [], [], null);
@@ -88,15 +84,15 @@ final class AuxiliaryData
         return new self(self::FORM_SHELLEY_MA, $metadataForm, $metadata, $container, $items, [], null);
     }
 
-    private static function fromAlonzo(Tag $object, string $context): self
+    private static function fromAlonzo(CborValue $object, string $context): self
     {
-        $tagNumber = TagPayload::numberOf($object);
+        $tagNumber = $object->tagNumber();
         if ($tagNumber !== self::ALONZO_TAG) {
             throw new DecodeException(sprintf('%s: expected tag %d, got tag %d.', $context, self::ALONZO_TAG, $tagNumber));
         }
 
         [$container, $slots, $slotKeys] = MapForm::unwrapIntKeyed(
-            $object->getValue(),
+            $object->taggedValue(),
             $context,
             self::ALONZO_FIELDS
         );
@@ -114,14 +110,14 @@ final class AuxiliaryData
             $container,
             $slots,
             $slotKeys,
-            $object->getAdditionalInformation(),
+            $object->additionalInformation,
         );
     }
 
     /**
-     * @return array{MapForm, list<array{CborInteger, CBORObject}>}
+     * @return array{MapForm, list<array{CborInteger, CborValue}>}
      */
-    private static function readMetadata(CBORObject $object, string $context): array
+    private static function readMetadata(CborValue $object, string $context): array
     {
         [$form, $entries] = MapForm::unwrap($object, $context);
 
@@ -133,7 +129,7 @@ final class AuxiliaryData
         return [$form, $metadata];
     }
 
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
         $metadata = $this->metadataCbor();
 
@@ -156,7 +152,7 @@ final class AuxiliaryData
             ];
         }
 
-        return GenericTag::createFromLoadedData(
+        return CborValue::taggedAs(
             (int) $this->tagAdditionalInformation,
             TagPayload::forTagNumber(self::ALONZO_TAG, (int) $this->tagAdditionalInformation),
             $this->container->wrap($entries)
@@ -186,7 +182,7 @@ final class AuxiliaryData
         return bin2hex($this->hash());
     }
 
-    private function metadataCbor(): ?CBORObject
+    private function metadataCbor(): ?CborValue
     {
         if ($this->metadataForm === null) {
             return null;
@@ -215,7 +211,7 @@ final class AuxiliaryData
         return in_array((string) $label, $this->labels(), true);
     }
 
-    public function metadataFor(int|string $label): ?CBORObject
+    public function metadataFor(int|string $label): ?CborValue
     {
         foreach ($this->metadata as [$key, $value]) {
             if ($key->value === (string) $label) {

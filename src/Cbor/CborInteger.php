@@ -9,9 +9,6 @@ namespace Cardano\Transaction\Cbor;
 
 use Brick\Math\BigInteger;
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\CBORObject;
-use CBOR\NegativeIntegerObject;
-use CBOR\UnsignedIntegerObject;
 use Throwable;
 
 /**
@@ -42,17 +39,17 @@ final class CborInteger
         private readonly int $additionalInformation,
     ) {}
 
-    public static function fromCbor(CBORObject $object, string $context): self
+    public static function fromCbor(CborValue $value, string $context): self
     {
-        if ($object instanceof UnsignedIntegerObject) {
-            return new self($object->getValue(), false, $object->getAdditionalInformation());
+        if ($value->isUnsigned()) {
+            return new self($value->integerText(), false, $value->additionalInformation);
         }
 
-        if ($object instanceof NegativeIntegerObject) {
-            return new self($object->getValue(), true, $object->getAdditionalInformation());
+        if ($value->isNegative()) {
+            return new self($value->integerText(), true, $value->additionalInformation);
         }
 
-        throw new DecodeException(sprintf('%s: expected an integer, got %s.', $context, Shape::describe($object)));
+        throw new DecodeException(sprintf('%s: expected an integer, got %s.', $context, Shape::describe($value)));
     }
 
     /**
@@ -105,30 +102,30 @@ final class CborInteger
         return new self($narrow->value, false, 27);
     }
 
-    public static function unsignedFromCbor(CBORObject $object, string $context): self
+    public static function unsignedFromCbor(CborValue $value, string $context): self
     {
-        if (! $object instanceof UnsignedIntegerObject) {
+        if (! $value->isUnsigned()) {
             throw new DecodeException(sprintf(
                 '%s: expected an unsigned integer, got %s.',
                 $context,
-                Shape::describe($object)
+                Shape::describe($value)
             ));
         }
 
-        return new self($object->getValue(), false, $object->getAdditionalInformation());
+        return new self($value->integerText(), false, $value->additionalInformation);
     }
 
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
         $argument = $this->negative
             ? BigInteger::of(-1)->minus(BigInteger::of($this->value))
             : BigInteger::of($this->value);
 
-        $payload = self::payload($this->additionalInformation, $argument);
-
-        return $this->negative
-            ? NegativeIntegerObject::createObjectForValue($this->additionalInformation, $payload)
-            : UnsignedIntegerObject::createObjectForValue($this->additionalInformation, $payload);
+        return CborValue::integerAs(
+            $this->negative,
+            $this->additionalInformation,
+            self::payload($this->additionalInformation, $argument)
+        );
     }
 
     public function toInt(): int

@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Cardano\Transaction\Ledger;
 
+use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
 use Cardano\Transaction\Exception\ArithmeticException;
 
@@ -118,6 +119,6 @@ final class FeeFixedPoint
      */
     public static function feeFieldBytes(Natural $fee): int
     {
-        return strlen((string) CborInteger::of($fee->value)->toCbor());
+        return strlen(CborCodec::encode(CborInteger::of($fee->value)->toCbor()));
     }
 }

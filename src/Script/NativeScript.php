@@ -16,17 +16,12 @@ use Cardano\Transaction\Address\Network;
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborHead;
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Exception\DecodeException;
 use Cardano\Transaction\Exception\ScriptException;
 use Cardano\Transaction\Hash\Blake2b;
 use Cardano\Transaction\Ledger\Slot;
-use CBOR\ByteStringObject;
-use CBOR\CBORObject;
-use CBOR\LengthCalculator;
-use CBOR\ListObject;
-use CBOR\NegativeIntegerObject;
-use CBOR\UnsignedIntegerObject;
 use Closure;
 
 /**
@@ -400,10 +395,10 @@ final class NativeScript
      * them would move the hash and the address with it. They still have a hash, and WitnessSet::nativeScriptHashes()
      * takes it over the bytes as they arrived without decoding them at all.
      *
-     * The bytes are walked here rather than handed to the CBOR library, whose decoder is recursive and stops at a
-     * thousand levels of nesting. A script node costs two of those, so that decoder reads 499 of them, and the chain
-     * carries scripts ten times deeper. Raising the library's own limit is not the fix: it guards a recursion PHP
-     * cannot unwind, and past it the process dies with nothing to catch.
+     * The bytes are walked here directly rather than being turned into CBOR values first. What the reader gains by
+     * that is the script's own model straight out of the bytes, with no intermediate tree twice as deep as the
+     * script to build and release. Reading the same script through CborCodec reaches the same depth and gives back
+     * the same bytes, which is what lets a transaction carry one of these in its witness set.
      */
     public static function fromCbor(string $bytes): self
     {
@@ -856,31 +851,31 @@ final class NativeScript
     }
 
     /**
-     * The script as the CBOR library's own object model.
+     * The script as CBOR values, for a caller that wants the structure rather than the bytes.
      *
      * The tree is assembled from the leaves up on a stack here, so building one costs no call stack. What comes back
-     * is twice as deep as the script, because each node is an array holding a list, and the library's containers
-     * both stringify and release by recursion. A script near MAX_DEPTH therefore turns into eleven thousand levels
-     * of library objects, which is more stack to unwind than the script itself. cbor() is the way to the bytes, and
-     * this is the way to something another CBOR-aware caller can hold.
+     * is twice as deep as the script, because each node is an array holding a list. A script near MAX_DEPTH
+     * therefore turns into eleven thousand levels of CBOR values, which is a tree PHP releases by recursing into it
+     * however it was built. cbor() is the way to the bytes, and this is the way to something another CBOR-aware
+     * caller can hold.
      */
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
-        return $this->fold(static function (self $node, array $children): CBORObject {
-            $tag = UnsignedIntegerObject::create(self::TAGS[$node->kind]);
+        return $this->fold(static function (self $node, array $children): CborValue {
+            $tag = CborValue::unsigned(self::TAGS[$node->kind]);
 
             return match ($node->kind) {
-                self::SIG => ListObject::create([$tag, ByteStringObject::create((string) $node->key?->hash)]),
-                self::BEFORE, self::AFTER => ListObject::create([
+                self::SIG => CborValue::sequence([$tag, CborValue::byteString((string) $node->key?->hash)]),
+                self::BEFORE, self::AFTER => CborValue::sequence([
                     $tag,
                     CborInteger::of((string) $node->slot)->toCbor(),
                 ]),
-                self::AT_LEAST => ListObject::create([
+                self::AT_LEAST => CborValue::sequence([
                     $tag,
                     self::thresholdObject((int) $node->required),
                     ($node->childForm ?? SequenceForm::definite())->wrap($children),
                 ]),
-                default => ListObject::create([
+                default => CborValue::sequence([
                     $tag,
                     ($node->childForm ?? SequenceForm::definite())->wrap($children),
                 ]),
@@ -913,8 +908,7 @@ final class NativeScript
 
             if ($item->kind === self::SIG) {
                 $hash = (string) $item->key?->hash;
-                [$information, $argument] = LengthCalculator::getLengthOfString($hash);
-                $out .= "\x82".$tag.chr(CborHead::MAJOR_BYTE_STRING << 5 | $information).($argument ?? '').$hash;
+                $out .= "\x82".$tag.CborHead::write(CborHead::MAJOR_BYTE_STRING, strlen($hash)).$hash;
 
                 continue;
             }
@@ -937,8 +931,7 @@ final class NativeScript
                 $out .= chr(CborHead::MAJOR_ARRAY << 5 | CborHead::INDEFINITE);
                 $stack[] = CborHead::BREAK;
             } else {
-                [$information, $argument] = LengthCalculator::getLengthOfArray($item->scripts);
-                $out .= chr(CborHead::MAJOR_ARRAY << 5 | $information).($argument ?? '');
+                $out .= CborHead::write(CborHead::MAJOR_ARRAY, count($item->scripts));
             }
 
             for ($i = count($item->scripts) - 1; $i >= 0; $i--) {
@@ -1382,11 +1375,11 @@ final class NativeScript
     /**
      * The threshold, written as the signed integer the CDDL says it is.
      */
-    private static function thresholdObject(int $required): CBORObject
+    private static function thresholdObject(int $required): CborValue
     {
         return $required < 0
-            ? NegativeIntegerObject::create($required)
-            : UnsignedIntegerObject::create($required);
+            ? CborValue::negative($required)
+            : CborValue::unsigned($required);
     }
 
     /**

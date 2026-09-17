@@ -8,11 +8,10 @@ declare(strict_types=1);
 namespace Cardano\Transaction\Primitives;
 
 use Cardano\Transaction\Cbor\CborCodec;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Cbor\Shape;
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\ByteStringObject;
-use CBOR\CBORObject;
 
 /**
  * A public key and its signature over the body hash.
@@ -48,7 +47,7 @@ final class VkeyWitness
         return new self($vkey, $signature, SequenceForm::definite());
     }
 
-    public static function fromCbor(CBORObject $object, string $context): self
+    public static function fromCbor(CborValue $object, string $context): self
     {
         [$form, $items] = SequenceForm::unwrap($object, $context, allowSetTag: false);
 
@@ -67,11 +66,11 @@ final class VkeyWitness
         );
     }
 
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
         return $this->form->wrap([
-            ByteStringObject::create($this->vkey),
-            ByteStringObject::create($this->signature),
+            CborValue::byteString($this->vkey),
+            CborValue::byteString($this->signature),
         ]);
     }
 

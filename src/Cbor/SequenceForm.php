@@ -8,18 +8,18 @@ declare(strict_types=1);
 namespace Cardano\Transaction\Cbor;
 
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\CBORObject;
-use CBOR\IndefiniteLengthListObject;
-use CBOR\ListObject;
-use CBOR\Tag;
-use CBOR\Tag\SetTag;
 
 /**
  * How an array was written, kept apart from what it held.
  *
- * Two things vary in a transaction and neither changes its meaning. An array may be definite or indefinite in length,
- * and a set may or may not carry the tag 258 that Conway introduced. Both are part of the bytes the ledger hashed, so
- * the form is recorded when the array is taken apart and replayed when it is put back together.
+ * Three things vary in a transaction and none of them changes its meaning. An array may be definite or indefinite in
+ * length; a definite one states its item count in any of the five widths a CBOR head has; and a set may or may not
+ * carry the tag 258 that Conway introduced. All of it is part of the bytes the ledger hashed, so the form is
+ * recorded when the array is taken apart and replayed when it is put back together.
+ *
+ * The recorded head is reused only while it still describes what is being written, which for an array head means
+ * only while the item count is the one it was read with. A rebuild that adds or drops an item takes the narrowest
+ * head that holds the new count instead.
  */
 final class SequenceForm
 {
@@ -35,6 +35,9 @@ final class SequenceForm
     private function __construct(
         public readonly bool $indefinite,
         public readonly ?int $setTagAdditionalInformation,
+        private readonly ?int $headAdditionalInformation = null,
+        private readonly ?string $headArgument = null,
+        private readonly ?int $headItemCount = null,
     ) {}
 
     /**
@@ -72,62 +75,67 @@ final class SequenceForm
     }
 
     /**
-     * @return array{self, list<CBORObject>}
+     * @return array{self, list<CborValue>}
      */
-    public static function unwrap(CBORObject $object, string $context, bool $allowSetTag = true): array
+    public static function unwrap(CborValue $value, string $context, bool $allowSetTag = true): array
     {
         $setTagAdditionalInformation = null;
 
-        if ($object instanceof Tag) {
-            if (! $allowSetTag || ! $object instanceof SetTag) {
+        if ($value->isTag()) {
+            if (! $allowSetTag || $value->tagNumber() !== CborValue::TAG_SET) {
                 throw new DecodeException(sprintf(
                     '%s: expected an array, got %s.',
                     $context,
-                    Shape::describe($object)
+                    Shape::describe($value)
                 ));
             }
 
-            $setTagAdditionalInformation = $object->getAdditionalInformation();
-            $object = $object->getValue();
+            $setTagAdditionalInformation = $value->additionalInformation;
+            $value = $value->taggedValue();
         }
 
-        if (! $object instanceof ListObject && ! $object instanceof IndefiniteLengthListObject) {
+        if (! $value->isSequence()) {
             throw new DecodeException(sprintf(
                 '%s: expected an array, got %s.',
                 $context,
-                Shape::describe($object)
+                Shape::describe($value)
             ));
         }
 
-        $items = [];
-        foreach ($object as $item) {
-            $items[] = $item;
-        }
+        $items = $value->items();
 
-        return [new self($object instanceof IndefiniteLengthListObject, $setTagAdditionalInformation), $items];
+        return [
+            new self(
+                $value->isIndefinite(),
+                $setTagAdditionalInformation,
+                $value->additionalInformation,
+                $value->argument,
+                count($items),
+            ),
+            $items,
+        ];
     }
 
     /**
-     * @param  list<CBORObject>  $items
+     * @param  list<CborValue>  $items
      */
-    public function wrap(array $items): CBORObject
+    public function wrap(array $items): CborValue
     {
         if ($this->indefinite) {
-            $list = IndefiniteLengthListObject::create();
-            foreach ($items as $item) {
-                $list->add($item);
-            }
+            $list = CborValue::sequence($items, true);
+        } elseif ($this->headItemCount !== null && $this->headItemCount === count($items)) {
+            $list = CborValue::sequenceAs((int) $this->headAdditionalInformation, $this->headArgument, $items);
         } else {
-            $list = ListObject::create($items);
+            $list = CborValue::sequence($items);
         }
 
         if ($this->setTagAdditionalInformation === null) {
             return $list;
         }
 
-        return SetTag::createFromLoadedData(
+        return CborValue::taggedAs(
             $this->setTagAdditionalInformation,
-            TagPayload::forTagNumber(CBORObject::TAG_SET, $this->setTagAdditionalInformation),
+            TagPayload::forTagNumber(CborValue::TAG_SET, $this->setTagAdditionalInformation),
             $list
         );
     }

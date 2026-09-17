@@ -8,10 +8,9 @@ declare(strict_types=1);
 namespace Cardano\Transaction\Primitives;
 
 use Cardano\Transaction\Cbor\CborCodec;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\MapForm;
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\ByteStringObject;
-use CBOR\CBORObject;
 
 /**
  * Policy to asset bundle. The shape the ledger calls multiasset, used both inside a value and as the mint field.
@@ -98,12 +97,12 @@ final class MultiAsset
     public static function compareKeys(string $a, string $b): int
     {
         return strcmp(
-            CborCodec::encode(ByteStringObject::create($a)),
-            CborCodec::encode(ByteStringObject::create($b))
+            CborCodec::encode(CborValue::byteString($a)),
+            CborCodec::encode(CborValue::byteString($b))
         );
     }
 
-    public static function fromCbor(CBORObject $object, string $context, bool $signed): self
+    public static function fromCbor(CborValue $object, string $context, bool $signed): self
     {
         [$form, $entries] = MapForm::unwrap($object, $context);
 
@@ -115,11 +114,11 @@ final class MultiAsset
         return new self($form, $bundles);
     }
 
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
         $entries = [];
         foreach ($this->bundles as $bundle) {
-            $entries[] = [ByteStringObject::create($bundle->policyId), $bundle->toCbor()];
+            $entries[] = [CborValue::byteString($bundle->policyId), $bundle->toCbor()];
         }
 
         return $this->form->wrap($entries);

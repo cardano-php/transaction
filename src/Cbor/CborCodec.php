@@ -8,69 +8,71 @@ declare(strict_types=1);
 namespace Cardano\Transaction\Cbor;
 
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\CBORObject;
-use CBOR\Decoder;
 use Throwable;
 
 /**
- * The CBOR layer, over spomky-labs/cbor-php.
+ * The CBOR layer: bytes to a CborValue and back, read and written on a stack rather than on PHP's.
  *
- * Two things are added to the library's decoder. The input has to be exactly one item, with nothing after it, and
- * every failure below arrives as a DecodeException rather than as whatever the library happened to throw.
+ * Two things are asked of the input beyond its being well formed CBOR. It has to be exactly one item with nothing
+ * after it, because a decoder that reads the first item and stops accepts any number of bytes appended to a
+ * transaction. And it has to nest no deeper than MAX_DEPTH, which is a refusal a caller can catch rather than a
+ * recursion a process cannot unwind.
  *
- * The library decodes by recursion and refuses anything nested past a thousand levels for that reason. Raising that
- * number is not an option: it guards a recursion PHP cannot unwind, and past it the process dies with nothing to
- * catch. A transaction's own structure is nowhere near the limit, but a native script nests without a bound and the
- * chain carries them thousands of levels deep, so NativeScript reads its own bytes rather than coming through here.
- * A transaction whose witness set holds a script that deep still stops at the library's limit, and the refusal below
- * says so rather than leaving the caller with the library's own wording.
+ * Everything about how a value was written is kept: the width of every integer head, the width of every length and
+ * count, whether a string, an array or a map stated its length or ran to a break byte, and the tag on a set. The
+ * ledger hashes the bytes it was handed, so a decoder that re-normalised any of that would hand back a transaction
+ * whose hash had moved under a transaction nobody edited.
  */
 final class CborCodec
 {
-    /** What the library says when its own nesting limit is what stopped it. */
-    private const NESTING_REFUSAL = 'Maximum nesting depth';
+    /**
+     * How deep this reads, which is as deep as a transaction could nest.
+     *
+     * The cheapest level of CBOR nesting is a one byte head, `81`, an array holding one thing. A document of N bytes
+     * therefore cannot nest deeper than N levels, and a transaction is at most maxTxSize bytes, which is 16,384 on
+     * mainnet, preprod and preview alike. Nothing that fits a transaction can reach this limit: the deepest structure
+     * the chain has actually carried is a native script of 5,383 levels, and a script level costs two CBOR levels,
+     * so that lands a little under eleven thousand.
+     *
+     * The limit is here rather than at whatever depth PHP gives out at, and that is the whole point of it. A tree of
+     * objects is released by recursing into it, on whatever stack the process was given, so a structure read past
+     * what the process can free would take the process with it when it was released, with nothing thrown and nothing
+     * to catch. Stopping where the ledger stops is the deepest that can be both promised and survived.
+     */
+    public const MAX_DEPTH = 16384;
 
     private function __construct() {}
 
-    public static function decode(string $bytes): CBORObject
+    public static function decode(string $bytes): CborValue
     {
         if ($bytes === '') {
             throw new DecodeException('Empty input.');
         }
 
-        $stream = new CborStream($bytes);
+        $offset = 0;
 
         try {
-            $object = Decoder::create()->decode($stream);
+            $value = CborReader::read($bytes, $offset, self::MAX_DEPTH);
         } catch (DecodeException $e) {
             throw $e;
         } catch (Throwable $e) {
-            if (str_contains($e->getMessage(), self::NESTING_REFUSAL)) {
-                throw new DecodeException(
-                    'Malformed CBOR: '.$e->getMessage().' The CBOR library decodes by recursion and goes no '
-                    .'deeper. A native script nests without a bound, and one on its own is read by '
-                    .'NativeScript::fromCbor, which walks the bytes instead; a transaction carrying a script that '
-                    .'deep is past what this decoder reaches.',
-                    0,
-                    $e
-                );
-            }
-
             throw new DecodeException('Malformed CBOR: '.$e->getMessage(), 0, $e);
         }
 
-        if ($stream->remaining() !== 0) {
+        $remaining = strlen($bytes) - $offset;
+
+        if ($remaining !== 0) {
             throw new DecodeException(sprintf(
                 'Malformed CBOR: %d byte(s) follow the top level item.',
-                $stream->remaining()
+                $remaining
             ));
         }
 
-        return $object;
+        return $value;
     }
 
-    public static function encode(CBORObject $object): string
+    public static function encode(CborValue $value): string
     {
-        return (string) $object;
+        return CborWriter::write($value);
     }
 }

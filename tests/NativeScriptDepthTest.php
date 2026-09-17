@@ -6,12 +6,12 @@
 namespace Cardano\Transaction\Tests;
 
 use Cardano\Transaction\Cbor\CborCodec;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Codec\TransactionDecoder;
 use Cardano\Transaction\Exception\DecodeException;
 use Cardano\Transaction\Exception\ScriptException;
 use Cardano\Transaction\Script\Framing;
 use Cardano\Transaction\Script\NativeScript;
-use CBOR\ListObject;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Throwable;
@@ -102,70 +102,168 @@ class NativeScriptDepthTest extends TestCase
     }
 
     /**
-     * The decoder this package used to lean on gives out at 499 levels, which is why it no longer reads scripts.
+     * The wall this package used to stand in front of, and where it stands now.
      *
-     * A script node is a two-item array holding a list, so it spends two of the CBOR library's thousand levels. The
-     * library's own comment says why the limit is there: it decodes by recursion, and PHP cannot unwind a recursion
-     * that deep. Raising the number would turn a refusal that can be caught into a process that dies, so the bytes
-     * are walked here instead.
+     * A script node is a two-item array holding a list, so it spends two levels of CBOR nesting. A decoder that
+     * recurses once per level and stops at a thousand therefore reads 499 script levels and no more, which is a
+     * tenth of what the chain carries. The decoder here recurses not at all: it keeps the containers it has opened
+     * in an array and walks the bytes, so how deep it reads is a number that was chosen rather than whatever the
+     * call stack happened to allow.
      */
-    public function test_the_cbor_library_stops_at_499_levels_and_this_package_does_not(): void
+    public function test_the_cbor_layer_reads_past_the_five_hundred_levels_a_recursive_decoder_reaches(): void
+    {
+        foreach ([499, 500, 1000, 5383, NativeScript::MAX_DEPTH] as $depth) {
+            $bytes = DeepScripts::bytes(DeepScripts::ALL_TO_EMPTY, $depth);
+            $value = CborCodec::decode($bytes);
+
+            $this->assertSame(
+                bin2hex($bytes),
+                bin2hex(CborCodec::encode($value)),
+                $depth.' levels did not come back out of the CBOR layer as they went in.'
+            );
+        }
+    }
+
+    /**
+     * The limit the CBOR layer reads to covers every script a transaction could carry, with room over.
+     *
+     * One level of CBOR nesting costs at least one byte, `81`, so a document of N bytes cannot nest deeper than N
+     * levels and a transaction cannot nest deeper than maxTxSize. A script at MAX_DEPTH inside a witness set spends
+     * two levels a script level, plus the transaction array, the witness set map, the script list and the tag a set
+     * may carry, and that sum is what has to fit.
+     */
+    public function test_the_cbor_limit_covers_the_deepest_script_a_transaction_could_carry(): void
     {
         $this->assertSame(
-            499,
-            NativeScript::fromCbor(DeepScripts::bytes(DeepScripts::ALL_AROUND_SIG, 499))->depth()
+            NativeScript::MAX_TRANSACTION_BYTES,
+            CborCodec::MAX_DEPTH,
+            'The CBOR limit is meant to be maxTxSize, because a level of nesting costs at least one byte.'
         );
 
-        CborCodec::decode(DeepScripts::bytes(DeepScripts::ALL_AROUND_SIG, 499));
+        // The transaction array, the witness set map, the script list, a set tag, two levels per script level, and
+        // the array the innermost leaf is written as.
+        $deepestTransaction = 4 + 2 * NativeScript::MAX_DEPTH + 1;
 
-        try {
-            CborCodec::decode(DeepScripts::bytes(DeepScripts::ALL_AROUND_SIG, 500));
-            $this->fail('The CBOR library read 500 levels, so this test no longer says anything.');
-        } catch (DecodeException $e) {
-            $this->assertStringContainsString('Maximum nesting depth of 1000 exceeded', $e->getMessage());
-        }
-
-        $this->assertSame(
-            5383,
-            NativeScript::fromCbor(DeepScripts::bytes(DeepScripts::ALL_AROUND_SIG, 5383))->depth(),
-            'The package reads ten times past the library, because it does not hand it the tree.'
+        $this->assertLessThan(
+            CborCodec::MAX_DEPTH,
+            $deepestTransaction,
+            'A transaction carrying the deepest script this package reads would not fit the CBOR limit.'
         );
     }
 
     /**
-     * A transaction carrying a deep script stops earlier than the script reader does, and says so.
+     * A transaction carrying a deep script is read whole, and the script comes back at the depth it went in at.
      *
-     * A script in a witness set is decoded by the CBOR library along with everything around it, so reading the
-     * transaction is still bounded by the library's thousand levels rather than by this package's. The refusal is a
-     * DecodeException that names both the limit and the reader that has none, which is the difference between a
-     * wall a caller can work around and one that kills the process.
+     * This is the assertion the wall used to stand in the way of. A script in a witness set is decoded along with
+     * everything around it, so the transaction decoder, not the script reader, is what decides how deep a script
+     * can travel. Both now stop in the same place.
+     *
+     * @param  int  $depth  how deep the script in the witness set nests
      */
-    public function test_a_transaction_carrying_a_deep_script_refuses_and_names_the_reader_that_does_not(): void
+    #[DataProvider('scriptDepthsInsideATransaction')]
+    public function test_a_transaction_carries_a_script_as_deep_as_the_script_reader_goes(int $depth): void
     {
-        $shallow = self::transactionCarrying(DeepScripts::bytes(DeepScripts::ALL_AROUND_SIG, 64));
-        $hashes = TransactionDecoder::decode($shallow)->witnessSet->nativeScriptHashes();
+        $script = DeepScripts::bytes(DeepScripts::ALL_AROUND_SIG, $depth);
+        $bytes = self::transactionCarrying($script);
+
+        $transaction = TransactionDecoder::decode($bytes);
 
         $this->assertSame(
-            DeepScripts::script(DeepScripts::ALL_AROUND_SIG, 64)->hash(),
-            $hashes[0],
+            bin2hex($bytes),
+            bin2hex($transaction->encode()),
+            'A transaction carrying a '.$depth.' level script does not survive a round trip.'
+        );
+
+        $carried = $transaction->witnessSet->nativeScripts();
+
+        $this->assertCount(1, $carried);
+        $this->assertSame(
+            bin2hex($script),
+            bin2hex(CborCodec::encode($carried[0])),
+            'The script in the witness set is not the script that was put there.'
+        );
+
+        $read = NativeScript::fromCbor(CborCodec::encode($carried[0]));
+
+        $this->assertSame($depth, $read->depth(), 'The script came back at a different depth than it went in at.');
+        $this->assertSame(
+            DeepScripts::script(DeepScripts::ALL_AROUND_SIG, $depth)->hash(),
+            $transaction->witnessSet->nativeScriptHashes()[0],
             'A transaction hashes the script in its witness set exactly as that script arrived.'
         );
+    }
 
-        $deep = self::transactionCarrying(DeepScripts::bytes(DeepScripts::ALL_AROUND_SIG, 5383));
+    /**
+     * @return array<string, array{int}>
+     */
+    public static function scriptDepthsInsideATransaction(): array
+    {
+        return [
+            'the deepest a recursive decoder reached' => [499],
+            'one level past it' => [500],
+            'the deepest a node has accepted' => [5383],
+            'the deepest that fits around a sig' => [5450],
+            'the deepest this package reads' => [NativeScript::MAX_DEPTH],
+        ];
+    }
 
-        try {
-            TransactionDecoder::decode($deep);
-            $this->fail('A transaction carrying a 5,383 level script was read, so this test says nothing.');
-        } catch (DecodeException $e) {
-            $this->assertStringContainsString('Maximum nesting depth', $e->getMessage());
-            $this->assertStringContainsString('NativeScript::fromCbor', $e->getMessage());
-        }
+    /**
+     * Past the CBOR limit the answer is a refusal that names the limit, at any depth and however it is reached.
+     *
+     * A refusal that arrives as a dead process is not a refusal. Each case here catches what was thrown and asserts
+     * what it was, and the input of each is far past the limit rather than one level over it, because a guard that
+     * only fires at the boundary is a guard that read the whole document before deciding.
+     */
+    public function test_nesting_past_the_cbor_limit_is_refused_by_name(): void
+    {
+        $atTheLimit = str_repeat("\x81", CborCodec::MAX_DEPTH)."\x00";
 
         $this->assertSame(
-            5383,
-            NativeScript::fromCbor(DeepScripts::bytes(DeepScripts::ALL_AROUND_SIG, 5383))->depth(),
-            'And the script those bytes hold is read on its own without trouble.'
+            bin2hex($atTheLimit),
+            bin2hex(CborCodec::encode(CborCodec::decode($atTheLimit))),
+            'The deepest nesting the limit allows is not read and written back whole.'
         );
+
+        foreach ([1, 2, 1000, CborCodec::MAX_DEPTH] as $over) {
+            $bytes = str_repeat("\x81", CborCodec::MAX_DEPTH + $over)."\x00";
+            $thrown = null;
+
+            try {
+                CborCodec::decode($bytes);
+            } catch (Throwable $e) {
+                $thrown = $e;
+            }
+
+            $this->assertInstanceOf(
+                DecodeException::class,
+                $thrown,
+                CborCodec::MAX_DEPTH + $over.' levels raised nothing at all.'
+            );
+            $this->assertStringContainsString((string) CborCodec::MAX_DEPTH, $thrown->getMessage());
+            $this->assertStringContainsString('deepest this decoder reads', $thrown->getMessage());
+        }
+    }
+
+    /**
+     * And the same when the nesting arrives inside a transaction rather than on its own.
+     *
+     * The script here is past what this package reads and past what a transaction could hold, so nothing further
+     * can be said about it than that it was refused by name. What matters is that the refusal is a DecodeException
+     * with the limit in it rather than a truncated witness set or a process that stopped.
+     */
+    public function test_a_transaction_nested_past_the_cbor_limit_is_refused_by_name(): void
+    {
+        $bytes = self::transactionCarrying(DeepScripts::bytes(DeepScripts::ALL_TO_EMPTY, CborCodec::MAX_DEPTH));
+        $thrown = null;
+
+        try {
+            TransactionDecoder::decode($bytes);
+        } catch (Throwable $e) {
+            $thrown = $e;
+        }
+
+        $this->assertInstanceOf(DecodeException::class, $thrown, 'A transaction past the limit raised nothing.');
+        $this->assertStringContainsString((string) CborCodec::MAX_DEPTH, $thrown->getMessage());
     }
 
     /**
@@ -247,7 +345,7 @@ class NativeScriptDepthTest extends TestCase
         $this->assertSame($depth, $script->depth());
         $this->assertSame(DeepScripts::bytes(DeepScripts::ALL_AROUND_SIG, $depth), $script->cbor());
         $this->assertSame(56, strlen($script->hashHex()));
-        $this->assertInstanceOf(ListObject::class, $script->toCbor());
+        $this->assertInstanceOf(CborValue::class, $script->toCbor());
 
         $this->assertSame([$keyHash], $script->keyHashes());
         $this->assertSame([$keyHash], $script->unboundedSigners());

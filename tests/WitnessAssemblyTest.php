@@ -8,6 +8,7 @@ namespace Cardano\Transaction\Tests;
 use Cardano\Transaction\Builder\TransactionBodyBuilder;
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\MapForm;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Codec\TransactionDecoder;
@@ -27,7 +28,6 @@ use Cardano\Transaction\Primitives\WitnessSet;
 use Cardano\Transaction\Script\NativeScript;
 use Cardano\Transaction\Signing\SigningKey;
 use Cardano\Transaction\Signing\TransactionSigner;
-use CBOR\ByteStringObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -378,7 +378,7 @@ class WitnessAssemblyTest extends TestCase
      */
     public function test_an_unmodelled_witness_field_survives_the_swap(): void
     {
-        $plutusData = SequenceForm::definite()->wrap([ByteStringObject::create(str_repeat("\x99", 16))]);
+        $plutusData = SequenceForm::definite()->wrap([CborValue::byteString(str_repeat("\x99", 16))]);
 
         $original = WitnessSet::fromCbor(MapForm::definite()->wrap([
             [CborInteger::of(WitnessSet::FIELD_VKEY_WITNESSES)->toCbor(), SequenceForm::definite()->wrap(

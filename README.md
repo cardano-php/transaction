@@ -13,7 +13,8 @@ encrypt one, derive one from a passphrase or write one down. Storing a key belon
 composer require cardano-php/transaction
 ```
 
-Requires PHP 8.2 or newer with the bcmath and sodium extensions.
+Requires PHP 8.2 or newer with the bcmath and sodium extensions. Beyond the language it depends on brick/math and
+on cardano-php/bech32, and on nothing else: the CBOR reading and writing is the package's own.
 
 ## What is in it
 
@@ -28,12 +29,17 @@ Requires PHP 8.2 or newer with the bcmath and sodium extensions.
 | `Cardano\Transaction\Ledger` | Protocol parameters, the minimum fee, the fee that is inside the thing it is charged on, minimum UTxO, value size and witness sizing. |
 | `Cardano\Transaction\Selection` | Coin selection, change strategies and packing a bag of assets into outputs that each satisfy the rules. |
 | `Cardano\Transaction\Time` | Era summaries, and converting a wall-clock instant to a slot. |
-| `Cardano\Transaction\Cbor` | The CBOR layer. Integers that remember the width they arrived in, and the forms an array or a map was written in. |
+| `Cardano\Transaction\Cbor` | The CBOR layer. A decoder and an encoder that walk a structure on a stack of their own, and a value that remembers the head it arrived in. |
 | `Cardano\Transaction\Exception` | Everything thrown from here. |
 
 A transaction re-encodes itself from the model it decoded into, byte for byte, so the hash the model computes is a
-statement about the decoder rather than about the bytes it was handed. That is what the corpus under `tests/fixtures`
-checks, against transactions taken off mainnet and preprod.
+statement about the decoder rather than about the bytes it was handed. That is what the corpus under
+`tests/fixtures` checks, against transactions taken off mainnet and preprod.
+
+Every head is kept as it arrived, because CBOR writes the same value several ways and the ledger hashed the bytes it
+was handed. That covers the width of an integer, the width of a length or a count, whether a string or a container
+stated its length or ran to a break byte, and the tag on a set. A decoder that normalized any of it would hand back
+a transaction whose hash had moved under a transaction nobody edited.
 
 ## Building and signing
 
@@ -106,6 +112,13 @@ over a script carries its own stack rather than PHP's, because a recursion that 
 something to catch. Reading further would mean handing back scripts that PHP itself cannot free, since a tree of
 objects is released by recursing into it. The stack a process is given runs out somewhere near six thousand levels
 on a megabyte, and past fifty thousand on the eight megabytes a Linux process gets by default.
+
+Reading a script at that depth means reading the whole transaction at that depth. Neither the decoder nor the
+encoder recurses: each keeps what it has opened, or what it has left to write, in an array of its own. Both stop at
+16,384 levels of nesting, which is `maxTxSize` again. The cheapest level of CBOR nesting is a one byte head, so
+nothing can nest further than its own document is long. A transaction carrying the deepest script this package reads
+spends a little under eleven thousand of those levels and peaks under seven megabytes while it is read. Past that it
+is a `DecodeException` naming that limit.
 
 The JSON form stops far earlier, at 255 levels, and says so rather than writing out a file that parses as nothing.
 That ceiling is PHP's, whose JSON reader and writer nest 512 levels by default and whose reader stops a few thousand

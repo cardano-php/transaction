@@ -9,10 +9,9 @@ namespace Cardano\Transaction\Primitives;
 
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\CBORObject;
-use CBOR\UnsignedIntegerObject;
 
 /**
  * What an output holds: lovelace on its own, or lovelace and a multiasset map as a pair.
@@ -63,9 +62,9 @@ final class Value
         return CborCodec::encode($this->toCbor());
     }
 
-    public static function fromCbor(CBORObject $object, string $context): self
+    public static function fromCbor(CborValue $object, string $context): self
     {
-        if ($object instanceof UnsignedIntegerObject) {
+        if ($object->isUnsigned()) {
             return new self(CborInteger::unsignedFromCbor($object, $context.' coin'), null, null);
         }
 
@@ -86,7 +85,7 @@ final class Value
         );
     }
 
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
         if ($this->assets === null || $this->form === null) {
             return $this->coin->toCbor();

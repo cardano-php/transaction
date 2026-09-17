@@ -9,13 +9,12 @@ namespace Cardano\Transaction\Primitives;
 
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\MapForm;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Cbor\Shape;
 use Cardano\Transaction\Exception\DecodeException;
 use Cardano\Transaction\Hash\Blake2b;
-use CBOR\ByteStringObject;
-use CBOR\CBORObject;
 
 /**
  * The part of a transaction the hash is taken over.
@@ -78,7 +77,7 @@ final class TransactionBody
     private const REQUIRED_FIELDS = [0, 1, 2];
 
     /**
-     * @param  array<int, CBORObject>  $fields
+     * @param  array<int, CborValue>  $fields
      * @param  array<int, CborInteger>  $keys
      * @param  array<int, list<TransactionInput>>  $inputSets
      * @param  array<int, SequenceForm>  $inputSetForms
@@ -106,7 +105,7 @@ final class TransactionBody
         private readonly ?SequenceForm $requiredSignerForm,
     ) {}
 
-    public static function fromCbor(CBORObject $object, string $context = 'body'): self
+    public static function fromCbor(CborValue $object, string $context = 'body'): self
     {
         [$form, $fields, $keys] = MapForm::unwrapIntKeyed($object, $context, self::FIELDS);
 
@@ -205,7 +204,7 @@ final class TransactionBody
         );
     }
 
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
         $entries = [];
         foreach ($this->fields as $key => $field) {
@@ -233,27 +232,27 @@ final class TransactionBody
         return bin2hex($this->hash());
     }
 
-    private function rebuild(int $key, CBORObject $field): CBORObject
+    private function rebuild(int $key, CborValue $field): CborValue
     {
         return match ($key) {
             self::FIELD_INPUTS, self::FIELD_COLLATERAL, self::FIELD_REFERENCE_INPUTS => $this->inputSetForms[$key]->wrap(
-                array_map(static fn (TransactionInput $i): CBORObject => $i->toCbor(), $this->inputSets[$key])
+                array_map(static fn (TransactionInput $i): CborValue => $i->toCbor(), $this->inputSets[$key])
             ),
             self::FIELD_OUTPUTS => $this->outputForm->wrap(
-                array_map(static fn (TransactionOutput $o): CBORObject => $o->toCbor(), $this->outputs)
+                array_map(static fn (TransactionOutput $o): CborValue => $o->toCbor(), $this->outputs)
             ),
             self::FIELD_FEE => $this->fee->toCbor(),
             self::FIELD_TTL => $this->ttl->toCbor(),
             self::FIELD_VALIDITY_INTERVAL_START => $this->validityIntervalStart->toCbor(),
-            self::FIELD_AUXILIARY_DATA_HASH => ByteStringObject::create($this->auxiliaryDataHash),
-            self::FIELD_SCRIPT_DATA_HASH => ByteStringObject::create($this->scriptDataHash),
+            self::FIELD_AUXILIARY_DATA_HASH => CborValue::byteString($this->auxiliaryDataHash),
+            self::FIELD_SCRIPT_DATA_HASH => CborValue::byteString($this->scriptDataHash),
             self::FIELD_MINT => $this->mint->toCbor(),
             self::FIELD_NETWORK_ID => $this->networkId->toCbor(),
             self::FIELD_TOTAL_COLLATERAL => $this->totalCollateral->toCbor(),
             self::FIELD_COLLATERAL_RETURN => $this->collateralReturn->toCbor(),
             self::FIELD_REQUIRED_SIGNERS => $this->requiredSignerForm->wrap(
                 array_map(
-                    static fn (string $s): CBORObject => ByteStringObject::create($s),
+                    static fn (string $s): CborValue => CborValue::byteString($s),
                     $this->requiredSigners
                 )
             ),

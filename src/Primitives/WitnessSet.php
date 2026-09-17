@@ -9,11 +9,11 @@ namespace Cardano\Transaction\Primitives;
 
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\MapForm;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Hash\Blake2b;
 use Cardano\Transaction\Script\NativeScript;
-use CBOR\CBORObject;
 
 /**
  * The witnesses attached to a transaction.
@@ -45,10 +45,10 @@ final class WitnessSet
     private const FIELDS = [0, 1, 2, 3, 4, 5, 6, 7];
 
     /**
-     * @param  array<int, CBORObject>  $fields
+     * @param  array<int, CborValue>  $fields
      * @param  array<int, CborInteger>  $keys
      * @param  list<VkeyWitness>  $vkeyWitnesses
-     * @param  list<CBORObject>  $nativeScripts
+     * @param  list<CborValue>  $nativeScripts
      */
     private function __construct(
         private readonly MapForm $form,
@@ -72,7 +72,7 @@ final class WitnessSet
      * scanning for unsigned transactions, as a deliberate claim that this one has no signatures.
      *
      * @param  list<VkeyWitness>  $vkeyWitnesses
-     * @param  list<NativeScript|CBORObject>  $nativeScripts
+     * @param  list<NativeScript|CborValue>  $nativeScripts
      */
     public static function of(array $vkeyWitnesses, array $nativeScripts = []): self
     {
@@ -83,7 +83,7 @@ final class WitnessSet
             $entries[] = [
                 CborInteger::of(self::FIELD_VKEY_WITNESSES)->toCbor(),
                 $form->wrap(array_map(
-                    static fn (VkeyWitness $witness): CBORObject => $witness->toCbor(),
+                    static fn (VkeyWitness $witness): CborValue => $witness->toCbor(),
                     array_values($vkeyWitnesses)
                 )),
             ];
@@ -93,7 +93,7 @@ final class WitnessSet
             $entries[] = [
                 CborInteger::of(self::FIELD_NATIVE_SCRIPTS)->toCbor(),
                 $form->wrap(array_map(
-                    static fn (NativeScript|CBORObject $script): CBORObject => $script instanceof NativeScript
+                    static fn (NativeScript|CborValue $script): CborValue => $script instanceof NativeScript
                         ? $script->toCbor()
                         : $script,
                     array_values($nativeScripts)
@@ -118,7 +118,7 @@ final class WitnessSet
     public function withVkeyWitnesses(array $witnesses): self
     {
         $replacement = ($this->vkeyForm ?? SequenceForm::definite())->wrap(array_map(
-            static fn (VkeyWitness $witness): CBORObject => $witness->toCbor(),
+            static fn (VkeyWitness $witness): CborValue => $witness->toCbor(),
             array_values($witnesses)
         ));
 
@@ -151,7 +151,7 @@ final class WitnessSet
         return self::fromCbor($this->form->wrap($entries), 'witness set');
     }
 
-    public static function fromCbor(CBORObject $object, string $context = 'witness set'): self
+    public static function fromCbor(CborValue $object, string $context = 'witness set'): self
     {
         [$form, $fields, $keys] = MapForm::unwrapIntKeyed($object, $context, self::FIELDS);
 
@@ -179,13 +179,13 @@ final class WitnessSet
         return new self($form, $fields, $keys, $vkeyWitnesses, $vkeyForm, $nativeScripts, $nativeScriptForm);
     }
 
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
         $entries = [];
         foreach ($this->fields as $key => $field) {
             $entries[] = [$this->keys[$key]->toCbor(), match ($key) {
                 self::FIELD_VKEY_WITNESSES => $this->vkeyForm?->wrap(
-                    array_map(static fn (VkeyWitness $w): CBORObject => $w->toCbor(), $this->vkeyWitnesses)
+                    array_map(static fn (VkeyWitness $w): CborValue => $w->toCbor(), $this->vkeyWitnesses)
                 ) ?? $field,
                 self::FIELD_NATIVE_SCRIPTS => $this->nativeScriptForm?->wrap($this->nativeScripts) ?? $field,
                 default => $field,
@@ -204,7 +204,7 @@ final class WitnessSet
     }
 
     /**
-     * @return list<CBORObject>
+     * @return list<CborValue>
      */
     public function nativeScripts(): array
     {
@@ -219,7 +219,7 @@ final class WitnessSet
     public function nativeScriptBytes(): array
     {
         return array_map(
-            static fn (CBORObject $script): string => CborCodec::encode($script),
+            static fn (CborValue $script): string => CborCodec::encode($script),
             $this->nativeScripts
         );
     }

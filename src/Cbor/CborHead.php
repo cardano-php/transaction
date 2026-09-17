@@ -12,12 +12,11 @@ use Cardano\Transaction\Exception\DecodeException;
 use Closure;
 
 /**
- * One CBOR head, read out of a byte string without building anything.
+ * One CBOR head, read out of a byte string without building anything, and written back the same way.
  *
- * The CBOR library decodes a whole item at once and does it by recursion, so the deepest structure it will accept is
- * fixed by how much call stack it is willing to spend. That is the right trade for a transaction, whose shape is
- * flat and whose nesting is bounded by the era's grammar. It is the wrong trade for a native script, which nests
- * without limit and which the chain carries thousands of levels deep.
+ * A decoder that reads a whole item at once and does it by recursion has its deepest structure fixed by how much
+ * call stack it is willing to spend. That is the wrong trade for anything this package reads: a native script nests
+ * without limit and the chain carries them thousands of levels deep, and a transaction carries those scripts.
  *
  * This is the piece a reader needs to walk those bytes itself: the initial byte split into its major type and
  * additional information, and the argument that follows it, with the offset advanced past both. What the item means
@@ -53,7 +52,7 @@ final class CborHead
     private function __construct(
         public readonly int $major,
         public readonly int $additionalInformation,
-        private readonly ?string $argument,
+        public readonly ?string $argument,
     ) {}
 
     /**
@@ -177,6 +176,54 @@ final class CborHead
         }
 
         return $value->toInt();
+    }
+
+    /**
+     * The head an item of $major carrying $argument is written with, at the narrowest width that holds it.
+     *
+     * RFC 8949 section 3 gives an argument five encodings and section 4.2 asks for the shortest that holds it. That
+     * is what every encoder in the ecosystem writes, so it is what this package writes when it has no arrived bytes
+     * to reproduce. The bounds are inclusive: 255 is the largest one byte argument, not the first two byte one.
+     *
+     * @return array{int, ?string} the additional information, and the bytes that follow it
+     */
+    public static function headFor(int|BigInteger $argument): array
+    {
+        if ($argument instanceof BigInteger) {
+            if ($argument->isGreaterThan(PHP_INT_MAX)) {
+                $payload = hex2bin(str_pad($argument->toBase(16), 16, '0', STR_PAD_LEFT));
+
+                if ($payload === false) {
+                    throw new DecodeException('Unable to write the argument '.$argument.'.');
+                }
+
+                return [27, $payload];
+            }
+
+            $argument = $argument->toInt();
+        }
+
+        if ($argument < 0) {
+            throw new DecodeException('A CBOR head argument is never negative, got '.$argument.'.');
+        }
+
+        return match (true) {
+            $argument <= 23 => [$argument, null],
+            $argument <= 0xFF => [24, chr($argument)],
+            $argument <= 0xFFFF => [25, pack('n', $argument)],
+            $argument <= 0xFFFFFFFF => [26, pack('N', $argument)],
+            default => [27, pack('J', $argument)],
+        };
+    }
+
+    /**
+     * The whole head of an item of $major carrying $argument, as bytes: the initial byte and whatever follows it.
+     */
+    public static function write(int $major, int|BigInteger $argument): string
+    {
+        [$additionalInformation, $payload] = self::headFor($argument);
+
+        return chr($major << 5 | $additionalInformation).($payload ?? '');
     }
 
     /**

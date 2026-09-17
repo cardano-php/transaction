@@ -8,13 +8,10 @@ declare(strict_types=1);
 namespace Cardano\Transaction\Primitives;
 
 use Cardano\Transaction\Cbor\CborCodec;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Cbor\Shape;
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\CBORObject;
-use CBOR\OtherObject\FalseObject;
-use CBOR\OtherObject\NullObject;
-use CBOR\OtherObject\TrueObject;
 
 /**
  * A whole signed transaction: body, witnesses, the Alonzo validity flag where the era has one, and auxiliary data.
@@ -53,8 +50,8 @@ final class Transaction
             SequenceForm::definite()->wrap([
                 $body->toCbor(),
                 $witnessSet->toCbor(),
-                $isValid ? TrueObject::create() : FalseObject::create(),
-                $auxiliaryData?->toCbor() ?? NullObject::create(),
+                $isValid ? CborValue::bool(true) : CborValue::bool(false),
+                $auxiliaryData?->toCbor() ?? CborValue::null(),
             ]),
             'assembled transaction'
         );
@@ -74,7 +71,7 @@ final class Transaction
         return new self($this->body, $witnessSet, $this->isValid, $this->auxiliaryData, $this->form);
     }
 
-    public static function fromCbor(CBORObject $object, string $context = 'transaction'): self
+    public static function fromCbor(CborValue $object, string $context = 'transaction'): self
     {
         [$form, $items] = SequenceForm::unwrap($object, $context, allowSetTag: false);
 
@@ -120,15 +117,15 @@ final class Transaction
         );
     }
 
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
         $items = [$this->body->toCbor(), $this->witnessSet->toCbor()];
 
         if ($this->isValid !== null) {
-            $items[] = $this->isValid ? TrueObject::create() : FalseObject::create();
+            $items[] = $this->isValid ? CborValue::bool(true) : CborValue::bool(false);
         }
 
-        $items[] = $this->auxiliaryData?->toCbor() ?? NullObject::create();
+        $items[] = $this->auxiliaryData?->toCbor() ?? CborValue::null();
 
         return $this->form->wrap($items);
     }

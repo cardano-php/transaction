@@ -8,11 +8,10 @@ declare(strict_types=1);
 namespace Cardano\Transaction\Primitives;
 
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\MapForm;
 use Cardano\Transaction\Cbor\Shape;
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\ByteStringObject;
-use CBOR\CBORObject;
 
 /**
  * The assets of one policy: asset name to quantity.
@@ -91,7 +90,7 @@ final class AssetBundle
         return new self($this->policyId, MapForm::definite(), $ordered);
     }
 
-    public static function fromCbor(CBORObject $policyId, CBORObject $assets, string $context, bool $signed): self
+    public static function fromCbor(CborValue $policyId, CborValue $assets, string $context, bool $signed): self
     {
         $policy = Shape::bytes($policyId, $context.' policy id', 28);
         [$form, $entries] = MapForm::unwrap($assets, $context.' asset map');
@@ -114,11 +113,11 @@ final class AssetBundle
         return new self($policy, $form, $decoded);
     }
 
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
         $entries = [];
         foreach ($this->assets as [$name, $quantity]) {
-            $entries[] = [ByteStringObject::create($name), $quantity->toCbor()];
+            $entries[] = [CborValue::byteString($name), $quantity->toCbor()];
         }
 
         return $this->form->wrap($entries);

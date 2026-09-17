@@ -38,7 +38,6 @@ class PackageIsSelfContainedTest extends TestCase
      */
     private const VENDOR_NAMESPACES = [
         'Brick' => 'brick/math',
-        'CBOR' => 'spomky-labs/cbor-php',
         'CardanoPhp' => 'cardano-php/bech32',
         'PHPUnit' => 'phpunit/phpunit',
     ];

@@ -8,7 +8,6 @@ declare(strict_types=1);
 namespace Cardano\Transaction\Cbor;
 
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\Tag;
 
 /**
  * The bytes that follow a tag head.
@@ -22,30 +21,6 @@ use CBOR\Tag;
 final class TagPayload
 {
     private function __construct() {}
-
-    public static function numberOf(Tag $tag): int
-    {
-        $additionalInformation = $tag->getAdditionalInformation();
-        if ($additionalInformation <= 23) {
-            return $additionalInformation;
-        }
-
-        $data = $tag->getData();
-        if ($data === null) {
-            throw new DecodeException('A tag head wider than 23 carries no payload.');
-        }
-
-        $number = 0;
-        foreach (str_split($data) as $byte) {
-            $number = ($number << 8) | ord($byte);
-        }
-
-        if ($number < 0) {
-            throw new DecodeException('Tag number out of range.');
-        }
-
-        return $number;
-    }
 
     public static function forTagNumber(int $tagNumber, int $additionalInformation): ?string
     {

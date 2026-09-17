@@ -8,11 +8,10 @@ declare(strict_types=1);
 namespace Cardano\Transaction\Primitives;
 
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Cbor\Shape;
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\ByteStringObject;
-use CBOR\CBORObject;
 
 /**
  * A reference to one output of an earlier transaction: its hash and the index of the output inside it.
@@ -48,7 +47,7 @@ final class TransactionInput
         return new self($transactionId, CborInteger::of($index), SequenceForm::definite());
     }
 
-    public static function fromCbor(CBORObject $object, string $context): self
+    public static function fromCbor(CborValue $object, string $context): self
     {
         [$form, $items] = SequenceForm::unwrap($object, $context, allowSetTag: false);
 
@@ -67,10 +66,10 @@ final class TransactionInput
         );
     }
 
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
         return $this->form->wrap([
-            ByteStringObject::create($this->transactionId),
+            CborValue::byteString($this->transactionId),
             $this->index->toCbor(),
         ]);
     }

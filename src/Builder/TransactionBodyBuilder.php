@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Cardano\Transaction\Builder;
 
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\MapForm;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Exception\DecodeException;
@@ -17,8 +18,6 @@ use Cardano\Transaction\Primitives\MultiAsset;
 use Cardano\Transaction\Primitives\TransactionBody;
 use Cardano\Transaction\Primitives\TransactionInput;
 use Cardano\Transaction\Primitives\TransactionOutput;
-use CBOR\ByteStringObject;
-use CBOR\CBORObject;
 
 /**
  * Writes a transaction body.
@@ -255,7 +254,7 @@ final class TransactionBodyBuilder
 
         $fields[TransactionBody::FIELD_INPUTS] = $sequence->wrap(self::inputList($this->inputs));
         $fields[TransactionBody::FIELD_OUTPUTS] = $sequence->wrap(array_map(
-            static fn (TransactionOutput $output): CBORObject => $output->toCbor(),
+            static fn (TransactionOutput $output): CborValue => $output->toCbor(),
             $this->outputs
         ));
         $fields[TransactionBody::FIELD_FEE] = $this->fee->toCbor();
@@ -265,7 +264,7 @@ final class TransactionBodyBuilder
         }
 
         if ($this->auxiliaryDataHash !== null) {
-            $fields[TransactionBody::FIELD_AUXILIARY_DATA_HASH] = ByteStringObject::create($this->auxiliaryDataHash);
+            $fields[TransactionBody::FIELD_AUXILIARY_DATA_HASH] = CborValue::byteString($this->auxiliaryDataHash);
         }
 
         if ($this->validityIntervalStart !== null) {
@@ -282,7 +281,7 @@ final class TransactionBodyBuilder
 
         if ($this->requiredSigners !== []) {
             $fields[TransactionBody::FIELD_REQUIRED_SIGNERS] = $sequence->wrap(array_map(
-                static fn (string $keyHash): CBORObject => ByteStringObject::create($keyHash),
+                static fn (string $keyHash): CborValue => CborValue::byteString($keyHash),
                 $this->requiredSigners
             ));
         }
@@ -307,12 +306,12 @@ final class TransactionBodyBuilder
 
     /**
      * @param  list<TransactionInput>  $inputs
-     * @return list<CBORObject>
+     * @return list<CborValue>
      */
     private static function inputList(array $inputs): array
     {
         return array_map(
-            static fn (TransactionInput $input): CBORObject => $input->toCbor(),
+            static fn (TransactionInput $input): CborValue => $input->toCbor(),
             $inputs
         );
     }

@@ -7,6 +7,7 @@ namespace Cardano\Transaction\Tests;
 
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\MapForm;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Exception\ArithmeticException;
@@ -18,10 +19,6 @@ use Cardano\Transaction\Ledger\WitnessPlan;
 use Cardano\Transaction\Primitives\TransactionOutput;
 use Cardano\Transaction\Primitives\Value;
 use Cardano\Transaction\Primitives\VkeyWitness;
-use CBOR\ByteStringObject;
-use CBOR\CBORObject;
-use CBOR\OtherObject\NullObject;
-use CBOR\OtherObject\TrueObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -52,7 +49,7 @@ class FeeFixedPointTest extends TestCase
         $address = "\x01".str_repeat("\x11", 28).str_repeat("\x22", 28);
 
         $input = SequenceForm::definite()->wrap([
-            ByteStringObject::create(str_repeat("\x33", 32)),
+            CborValue::byteString(str_repeat("\x33", 32)),
             CborInteger::of(0)->toCbor(),
         ]);
 
@@ -74,15 +71,15 @@ class FeeFixedPointTest extends TestCase
             $witnessSet = MapForm::definite()->wrap([[
                 CborInteger::of(0)->toCbor(),
                 SequenceForm::definite()->wrap(
-                    array_map(static fn (VkeyWitness $w): CBORObject => $w->toCbor(), $witnesses)
+                    array_map(static fn (VkeyWitness $w): CborValue => $w->toCbor(), $witnesses)
                 ),
             ]]);
 
             return CborCodec::encode(SequenceForm::definite()->wrap([
                 $body,
                 $witnessSet,
-                TrueObject::create(),
-                NullObject::create(),
+                CborValue::bool(true),
+                CborValue::null(),
             ]));
         };
     }

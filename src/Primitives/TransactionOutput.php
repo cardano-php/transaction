@@ -9,14 +9,11 @@ namespace Cardano\Transaction\Primitives;
 
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
+use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\MapForm;
 use Cardano\Transaction\Cbor\SequenceForm;
 use Cardano\Transaction\Cbor\Shape;
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\ByteStringObject;
-use CBOR\CBORObject;
-use CBOR\IndefiniteLengthMapObject;
-use CBOR\MapObject;
 
 /**
  * One output, in either of the two forms the chain still carries.
@@ -42,7 +39,7 @@ final class TransactionOutput
     private const MAP_FIELDS = [0, 1, 2, 3];
 
     /**
-     * @param  list<CBORObject>|array<int, CBORObject>  $slots
+     * @param  list<CborValue>|array<int, CborValue>  $slots
      * @param  array<int, CborInteger>  $keys
      */
     private function __construct(
@@ -72,7 +69,7 @@ final class TransactionOutput
             $address,
             $value,
             MapForm::definite(),
-            [self::MAP_ADDRESS => ByteStringObject::create($address), self::MAP_VALUE => $value->toCbor()],
+            [self::MAP_ADDRESS => CborValue::byteString($address), self::MAP_VALUE => $value->toCbor()],
             [self::MAP_ADDRESS => CborInteger::of(0), self::MAP_VALUE => CborInteger::of(1)],
         );
     }
@@ -97,16 +94,16 @@ final class TransactionOutput
         return CborCodec::encode($this->toCbor());
     }
 
-    public static function fromCbor(CBORObject $object, string $context): self
+    public static function fromCbor(CborValue $object, string $context): self
     {
-        if ($object instanceof MapObject || $object instanceof IndefiniteLengthMapObject) {
+        if ($object->isMap()) {
             return self::fromMap($object, $context);
         }
 
         return self::fromLegacyArray($object, $context);
     }
 
-    private static function fromMap(CBORObject $object, string $context): self
+    private static function fromMap(CborValue $object, string $context): self
     {
         [$form, $fields, $keys] = MapForm::unwrapIntKeyed($object, $context, self::MAP_FIELDS);
 
@@ -126,7 +123,7 @@ final class TransactionOutput
         );
     }
 
-    private static function fromLegacyArray(CBORObject $object, string $context): self
+    private static function fromLegacyArray(CborValue $object, string $context): self
     {
         [$form, $items] = SequenceForm::unwrap($object, $context, allowSetTag: false);
 
@@ -152,13 +149,13 @@ final class TransactionOutput
         );
     }
 
-    public function toCbor(): CBORObject
+    public function toCbor(): CborValue
     {
         if ($this->form === self::FORM_MAP) {
             $entries = [];
             foreach ($this->slots as $key => $slot) {
                 $entries[] = [$this->keys[$key]->toCbor(), match ($key) {
-                    self::MAP_ADDRESS => ByteStringObject::create($this->address),
+                    self::MAP_ADDRESS => CborValue::byteString($this->address),
                     self::MAP_VALUE => $this->value->toCbor(),
                     default => $slot,
                 }];
@@ -168,7 +165,7 @@ final class TransactionOutput
         }
 
         $items = $this->slots;
-        $items[0] = ByteStringObject::create($this->address);
+        $items[0] = CborValue::byteString($this->address);
         $items[1] = $this->value->toCbor();
 
         return $this->container->wrap(array_values($items));

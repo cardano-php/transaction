@@ -14,5 +14,5 @@ You may obtain a copy of the License at
 This product depends on software developed by third parties, each under its
 own license:
 
-  - spomky-labs/cbor-php, licensed under the MIT License.
+  - brick/math, licensed under the MIT License.
   - cardano-php/bech32, licensed under the Apache License, Version 2.0.

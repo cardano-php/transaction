@@ -8,26 +8,11 @@ declare(strict_types=1);
 namespace Cardano\Transaction\Cbor;
 
 use Cardano\Transaction\Exception\DecodeException;
-use CBOR\ByteStringObject;
-use CBOR\CBORObject;
-use CBOR\IndefiniteLengthByteStringObject;
-use CBOR\IndefiniteLengthListObject;
-use CBOR\IndefiniteLengthMapObject;
-use CBOR\IndefiniteLengthTextStringObject;
-use CBOR\ListObject;
-use CBOR\MapObject;
-use CBOR\NegativeIntegerObject;
-use CBOR\OtherObject\FalseObject;
-use CBOR\OtherObject\NullObject;
-use CBOR\OtherObject\TrueObject;
-use CBOR\Tag;
-use CBOR\TextStringObject;
-use CBOR\UnsignedIntegerObject;
 
 /**
  * Type assertions over decoded CBOR.
  *
- * Every read of a transaction goes through one of these rather than through an instanceof at the call site, so that a
+ * Every read of a transaction goes through one of these rather than through a type test at the call site, so that a
  * value in the wrong position is refused in one place and with one kind of message. The ledger accepted every
  * transaction the corpus was fetched by, which means the corpus cannot show whether the decoder would have refused
  * something else. These assertions, and the negative fixtures that exercise them, are the only thing that can.
@@ -40,94 +25,79 @@ final class Shape
 {
     private function __construct() {}
 
-    public static function bytes(CBORObject $object, string $context, ?int $length = null): string
+    public static function bytes(CborValue $value, string $context, ?int $length = null): string
     {
-        if ($object instanceof IndefiniteLengthByteStringObject) {
+        if ($value->isIndefiniteByteString()) {
             throw new DecodeException(sprintf('%s: expected a definite length byte string.', $context));
         }
 
-        if (! $object instanceof ByteStringObject) {
+        if (! $value->isByteString()) {
             throw new DecodeException(sprintf(
                 '%s: expected a byte string, got %s.',
                 $context,
-                self::describe($object)
+                self::describe($value)
             ));
         }
 
-        $value = $object->getValue();
-        if ($length !== null && strlen($value) !== $length) {
+        $payload = $value->stringValue();
+        if ($length !== null && strlen($payload) !== $length) {
             throw new DecodeException(sprintf(
                 '%s: expected %d bytes, got %d.',
                 $context,
                 $length,
-                strlen($value)
+                strlen($payload)
             ));
         }
 
-        return $value;
+        return $payload;
     }
 
     /**
      * A byte string whose length falls inside an inclusive range. Asset names are the case: nought to thirty-two.
      */
-    public static function boundedBytes(CBORObject $object, string $context, int $min, int $max): string
+    public static function boundedBytes(CborValue $value, string $context, int $min, int $max): string
     {
-        $value = self::bytes($object, $context);
-        if (strlen($value) < $min || strlen($value) > $max) {
+        $payload = self::bytes($value, $context);
+        if (strlen($payload) < $min || strlen($payload) > $max) {
             throw new DecodeException(sprintf(
                 '%s: expected between %d and %d bytes, got %d.',
                 $context,
                 $min,
                 $max,
-                strlen($value)
+                strlen($payload)
             ));
         }
 
-        return $value;
+        return $payload;
     }
 
-    public static function isNull(CBORObject $object): bool
+    public static function isNull(CborValue $value): bool
     {
-        return $object instanceof NullObject;
+        return $value->isNull();
     }
 
-    public static function bool(CBORObject $object, string $context): bool
+    public static function bool(CborValue $value, string $context): bool
     {
-        if ($object instanceof TrueObject) {
+        if ($value->isTrue()) {
             return true;
         }
 
-        if ($object instanceof FalseObject) {
+        if ($value->isFalse()) {
             return false;
         }
 
         throw new DecodeException(sprintf(
             '%s: expected a boolean, got %s.',
             $context,
-            self::describe($object)
+            self::describe($value)
         ));
     }
 
     /**
-     * A short name for an object, for the message a refusal carries.
+     * A short name for a value, for the message a refusal carries.
      */
-    public static function describe(CBORObject $object): string
+    public static function describe(CborValue $value): string
     {
-        return match (true) {
-            $object instanceof UnsignedIntegerObject => 'an unsigned integer',
-            $object instanceof NegativeIntegerObject => 'a negative integer',
-            $object instanceof ByteStringObject => 'a byte string',
-            $object instanceof IndefiniteLengthByteStringObject => 'an indefinite length byte string',
-            $object instanceof TextStringObject,
-            $object instanceof IndefiniteLengthTextStringObject => 'a text string',
-            $object instanceof ListObject => 'an array',
-            $object instanceof IndefiniteLengthListObject => 'an indefinite length array',
-            $object instanceof MapObject => 'a map',
-            $object instanceof IndefiniteLengthMapObject => 'an indefinite length map',
-            $object instanceof Tag => sprintf('a tagged item (tag head %d)', $object->getAdditionalInformation()),
-            $object instanceof NullObject => 'null',
-            $object instanceof TrueObject, $object instanceof FalseObject => 'a boolean',
-            default => 'a '.$object::class,
-        };
+        return $value->describe();
     }
 }
