@@ -188,6 +188,8 @@ class CborCodecTest extends TestCase
             'the same text string key twice' => ['a2616100616101'],
             'the same array key twice' => ['a2810000810001'],
             'the same map key twice' => ['a2a000a001'],
+            'the same nested map key twice' => ['a2'.'a100a10000'.'00'.'a100a10000'.'01'],
+            'the same tagged key twice' => ['a2'.'c24101'.'00'.'c24101'.'01'],
             'the same simple value key twice' => ['a2f400f401'],
         ];
     }
@@ -208,6 +210,53 @@ class CborCodecTest extends TestCase
         $hex = 'a3'.'00'.'00'.'190001'.'01'.'1a00000002'.'02';
 
         $this->assertSame($hex, bin2hex(CborCodec::encode(CborCodec::decode(hex2bin($hex)))));
+    }
+
+    /**
+     * A key that is a container is compared by its bytes, so one written wider is a different key.
+     *
+     * This is the rule that was always here and it has not moved; what has moved is how the bytes are reached. They
+     * are the slice of the input the key was read from rather than a re-encoding of the key, and the two have to
+     * agree on both halves of the question: `8100` and `980100` are one item array holding nought written two ways,
+     * and a map may carry both because anything hashing that map would see two different keys.
+     */
+    public function test_a_container_key_written_at_two_widths_is_two_keys(): void
+    {
+        $hex = 'a2'.'8100'.'00'.'980100'.'01';
+
+        $this->assertSame($hex, bin2hex(CborCodec::encode(CborCodec::decode(hex2bin($hex)))));
+    }
+
+    /**
+     * What a document nesting maps as keys costs to decide, which used to be the length of the input squared.
+     *
+     * Naming a container key meant re-encoding it, so a key nested d deep was re-encoded once at every level above
+     * it. The input below is one byte under maxTxSize, which makes it a document that fits in a transaction and
+     * reaches this through the public decoder. It took over twenty seconds to accept, and a hostile one of the same
+     * shape could not be refused cheaply either, which is the half of it that matters: a decoder that is expensive
+     * to say no to is a decoder anyone can point at a service.
+     *
+     * The bound is loose on purpose. It is not a benchmark and it is not measuring a machine; it is far enough
+     * below what the old cost was, and far enough above what the new one is, that only a return to walking the key
+     * at every level can cross it.
+     */
+    public function test_a_transaction_sized_document_of_nested_map_keys_is_decided_promptly(): void
+    {
+        $depth = 8191;
+        $bytes = str_repeat("\xa1", $depth)."\x00".str_repeat("\x00", $depth);
+
+        $this->assertSame(16383, strlen($bytes), 'The input is meant to be one byte under maxTxSize.');
+
+        $started = microtime(true);
+        $value = CborCodec::decode($bytes);
+        $elapsed = microtime(true) - $started;
+
+        $this->assertSame(bin2hex($bytes), bin2hex(CborCodec::encode($value)));
+        $this->assertLessThan(
+            5.0,
+            $elapsed,
+            sprintf('A %d byte document of nested map keys took %.2f seconds to decode.', strlen($bytes), $elapsed)
+        );
     }
 
     /**

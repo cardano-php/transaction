@@ -49,7 +49,7 @@ final class CborReader
     {
         /**
          * @var list<array{
-         *   major: int, additionalInformation: int, argument: ?string, count: ?int,
+         *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
          *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
          *   identities: array<string, true>
          * }> $stack
@@ -80,21 +80,27 @@ final class CborReader
         $expand = true;
         $completed = null;
 
+        // Where in the input the item now in $completed started. A map key is named by the bytes it was written in,
+        // and those bytes are in hand here; working them out again from the value would mean re-encoding it.
+        $completedStart = 0;
+
         while (true) {
             if ($expand) {
                 $expand = false;
+                $start = $offset;
                 $head = CborHead::read($bytes, $offset, $context);
 
                 if ($head->isBreak()) {
-                    $completed = self::closeOnBreak($stack, $context);
+                    $completed = self::closeOnBreak($stack, $completedStart, $context);
 
                     continue;
                 }
 
-                $opened = self::open($head, $bytes, $offset, $context);
+                $opened = self::open($head, $bytes, $offset, $start, $context);
 
                 if ($opened instanceof CborValue) {
                     $completed = $opened;
+                    $completedStart = $start;
 
                     continue;
                 }
@@ -105,6 +111,7 @@ final class CborReader
 
                 if (self::isFinished($opened)) {
                     $completed = self::close($opened);
+                    $completedStart = $start;
 
                     continue;
                 }
@@ -120,10 +127,11 @@ final class CborReader
             }
 
             $top = count($stack) - 1;
-            self::attach($stack[$top], $completed, $context);
+            self::attach($stack[$top], $completed, $bytes, $completedStart, $offset, $context);
 
             if (self::isFinished($stack[$top])) {
                 $frame = array_pop($stack);
+                $completedStart = $frame['start'];
                 $completed = self::close($frame);
 
                 continue;
@@ -138,12 +146,18 @@ final class CborReader
      *
      * @param  Closure(): string  $context
      * @return CborValue|array{
-     *   major: int, additionalInformation: int, argument: ?string, count: ?int,
+     *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
      *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
      *   identities: array<string, true>
      * }
      */
-    private static function open(CborHead $head, string $bytes, int &$offset, Closure $context): CborValue|array
+    private static function open(
+        CborHead $head,
+        string $bytes,
+        int &$offset,
+        int $start,
+        Closure $context
+    ): CborValue|array
     {
         $indefinite = $head->isIndefinite();
 
@@ -173,7 +187,7 @@ final class CborReader
                 );
             }
 
-            return self::frame($head, null);
+            return self::frame($head, null, $start);
         }
 
         if ($head->major === CborHead::MAJOR_TAG) {
@@ -181,27 +195,28 @@ final class CborReader
                 throw new DecodeException(sprintf('%s: a tag is never indefinite in length.', $context()));
             }
 
-            return self::frame($head, 1);
+            return self::frame($head, 1, $start);
         }
 
         // An array or a map, which is the only place the count in the head means a number of items to read.
-        return self::frame($head, $indefinite ? null : $head->length($context));
+        return self::frame($head, $indefinite ? null : $head->length($context), $start);
     }
 
     /**
      * @return array{
-     *   major: int, additionalInformation: int, argument: ?string, count: ?int,
+     *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
      *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
      *   identities: array<string, true>
      * }
      */
-    private static function frame(CborHead $head, ?int $count): array
+    private static function frame(CborHead $head, ?int $count, int $start): array
     {
         return [
             'major' => $head->major,
             'additionalInformation' => $head->additionalInformation,
             'argument' => $head->argument,
             'count' => $count,
+            'start' => $start,
             'items' => [],
             'entries' => [],
             'key' => null,
@@ -255,17 +270,24 @@ final class CborReader
      * One finished item handed to the container above it.
      *
      * @param  array{
-     *   major: int, additionalInformation: int, argument: ?string, count: ?int,
+     *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
      *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
      *   identities: array<string, true>
      * }  $frame
      * @param  Closure(): string  $context
      */
-    private static function attach(array &$frame, CborValue $value, Closure $context): void
+    private static function attach(
+        array &$frame,
+        CborValue $value,
+        string $bytes,
+        int $start,
+        int $end,
+        Closure $context
+    ): void
     {
         if ($frame['major'] === CborHead::MAJOR_MAP) {
             if ($frame['key'] === null) {
-                $identity = self::keyIdentity($value);
+                $identity = self::keyIdentity($value, $bytes, $start, $end);
 
                 if (isset($frame['identities'][$identity])) {
                     throw new DecodeException(sprintf(
@@ -306,13 +328,13 @@ final class CborReader
      * The break byte, which closes the innermost container written without a count.
      *
      * @param  list<array{
-     *   major: int, additionalInformation: int, argument: ?string, count: ?int,
+     *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
      *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
      *   identities: array<string, true>
      * }>  $stack
      * @param  Closure(): string  $context
      */
-    private static function closeOnBreak(array &$stack, Closure $context): CborValue
+    private static function closeOnBreak(array &$stack, int &$start, Closure $context): CborValue
     {
         if ($stack === []) {
             throw new DecodeException(sprintf(
@@ -334,14 +356,17 @@ final class CborReader
             throw new DecodeException(sprintf('%s: a map key with no value after it.', $context()));
         }
 
-        return self::close(array_pop($stack));
+        $frame = array_pop($stack);
+        $start = $frame['start'];
+
+        return self::close($frame);
     }
 
     /**
      * The value a finished frame stands for, written at the head it arrived in.
      *
      * @param  array{
-     *   major: int, additionalInformation: int, argument: ?string, count: ?int,
+     *   major: int, additionalInformation: int, argument: ?string, count: ?int, start: int,
      *   items: list<CborValue>, entries: list<array{CborValue, CborValue}>, key: ?CborValue,
      *   identities: array<string, true>
      * }  $frame
@@ -377,15 +402,22 @@ final class CborReader
      * string is its content whichever framing carried it. A key that is itself an array, a map or a tag is compared
      * by the bytes it was written in, because two containers written differently are two different keys as far as
      * anything hashing them is concerned, and a transaction has never carried one.
+     *
+     * Those bytes are the slice of the input the key was read from, not a re-encoding of it. The two are the same
+     * string, because a value read here writes back exactly what it was read from, and taking the slice costs one
+     * copy where re-encoding costs a walk of the whole key. That is the difference between linear and quadratic
+     * when containers are nested as keys: a key nested d deep was re-encoded once at every level above it, so a
+     * document that fits inside maxTxSize could spend over a minute being accepted, and a hostile one could not be
+     * refused cheaply either.
      */
-    private static function keyIdentity(CborValue $key): string
+    private static function keyIdentity(CborValue $key, string $bytes, int $start, int $end): string
     {
         return match (true) {
             $key->isInteger() => 'i:'.$key->integerText(),
             $key->isByteString(), $key->isIndefiniteByteString() => 'b:'.$key->stringValue(),
             $key->isTextString() => 't:'.$key->stringValue(),
             $key->isSimple() => 's:'.bin2hex($key->head()),
-            default => 'x:'.CborWriter::write($key),
+            default => 'x:'.substr($bytes, $start, $end - $start),
         };
     }
 
