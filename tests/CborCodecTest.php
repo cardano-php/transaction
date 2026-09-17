@@ -300,6 +300,77 @@ class CborCodecTest extends TestCase
     }
 
     /**
+     * How long an input this reads, and what happens to a longer one.
+     *
+     * The depth limit bounds one of the two ways a document costs memory. The other is breadth, which it says
+     * nothing about: an array of a million items nests one level and is a million objects. Past some length the
+     * answer stops being a refusal and becomes the allocator giving up, and that is a fatal error rather than an
+     * exception, so a caller cannot catch it, log it or carry on serving. The length is checked before anything is
+     * read, so a document far past the limit costs the same to refuse as one a byte past it.
+     */
+    public function test_an_input_longer_than_the_limit_is_refused_before_it_is_read(): void
+    {
+        $length = CborCodec::MAX_INPUT_BYTES;
+        $payload = $length - 5;
+        $atTheLimit = "\x5a".pack('N', $payload).str_repeat('A', $payload);
+
+        $this->assertSame($length, strlen($atTheLimit));
+        $this->assertSame(
+            bin2hex($atTheLimit),
+            bin2hex(CborCodec::encode(CborCodec::decode($atTheLimit))),
+            'The longest input the limit allows is not read and written back whole.'
+        );
+
+        foreach ([1, 1024, 1024 * 1024] as $over) {
+            $bytes = $atTheLimit.str_repeat('A', $over);
+            $thrown = null;
+
+            try {
+                CborCodec::decode($bytes);
+            } catch (DecodeException $e) {
+                $thrown = $e;
+            }
+
+            $this->assertInstanceOf(
+                DecodeException::class,
+                $thrown,
+                strlen($bytes).' bytes raised nothing at all.'
+            );
+            $this->assertStringContainsString((string) CborCodec::MAX_INPUT_BYTES, $thrown->getMessage());
+        }
+    }
+
+    /**
+     * And the refusal arrives without the document being walked, whatever shape it is.
+     *
+     * A document of forty million one byte array heads is what the depth limit alone leaves open: it is refused for
+     * nesting, but only after forty million heads have been read and sixteen thousand values built. Checking the
+     * length first turns that into a string comparison.
+     */
+    public function test_a_document_far_past_the_limit_is_refused_promptly(): void
+    {
+        $bytes = str_repeat("\x81", 40 * 1000 * 1000);
+
+        $started = microtime(true);
+        $thrown = null;
+
+        try {
+            CborCodec::decode($bytes);
+        } catch (DecodeException $e) {
+            $thrown = $e;
+        }
+
+        $elapsed = microtime(true) - $started;
+
+        $this->assertInstanceOf(DecodeException::class, $thrown);
+        $this->assertLessThan(
+            1.0,
+            $elapsed,
+            sprintf('A %d byte document took %.2f seconds to refuse.', strlen($bytes), $elapsed)
+        );
+    }
+
+    /**
      * Documents that are not CBOR, each refused for its own reason rather than read part way.
      */
     public static function documentsThatAreRefused(): array
