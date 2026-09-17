@@ -6,6 +6,7 @@
 namespace Cardano\Transaction\Tests;
 
 use Cardano\Transaction\Cbor\CborCodec;
+use Cardano\Transaction\Codec\TransactionDecoder;
 use Cardano\Transaction\Exception\DecodeException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -121,6 +122,50 @@ class CborRoundTripTest extends TestCase
             $refused,
             'No corrupted document was refused, so this test is not exercising the refusals.'
         );
+    }
+
+    /**
+     * The same documents through the transaction layer, which is where the hash is computed.
+     *
+     * The three cases above stop at CborCodec, and CborCodec is the layer with nothing in it that takes a
+     * transaction apart: it holds the head of every item it reads and hands all of them back. The layer above it
+     * reads fields out into a model and rebuilds them, and a document that the codec reproduces can still come back
+     * from there as different bytes. Anything a generated document reaches has to hold at both layers, so the
+     * decoder either refuses it by name or answers with exactly what it was given.
+     *
+     * Almost every document here is refused, because almost nothing shaped at random is a transaction. What the
+     * count at the end says is that the case is wired to the transaction layer at all.
+     */
+    #[DataProvider('seeds')]
+    public function test_a_generated_document_reaching_the_transaction_layer_is_refused_or_reproduced(int $seed): void
+    {
+        mt_srand($seed + 3000);
+
+        $refused = 0;
+
+        for ($index = 0; $index < self::DOCUMENTS; $index++) {
+            $bytes = self::document(0);
+
+            try {
+                $transaction = TransactionDecoder::decode($bytes);
+            } catch (DecodeException) {
+                $refused++;
+
+                continue;
+            } catch (Throwable $e) {
+                $this->fail(sprintf(
+                    'Seed %d document %d was refused with %s rather than a DecodeException: %s',
+                    $seed,
+                    $index,
+                    $e::class,
+                    $e->getMessage()
+                ));
+            }
+
+            $this->assertSame(bin2hex($bytes), bin2hex($transaction->encode()));
+        }
+
+        $this->assertGreaterThan(0, $refused, 'Nothing was refused, so this case is not reaching the decoder.');
     }
 
     // ------------------------------------------------------------------ the generator

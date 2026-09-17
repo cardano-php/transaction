@@ -100,6 +100,80 @@ final class HeadWidths
     }
 
     /**
+     * The same document with every head of $majors rewritten at a width chosen by $width, widest heads rewritten
+     * first so that the offsets of the ones still to come do not move.
+     *
+     * @param  list<int>  $majors
+     * @param  callable(array{offset: int, headLength: int, major: int, additionalInformation: int, argument: int}): int  $width
+     *                          the additional information to write the head at, or the one it already has
+     */
+    public static function rewritten(string $bytes, array $majors, callable $width): string
+    {
+        $heads = self::heads($bytes);
+
+        for ($index = count($heads) - 1; $index >= 0; $index--) {
+            $head = $heads[$index];
+
+            if (! in_array($head['major'], $majors, true)) {
+                continue;
+            }
+
+            $chosen = $width($head);
+
+            if ($chosen === $head['additionalInformation']) {
+                continue;
+            }
+
+            $bytes = substr($bytes, 0, $head['offset'])
+                .self::head($head['major'], $chosen, $head['argument'])
+                .substr($bytes, $head['offset'] + $head['headLength']);
+        }
+
+        return $bytes;
+    }
+
+    /**
+     * The additional information values that can state $argument, narrowest first.
+     *
+     * @return list<int>
+     */
+    public static function widthsFor(int $argument): array
+    {
+        $widths = [];
+
+        if ($argument <= 23) {
+            $widths[] = $argument;
+        }
+
+        if ($argument <= 0xFF) {
+            $widths[] = 24;
+        }
+
+        if ($argument <= 0xFFFF) {
+            $widths[] = 25;
+        }
+
+        if ($argument <= 0xFFFFFFFF) {
+            $widths[] = 26;
+        }
+
+        $widths[] = 27;
+
+        return $widths;
+    }
+
+    private static function head(int $major, int $additionalInformation, int $argument): string
+    {
+        return match (true) {
+            $additionalInformation <= 23 => chr($major << 5 | $additionalInformation),
+            $additionalInformation === 24 => chr($major << 5 | 24).chr($argument),
+            $additionalInformation === 25 => chr($major << 5 | 25).pack('n', $argument),
+            $additionalInformation === 26 => chr($major << 5 | 26).pack('N', $argument),
+            default => chr($major << 5 | 27).pack('J', $argument),
+        };
+    }
+
+    /**
      * @param  list<array{offset: int, headLength: int, major: int, additionalInformation: int, argument: int}>  $heads
      */
     private static function walk(string $bytes, int &$offset, array &$heads): void

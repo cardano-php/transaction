@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Cardano\Transaction\Primitives;
 
+use Cardano\Transaction\Cbor\ByteStringForm;
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\SequenceForm;
@@ -26,6 +27,8 @@ final class VkeyWitness
         public readonly string $vkey,
         public readonly string $signature,
         private readonly SequenceForm $form,
+        private readonly ByteStringForm $vkeyForm,
+        private readonly ByteStringForm $signatureForm,
     ) {}
 
     /**
@@ -44,7 +47,13 @@ final class VkeyWitness
             throw new DecodeException(sprintf('An Ed25519 signature is 64 bytes, got %d.', strlen($signature)));
         }
 
-        return new self($vkey, $signature, SequenceForm::definite());
+        return new self(
+            $vkey,
+            $signature,
+            SequenceForm::definite(),
+            ByteStringForm::shortest(),
+            ByteStringForm::shortest(),
+        );
     }
 
     public static function fromCbor(CborValue $object, string $context): self
@@ -63,14 +72,16 @@ final class VkeyWitness
             Shape::bytes($items[0], $context.' public key', 32),
             Shape::bytes($items[1], $context.' signature', 64),
             $form,
+            ByteStringForm::of($items[0]),
+            ByteStringForm::of($items[1]),
         );
     }
 
     public function toCbor(): CborValue
     {
         return $this->form->wrap([
-            CborValue::byteString($this->vkey),
-            CborValue::byteString($this->signature),
+            $this->vkeyForm->wrap($this->vkey),
+            $this->signatureForm->wrap($this->signature),
         ]);
     }
 

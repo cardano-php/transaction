@@ -118,7 +118,7 @@ final class MultiAsset
     {
         $entries = [];
         foreach ($this->bundles as $bundle) {
-            $entries[] = [CborValue::byteString($bundle->policyId), $bundle->toCbor()];
+            $entries[] = [$bundle->policyIdKey(), $bundle->toCbor()];
         }
 
         return $this->form->wrap($entries);

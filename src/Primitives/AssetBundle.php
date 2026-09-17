@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Cardano\Transaction\Primitives;
 
+use Cardano\Transaction\Cbor\ByteStringForm;
 use Cardano\Transaction\Cbor\CborInteger;
 use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\MapForm;
@@ -23,11 +24,14 @@ final class AssetBundle
 {
     /**
      * @param  list<array{string, CborInteger}>  $assets
+     * @param  list<ByteStringForm>  $assetNameForms  the head each asset name arrived in, one per entry of $assets
      */
     private function __construct(
         public readonly string $policyId,
         private readonly MapForm $form,
         private readonly array $assets,
+        private readonly ByteStringForm $policyIdForm,
+        private readonly array $assetNameForms,
     ) {}
 
     /**
@@ -60,7 +64,13 @@ final class AssetBundle
             $decoded[] = [$name, CborInteger::of($quantity)];
         }
 
-        return new self($policyId, MapForm::definite(), $decoded);
+        return new self(
+            $policyId,
+            MapForm::definite(),
+            $decoded,
+            ByteStringForm::shortest(),
+            array_fill(0, count($decoded), ByteStringForm::shortest()),
+        );
     }
 
     /**
@@ -87,7 +97,13 @@ final class AssetBundle
         $ordered = $this->assets;
         usort($ordered, static fn (array $a, array $b): int => MultiAsset::compareKeys($a[0], $b[0]));
 
-        return new self($this->policyId, MapForm::definite(), $ordered);
+        return new self(
+            $this->policyId,
+            MapForm::definite(),
+            $ordered,
+            ByteStringForm::shortest(),
+            array_fill(0, count($ordered), ByteStringForm::shortest()),
+        );
     }
 
     public static function fromCbor(CborValue $policyId, CborValue $assets, string $context, bool $signed): self
@@ -96,6 +112,7 @@ final class AssetBundle
         [$form, $entries] = MapForm::unwrap($assets, $context.' asset map');
 
         $decoded = [];
+        $nameForms = [];
         foreach ($entries as [$name, $quantity]) {
             $assetName = Shape::boundedBytes($name, $context.' asset name', 0, 32);
             $decoded[] = [
@@ -104,23 +121,35 @@ final class AssetBundle
                     ? CborInteger::fromCbor($quantity, $context.' quantity')
                     : CborInteger::unsignedFromCbor($quantity, $context.' quantity'),
             ];
+            $nameForms[] = ByteStringForm::of($name);
         }
 
         if ($decoded === []) {
             throw new DecodeException(sprintf('%s: a policy carries no assets.', $context));
         }
 
-        return new self($policy, $form, $decoded);
+        return new self($policy, $form, $decoded, ByteStringForm::of($policyId), $nameForms);
     }
 
     public function toCbor(): CborValue
     {
         $entries = [];
-        foreach ($this->assets as [$name, $quantity]) {
-            $entries[] = [CborValue::byteString($name), $quantity->toCbor()];
+        foreach ($this->assets as $index => [$name, $quantity]) {
+            $entries[] = [$this->assetNameForms[$index]->wrap($name), $quantity->toCbor()];
         }
 
         return $this->form->wrap($entries);
+    }
+
+    /**
+     * The policy id as the map key it is written as, at the head it arrived in.
+     *
+     * A multiasset map is keyed by policy id, so the key is part of this bundle rather than of the map that holds
+     * it, and so is the head it was written with.
+     */
+    public function policyIdKey(): CborValue
+    {
+        return $this->policyIdForm->wrap($this->policyId);
     }
 
     public function policyIdHex(): string

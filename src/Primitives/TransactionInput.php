@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Cardano\Transaction\Primitives;
 
+use Cardano\Transaction\Cbor\ByteStringForm;
 use Cardano\Transaction\Cbor\CborInteger;
 use Cardano\Transaction\Cbor\CborValue;
 use Cardano\Transaction\Cbor\SequenceForm;
@@ -22,6 +23,7 @@ final class TransactionInput
         public readonly string $transactionId,
         public readonly CborInteger $index,
         private readonly SequenceForm $form,
+        private readonly ByteStringForm $transactionIdForm,
     ) {}
 
     /**
@@ -44,7 +46,12 @@ final class TransactionInput
             throw new DecodeException(sprintf('An output index cannot be %d.', $index));
         }
 
-        return new self($transactionId, CborInteger::of($index), SequenceForm::definite());
+        return new self(
+            $transactionId,
+            CborInteger::of($index),
+            SequenceForm::definite(),
+            ByteStringForm::shortest(),
+        );
     }
 
     public static function fromCbor(CborValue $object, string $context): self
@@ -63,13 +70,14 @@ final class TransactionInput
             Shape::bytes($items[0], $context.' transaction id', 32),
             CborInteger::unsignedFromCbor($items[1], $context.' index'),
             $form,
+            ByteStringForm::of($items[0]),
         );
     }
 
     public function toCbor(): CborValue
     {
         return $this->form->wrap([
-            CborValue::byteString($this->transactionId),
+            $this->transactionIdForm->wrap($this->transactionId),
             $this->index->toCbor(),
         ]);
     }

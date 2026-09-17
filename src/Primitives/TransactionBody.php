@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Cardano\Transaction\Primitives;
 
+use Cardano\Transaction\Cbor\ByteStringForm;
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
 use Cardano\Transaction\Cbor\CborValue;
@@ -83,6 +84,7 @@ final class TransactionBody
      * @param  array<int, SequenceForm>  $inputSetForms
      * @param  list<TransactionOutput>  $outputs
      * @param  list<string>  $requiredSigners
+     * @param  list<ByteStringForm>  $requiredSignerForms  one per entry of $requiredSigners, in the same order
      */
     private function __construct(
         private readonly MapForm $form,
@@ -103,6 +105,9 @@ final class TransactionBody
         private readonly ?TransactionOutput $collateralReturn,
         private readonly array $requiredSigners,
         private readonly ?SequenceForm $requiredSignerForm,
+        private readonly array $requiredSignerForms,
+        private readonly ?ByteStringForm $auxiliaryDataHashForm,
+        private readonly ?ByteStringForm $scriptDataHashForm,
     ) {}
 
     public static function fromCbor(CborValue $object, string $context = 'body'): self
@@ -146,6 +151,7 @@ final class TransactionBody
         }
 
         $requiredSigners = [];
+        $requiredSignerForms = [];
         $requiredSignerForm = null;
         if (isset($fields[self::FIELD_REQUIRED_SIGNERS])) {
             [$requiredSignerForm, $items] = SequenceForm::unwrap(
@@ -154,6 +160,7 @@ final class TransactionBody
             );
             foreach ($items as $index => $item) {
                 $requiredSigners[] = Shape::bytes($item, sprintf('%s required signer %d', $context, $index), 28);
+                $requiredSignerForms[] = ByteStringForm::of($item);
             }
         }
 
@@ -201,6 +208,13 @@ final class TransactionBody
                 : null,
             $requiredSigners,
             $requiredSignerForm,
+            $requiredSignerForms,
+            isset($fields[self::FIELD_AUXILIARY_DATA_HASH])
+                ? ByteStringForm::of($fields[self::FIELD_AUXILIARY_DATA_HASH])
+                : null,
+            isset($fields[self::FIELD_SCRIPT_DATA_HASH])
+                ? ByteStringForm::of($fields[self::FIELD_SCRIPT_DATA_HASH])
+                : null,
         );
     }
 
@@ -244,16 +258,17 @@ final class TransactionBody
             self::FIELD_FEE => $this->fee->toCbor(),
             self::FIELD_TTL => $this->ttl->toCbor(),
             self::FIELD_VALIDITY_INTERVAL_START => $this->validityIntervalStart->toCbor(),
-            self::FIELD_AUXILIARY_DATA_HASH => CborValue::byteString($this->auxiliaryDataHash),
-            self::FIELD_SCRIPT_DATA_HASH => CborValue::byteString($this->scriptDataHash),
+            self::FIELD_AUXILIARY_DATA_HASH => $this->auxiliaryDataHashForm->wrap($this->auxiliaryDataHash),
+            self::FIELD_SCRIPT_DATA_HASH => $this->scriptDataHashForm->wrap($this->scriptDataHash),
             self::FIELD_MINT => $this->mint->toCbor(),
             self::FIELD_NETWORK_ID => $this->networkId->toCbor(),
             self::FIELD_TOTAL_COLLATERAL => $this->totalCollateral->toCbor(),
             self::FIELD_COLLATERAL_RETURN => $this->collateralReturn->toCbor(),
             self::FIELD_REQUIRED_SIGNERS => $this->requiredSignerForm->wrap(
                 array_map(
-                    static fn (string $s): CborValue => CborValue::byteString($s),
-                    $this->requiredSigners
+                    static fn (string $signer, ByteStringForm $form): CborValue => $form->wrap($signer),
+                    $this->requiredSigners,
+                    $this->requiredSignerForms
                 )
             ),
             default => $field,

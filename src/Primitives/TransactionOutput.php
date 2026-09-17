@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Cardano\Transaction\Primitives;
 
+use Cardano\Transaction\Cbor\ByteStringForm;
 use Cardano\Transaction\Cbor\CborCodec;
 use Cardano\Transaction\Cbor\CborInteger;
 use Cardano\Transaction\Cbor\CborValue;
@@ -49,6 +50,7 @@ final class TransactionOutput
         private readonly SequenceForm|MapForm $container,
         private readonly array $slots,
         private readonly array $keys,
+        private readonly ByteStringForm $addressForm,
     ) {}
 
     /**
@@ -71,6 +73,7 @@ final class TransactionOutput
             MapForm::definite(),
             [self::MAP_ADDRESS => CborValue::byteString($address), self::MAP_VALUE => $value->toCbor()],
             [self::MAP_ADDRESS => CborInteger::of(0), self::MAP_VALUE => CborInteger::of(1)],
+            ByteStringForm::shortest(),
         );
     }
 
@@ -85,7 +88,15 @@ final class TransactionOutput
         $slots = $this->slots;
         $slots[$this->form === self::FORM_MAP ? self::MAP_VALUE : 1] = $value->toCbor();
 
-        return new self($this->form, $this->address, $value, $this->container, $slots, $this->keys);
+        return new self(
+            $this->form,
+            $this->address,
+            $value,
+            $this->container,
+            $slots,
+            $this->keys,
+            $this->addressForm,
+        );
     }
 
     /** The serialized bytes of the whole output, which is what the minimum-UTxO formula is measured over. */
@@ -120,6 +131,7 @@ final class TransactionOutput
             $form,
             $fields,
             $keys,
+            ByteStringForm::of($fields[self::MAP_ADDRESS]),
         );
     }
 
@@ -146,6 +158,7 @@ final class TransactionOutput
             $form,
             $items,
             [],
+            ByteStringForm::of($items[0]),
         );
     }
 
@@ -155,7 +168,7 @@ final class TransactionOutput
             $entries = [];
             foreach ($this->slots as $key => $slot) {
                 $entries[] = [$this->keys[$key]->toCbor(), match ($key) {
-                    self::MAP_ADDRESS => CborValue::byteString($this->address),
+                    self::MAP_ADDRESS => $this->addressForm->wrap($this->address),
                     self::MAP_VALUE => $this->value->toCbor(),
                     default => $slot,
                 }];
@@ -165,7 +178,7 @@ final class TransactionOutput
         }
 
         $items = $this->slots;
-        $items[0] = CborValue::byteString($this->address);
+        $items[0] = $this->addressForm->wrap($this->address);
         $items[1] = $this->value->toCbor();
 
         return $this->container->wrap(array_values($items));
