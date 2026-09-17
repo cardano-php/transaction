@@ -18,6 +18,12 @@ use Cardano\Transaction\Exception\DecodeException;
  *
  * Shelley through Mary wrote three items. Alonzo inserted the boolean that says whether the scripts passed, making
  * four. Both lengths are still on mainnet and the decoder takes either.
+ *
+ * fromCbor() refuses a transaction it cannot write back out as the value it was handed. That is the same promise
+ * TransactionBody makes about the half that gets hashed, made again about the half that gets submitted, and it is
+ * made here rather than only in TransactionDecoder because this method is public and every route to a transaction
+ * hash passes through it: a caller decoding CBOR themselves and a transaction assembled from parts both arrive here
+ * and neither has been past the CBOR layer's own checks.
  */
 final class Transaction
 {
@@ -72,6 +78,25 @@ final class Transaction
     }
 
     public static function fromCbor(CborValue $object, string $context = 'transaction'): self
+    {
+        $transaction = self::read($object, $context);
+        $arrived = CborCodec::encode($object);
+        $rebuilt = $transaction->encode();
+
+        if ($rebuilt !== $arrived) {
+            throw new DecodeException(sprintf(
+                '%s: this transaction is written in a way this package cannot write back, so re-encoding it would '
+                .'change what was signed. It arrived as %d bytes and rebuilds as %d.',
+                $context,
+                strlen($arrived),
+                strlen($rebuilt)
+            ));
+        }
+
+        return $transaction;
+    }
+
+    private static function read(CborValue $object, string $context): self
     {
         [$form, $items] = SequenceForm::unwrap($object, $context, allowSetTag: false);
 

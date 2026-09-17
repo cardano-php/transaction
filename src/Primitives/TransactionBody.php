@@ -24,6 +24,11 @@ use Cardano\Transaction\Hash\Blake2b;
  * was given rather than a canonical arrangement of them. The fields this step owns are rebuilt from the model; the
  * ones it does not -- certificates, withdrawals, the Shelley update field and the Conway governance fields -- are
  * carried through as decoded, which is exactly as much as this step claims about them.
+ *
+ * hash() is taken over the rebuilt bytes rather than over a slice of the input, so the one thing this class has to
+ * promise is that the rebuild reproduces what it read. fromCbor() checks that and refuses what does not, because a
+ * hash that belongs to a different arrangement of the same fields is worse than no hash: a caller has signed,
+ * submitted or reported something other than what they were handed, and nothing downstream can tell.
  */
 final class TransactionBody
 {
@@ -111,6 +116,32 @@ final class TransactionBody
     ) {}
 
     public static function fromCbor(CborValue $object, string $context = 'body'): self
+    {
+        $body = self::read($object, $context);
+        $arrived = CborCodec::encode($object);
+        $rebuilt = $body->encode();
+
+        // The rebuild has to reach the bytes it was read from, because hash() is taken over the rebuild and the
+        // ledger hashed the bytes. Everything this class takes apart is written back at the head and in the framing
+        // it arrived in, so this holds for every encoding of every field. What it does not hold for is a map that
+        // writes one field number twice: the two entries are one field in the model, and a body that goes back out
+        // an entry shorter than it came in hashes to a transaction nobody sent. A repeated key is already refused
+        // when a body is read from bytes, because the CBOR layer refuses the map; a body handed in as a value has
+        // not been through that, and this is where it is caught.
+        if ($rebuilt !== $arrived) {
+            throw new DecodeException(sprintf(
+                '%s: this body is written in a way this package cannot write back, so its hash would belong to a '
+                .'different arrangement of the same fields. It arrived as %d bytes and rebuilds as %d.',
+                $context,
+                strlen($arrived),
+                strlen($rebuilt)
+            ));
+        }
+
+        return $body;
+    }
+
+    private static function read(CborValue $object, string $context): self
     {
         [$form, $fields, $keys] = MapForm::unwrapIntKeyed($object, $context, self::FIELDS);
 
