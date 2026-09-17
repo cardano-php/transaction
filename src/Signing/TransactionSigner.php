@@ -62,15 +62,26 @@ final class TransactionSigner
     }
 
     /**
-     * A signed transaction: the same body, the same auxiliary data, and a witness set carrying one witness per key.
+     * A signed transaction: the same body, the same auxiliary data, and a witness for each key added to the
+     * witnesses already there.
      *
-     * Everything already in the witness set other than the vkey witnesses is kept. A native script spend carries the
-     * script beside the signatures, and dropping it here would produce a transaction that is correctly signed and
-     * refused for having no witness for the script that guards the input.
+     * Everything already in the witness set is kept, and so is every signature on it that verifies against this
+     * body. A native script spend carries the script beside the signatures, and dropping it here would produce a
+     * transaction that is correctly signed and refused for having no witness for the script that guards the input.
+     * A signature another party already put on the transaction is no different: a two-of-two branch is signed by
+     * each party in turn, so replacing the set rather than adding to it hands the second signer a transaction the
+     * first one's signature has quietly left.
      *
-     * Duplicate keys are refused. Two witnesses from one key is not more signed than one; it is a hundred and one
-     * wasted bytes, a fee computed against a witness count that does not match the set, and on some node versions a
-     * refusal.
+     * The measuring witnesses a fee is settled against are the one thing that does not survive, and they identify
+     * themselves: they hold a signature of zeroes, which cannot verify. So the same rule both keeps a co-signer's
+     * work and swaps every measuring witness for the real one, and the signed transaction is still exactly the
+     * size the fee was computed for.
+     *
+     * Duplicate keys are refused, counting the witnesses that arrived as well as the keys given here. Two witnesses
+     * from one key is not more signed than one; it is a hundred and one wasted bytes, a fee computed against a
+     * witness count that does not match the set, and on some node versions a refusal. Signing twice with the same
+     * key is therefore an error rather than a silent no-op, because it is usually a sign that the caller believes a
+     * signature is missing when it is already there.
      */
     public static function sign(Transaction $transaction, SigningKey ...$keys): Transaction
     {
@@ -79,11 +90,38 @@ final class TransactionSigner
         }
 
         $seen = [];
+        $carried = [];
         $witnesses = [];
         $hash = $transaction->body->hash();
 
+        // A witness already on the transaction is kept when it verifies against this body, and dropped when it
+        // does not. That single rule covers both of the ways a witness set arrives here. Measuring witnesses hold
+        // a signature of zeroes precisely so that they cannot verify, so the fee settled against their size is
+        // still the size of the transaction that gets submitted. A signature from another party does verify, and
+        // it has to survive, because a two-of-two branch is signed by each party in turn. Anything that verifies
+        // against a different body cannot make this transaction valid whether it is kept or not, and keeping it
+        // would put the fee back out by a hundred and one bytes.
+        foreach ($transaction->witnessSet->vkeyWitnesses() as $witness) {
+            if (! $witness->verifies($hash)) {
+                continue;
+            }
+
+            $carried[$witness->vkeyHex()] = true;
+            $seen[$witness->vkeyHex()] = true;
+            $witnesses[] = $witness;
+        }
+
         foreach ($keys as $key) {
             $publicKey = $key->publicKeyHex();
+
+            if (isset($carried[$publicKey])) {
+                throw new SigningException(sprintf(
+                    'The key %s has already witnessed this transaction; a transaction carries one witness per key. '
+                    .'Signing again with a key whose witness is already there is usually a sign that the caller '
+                    .'believes a signature was lost.',
+                    $publicKey
+                ));
+            }
 
             if (isset($seen[$publicKey])) {
                 throw new SigningException(sprintf(
