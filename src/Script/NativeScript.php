@@ -399,9 +399,27 @@ final class NativeScript
      * that is the script's own model straight out of the bytes, with no intermediate tree twice as deep as the
      * script to build and release. Reading the same script through CborCodec reaches the same depth and gives back
      * the same bytes, which is what lets a transaction carry one of these in its witness set.
+     *
+     * Walking the bytes directly is also why the length of the input is checked here. CborCodec::MAX_INPUT_BYTES is
+     * the bound on how long a document this package will read at all, and the reason it exists is breadth rather
+     * than depth: a document of N bytes holds at most N items, and past some N the answer is the allocator giving up
+     * rather than a refusal, which is a fatal error a caller cannot catch. A script is a document of items in
+     * exactly the same way, so taking the bytes straight rather than through CborCodec would be taking them past
+     * that bound. The same number is used rather than a smaller one because the deepest script this package promises
+     * to read is by construction a little larger than what fits a transaction.
      */
     public static function fromCbor(string $bytes): self
     {
+        if (strlen($bytes) > CborCodec::MAX_INPUT_BYTES) {
+            throw new ScriptException(sprintf(
+                'The input is %d bytes and this decoder reads at most %d. A native script reaches the chain inside a '
+                .'transaction, and a transaction is at most %d bytes.',
+                strlen($bytes),
+                CborCodec::MAX_INPUT_BYTES,
+                self::MAX_TRANSACTION_BYTES
+            ));
+        }
+
         try {
             $script = self::readBytes($bytes);
         } catch (DecodeException $e) {

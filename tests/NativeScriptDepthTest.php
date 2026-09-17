@@ -472,6 +472,11 @@ class NativeScriptDepthTest extends TestCase
      * deciding. The million level case is three megabytes of input, and the point of it is that the refusal arrives
      * having built nothing, as quickly and as cheaply as the one that is a single level over.
      *
+     * Which limit names the refusal moves with the size of the input. A script deep enough to be past MAX_DEPTH and
+     * short enough to be worth reading is refused for its depth; one longer than CborCodec::MAX_INPUT_BYTES is
+     * refused for its length, before a byte of it is read. Both are refusals by name and the second is the cheaper
+     * of the two, which is the whole reason the length is looked at first.
+     *
      * @param  int  $depth  how deep the script nests
      */
     #[DataProvider('depthsPastTheLimit')]
@@ -488,7 +493,65 @@ class NativeScriptDepthTest extends TestCase
         }
 
         $this->assertInstanceOf(ScriptException::class, $thrown, $depth.' levels raised nothing at all.');
-        $this->assertStringContainsString((string) NativeScript::MAX_DEPTH, $thrown->getMessage());
+
+        $this->assertStringContainsString(
+            strlen($bytes) > CborCodec::MAX_INPUT_BYTES
+                ? (string) CborCodec::MAX_INPUT_BYTES
+                : (string) NativeScript::MAX_DEPTH,
+            $thrown->getMessage()
+        );
+    }
+
+    /**
+     * A script longer than the decoder reads is refused for its length, having allocated nothing for it.
+     *
+     * NativeScript::fromCbor takes raw bytes and walks them itself rather than going through CborCodec, which is
+     * what lets it read a script without building a CBOR tree twice as deep as the script. The bound CborCodec puts
+     * on the length of an input is there for breadth rather than depth: a document of N bytes holds at most N items,
+     * and past some N the answer is the allocator giving up, which is a fatal error rather than something a caller
+     * can catch. Taking the bytes straight rather than through CborCodec must not mean taking them past that.
+     */
+    public function test_a_script_longer_than_the_decoder_reads_is_refused_by_length(): void
+    {
+        $bytes = str_repeat("\x82\x01\x81", CborCodec::MAX_INPUT_BYTES)."\x82\x00\x58\x1c"
+            .(string) hex2bin(DeepScripts::keyHash());
+
+        $this->assertGreaterThan(CborCodec::MAX_INPUT_BYTES, strlen($bytes));
+
+        $thrown = null;
+
+        try {
+            NativeScript::fromCbor($bytes);
+        } catch (Throwable $e) {
+            $thrown = $e;
+        }
+
+        $this->assertInstanceOf(ScriptException::class, $thrown, 'An oversized script raised nothing at all.');
+        $this->assertStringContainsString((string) strlen($bytes), $thrown->getMessage());
+        $this->assertStringContainsString((string) CborCodec::MAX_INPUT_BYTES, $thrown->getMessage());
+    }
+
+    /**
+     * And a script right at the bound is read rather than refused, so the bound is not shadowing anything real.
+     *
+     * The deepest script this package promises to read is a little larger than what fits a transaction, which is why
+     * the bound is four times maxTxSize rather than exactly it. A case at the limit that came back refused would
+     * mean the bound had been set below what the package says it reads.
+     */
+    public function test_the_deepest_script_this_package_reads_is_well_inside_the_input_bound(): void
+    {
+        $deepest = 0;
+
+        foreach (DeepScripts::cases() as $case) {
+            if ($case['refused']) {
+                continue;
+            }
+
+            $deepest = max($deepest, $case['script_bytes']);
+        }
+
+        $this->assertGreaterThan(0, $deepest);
+        $this->assertLessThan(CborCodec::MAX_INPUT_BYTES, $deepest);
     }
 
     /**
