@@ -34,10 +34,17 @@ final class CborCodec
      * the chain has actually carried is a native script of 5,383 levels, and a script level costs two CBOR levels,
      * so that lands a little under eleven thousand.
      *
-     * The limit is here rather than at whatever depth PHP gives out at, and that is the whole point of it. A tree of
-     * objects is released by recursing into it, on whatever stack the process was given, so a structure read past
-     * what the process can free would take the process with it when it was released, with nothing thrown and nothing
-     * to catch. Stopping where the ledger stops is the deepest that can be both promised and survived.
+     * The limit is here rather than at whatever depth PHP gives out at, so that how deep this reads is a number that
+     * was chosen and a refusal that can be caught.
+     *
+     * What it does not do is make the whole of that depth free of the call stack. Reading and writing a tree do not
+     * recurse; releasing one does, inside the engine's own reference counting, where no PHP code runs and nothing
+     * can be caught. The cost is around 160 bytes of C stack a level on PHP 8.3 on 64-bit Linux: freeing a tree at
+     * MAX_DEPTH wants about 2.6 MB, and a transaction carrying a native script at NativeScript::MAX_DEPTH, which is
+     * 10,924 CBOR levels, wants about 1.8 MB. The usual 8 MB main thread stack covers both with room to spare, and a
+     * SAPI, container or thread configured below that does not: the process ends on SIGSEGV when the tree goes out
+     * of scope, with nothing thrown and nothing to catch. A caller running with a small stack should hold the
+     * decoder to a depth it has measured on its own build rather than to this one.
      */
     public const MAX_DEPTH = 16384;
 
