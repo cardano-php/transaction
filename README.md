@@ -32,14 +32,21 @@ on cardano-php/bech32, and on nothing else: the CBOR reading and writing is the 
 | `Cardano\Transaction\Cbor` | The CBOR layer. A decoder and an encoder that walk a structure on a stack of their own, and a value that remembers the head it arrived in. |
 | `Cardano\Transaction\Exception` | Everything thrown from here. |
 
-A transaction re-encodes itself from the model it decoded into, byte for byte, so the hash the model computes is a
-statement about the decoder rather than about the bytes it was handed. That is what the corpus under
-`tests/fixtures` checks, against transactions taken off mainnet and preprod.
+A transaction re-encodes itself from the model it decoded into, and one the model cannot write back out unchanged is
+refused rather than hashed. So a hash from this package is the blake2b-256 of the bytes that were handed in, or
+there is no answer.
 
 Every head is kept as it arrived, because CBOR writes the same value several ways and the ledger hashed the bytes it
 was handed. That covers the width of an integer, the width of a length or a count, whether a string or a container
 stated its length or ran to a break byte, and the tag on a set. A decoder that normalized any of it would hand back
 a transaction whose hash had moved under a transaction nobody edited.
+
+The transaction corpus under `tests/fixtures/cardano-tx` checks this. Thirteen mainnet transactions are committed
+as hex, each with the hash the chain returned it under, picked by shape out of a pool of 1616 that were fetched,
+decoded and classified. Twelve more are derived from those with one thing changed, and the manifest says what each
+one has to be refused for. The last was never on chain: a fee raised by one lovelace, so the body is one the decoder
+has never seen and the hash it gives has to be computed. `tests/fixtures/cardano-tx/README.md` says where they came
+from and how to refetch any of them.
 
 ## Building and signing
 
