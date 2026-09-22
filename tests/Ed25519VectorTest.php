@@ -20,9 +20,9 @@ use SodiumException;
  * was made by a key nobody here holds.
  *
  * The keys in these vectors are the RFC's own, printed in a public standards document since 2017 so that
- * implementations can be checked against each other. They are the only secret keys anywhere in this repository, they
- * are worthless, and they are read from a file rather than generated so that nothing here can quietly start checking
- * its own arithmetic against itself.
+ * implementations can be checked against each other. They are worthless, and they are read from a file rather than
+ * generated so that nothing here can quietly start checking its own arithmetic against itself. The only other secret
+ * keys in this repository are the two throwaway extended keys under tests/fixtures/cardano-signer.
  */
 class Ed25519VectorTest extends TestCase
 {

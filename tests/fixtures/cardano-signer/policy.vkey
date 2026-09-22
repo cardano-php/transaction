@@ -1,0 +1,5 @@
+{
+  "type": "ExtendedVerificationKeyShelley_ed25519_bip32",
+  "description": "Verification Key",
+  "cborHex": "58201a1d343754226bba79af54f110d1dea6e65fff3ce1e16b0933fa1c89430d2106"
+}

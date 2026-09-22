@@ -1,0 +1,128 @@
+{
+    "source": {
+        "generated_by": "generate.py",
+        "note": "Computed by generate.py from the curve equation with Python integers and hashlib, sharing no code with this package. The keys are test values derived from fixed labels and have never held funds."
+    },
+    "vectors": [
+        {
+            "shape": "top bit set",
+            "kL": "28d0fa9ec9a647b80827763edddb9deb523705cc999e7ffb7648f88c3027c5f3",
+            "kR": "66865ac40d89745a2851c12d26d77ad0b4df0a5b73a7bd8effb3d1cd5415875f",
+            "public_key": "bea2d7b3fb3560b6b19ab55a99cd26375cf321c7c1041f3d514c008eac3d19b0",
+            "message": "",
+            "signature": "c40a04735e91cee8d32e205f473fe59f61ee0e60b54cd11ef61e30487d7e64b767c1bf63ffb5e02636a65cece20eeb0c76fd29f8c64946c951ef459e4993f701"
+        },
+        {
+            "shape": "top bit set",
+            "kL": "7095fea760978c016d345bdec0dfe159772321cd6394f8abc32c851973e3c1d3",
+            "kR": "d7368e33663a9e6ce2bfaf52dd7890fe2183147ce437b436533520ebf4c7ca5d",
+            "public_key": "4cd6aef8af548ca8696c6bfbd049ed9d8c26cdf9073b527a0dbc58caf7e28738",
+            "message": "72",
+            "signature": "749f6e4bfce2782e3438bd67bb7401a32088f3dce79b780bcce4f08b3c12fb1d4430dc2f1a513a54cd734144a3ccb25d2823c0d7883894ed8df5b3bcfcc5d50b"
+        },
+        {
+            "shape": "top bit set",
+            "kL": "e06cc528bb271d9596c4a45ed9af0a779a8eed5a09ac9586ea5c0a8f3e6e95a2",
+            "kR": "88661a0002e188288ee3a76bb8bf4c49f7d5de735c3ea83698309fd6214bc1e0",
+            "public_key": "06e3a7bcaea46109ea4d204747849935ec25b030438895c50b3b7e5a09abe806",
+            "message": "0000000000000000000000000000000000000000000000000000000000000000",
+            "signature": "ac2b30493a5f62515f914f7af878aa842a238cb305cd6386056891706eb126ee6311f8b5254197ed9033e3e3609789f4f1b71e874f72c75bb1bbbb7ea2646900"
+        },
+        {
+            "shape": "bit 254 clear",
+            "kL": "2025c6f3efbc75779f8b672f391e862c3f052de530363a5b3b9a97296ac71123",
+            "kR": "1cfb0df14e795d08b0306b141a1ca62ec385052445915eb5ecd960599ec8115e",
+            "public_key": "2d0971b12766a357b5ad0f6f53066257054c5d27f48acdf39769b824fe75ff54",
+            "message": "95797efb96c46bc63e90dec21f63936621b34e9f72568832e28f784740cf42d4",
+            "signature": "86e682e78017ff936ad5dc685c0e5b4e9fdacf8aa8872bec9b2c88abf6bfdfc44820a469f2b0b1f97e646f83d29a54132874d2785500152d29e470349464d70c"
+        },
+        {
+            "shape": "bit 254 clear",
+            "kL": "d8fb722c4a6a409715c5dcc82d2597f4602cd94b8519b6354adf52205a67112c",
+            "kR": "9b87132ff1929a1c45623f787b393f0c29cfeec52e034053f812097ac479a475",
+            "public_key": "4f0bf1602421e441fd3c86fa46cf7d5f3dfbe844043d18f5d894ce6a71338c6a",
+            "message": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+            "signature": "f0ae5468c0f5ae7692334c683c8a6ce319fc4b599c7c7c702f08867807081cd5d96fd3e423f408d8fc69d17b4b50938c1328527dc58a52bc10ead24ccc3ed50f"
+        },
+        {
+            "shape": "bit 254 clear",
+            "kL": "e89fc0322bb3cb88a88a4670b8fd5f0ab477ac4751452b865d67c494cd8af214",
+            "kR": "bceef03786c173eb2a83e8b4832e842084763a17c74dfc0c69c24d5124a974e6",
+            "public_key": "1bf95296556e75d950fdf08881fae6b689947433e19736bb832a9818a164aeb4",
+            "message": "",
+            "signature": "33c81236179c110ea1929ab60f8d87dccb930a4b15e77a69fc088223c736de5b4f21cc2fe003892bdba149deb756160497fcc6681da90c8efb7b5095cd829006"
+        },
+        {
+            "shape": "root clamped",
+            "kL": "d8fe81cc58867124b836f117732fa7af5c4eb75af3178a242788bd338e3bf94a",
+            "kR": "0a9a618148a66a10cf2c21ffc429fd3fff0dd99e65453d84a58b5c6495af2099",
+            "public_key": "fcc2ad676ed84b87b4b5488027ba1beb8910e00cc354e6838abda87f44040850",
+            "message": "72",
+            "signature": "0aceffb477b507e494194842280b6b129ced6d50654861158b56204d36bdf17744d5f54ae338262be2cd9109999789687d15bbf5a46652a6bca5b39fcdceea01"
+        },
+        {
+            "shape": "root clamped",
+            "kL": "9813b7adb8cd2df15c5435e07a336f321949f8256190672d389e0b58af25bc4f",
+            "kR": "501695975ee985d4343aa7864df09faa156622ab11b32a597344185f6b78ba30",
+            "public_key": "9d9fa91a6f0e95cfb8f60a7669298480665815ca9fe6dcae61e879de877abd7d",
+            "message": "0000000000000000000000000000000000000000000000000000000000000000",
+            "signature": "a1206582d281f06a9bf64669e1daa8df5e898df6c9885a9a7efd9d08adde8804b2bed8b3812a92ccc42cc30f28ef326250ee81801b07ce535322f46ff4db070e"
+        },
+        {
+            "shape": "root clamped",
+            "kL": "38658656ee3346382ff12cb678facf936c21be0886821aae90c3279e4b794e48",
+            "kR": "e9ce4bdb71570ebd9bbb12fa1a35ff94203508bfaa03103e29611faec7e39bac",
+            "public_key": "ef6381cec629ec9f86e58ea82831ab3a684d39a4007da90b0903878c6d6feadc",
+            "message": "95797efb96c46bc63e90dec21f63936621b34e9f72568832e28f784740cf42d4",
+            "signature": "23ac74667e512102da1a306594b60ed7d488af6e3c7ea59c3faca24147c2df8772758df20595d7b668ed86407b4066c88e144bd21c5b59a6fec1075f63b34803"
+        },
+        {
+            "shape": "below L",
+            "kL": "60020b4becf5e4eb091be844d003e88d3b085f50c42b944e508c54633d478e04",
+            "kR": "c6a68a12112866ffca437a8287c59633df93394095999a462909995fecd4825f",
+            "public_key": "06f082dac0337d47780d599331a31d425a63642824ddf365f052601a883405fa",
+            "message": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+            "signature": "c568a8764abfb7a894bc935460349616c885342bd4169f7a05d2e30ce74bbe14605b3e80986d18f262b63a408f143a7841d6d0b44eeab1dcd52bfcf93c96000e"
+        },
+        {
+            "shape": "below L",
+            "kL": "d05ce786c80fb2a878fee137e1e4226f4f131e8ab1724cfeef118b8ef4df070e",
+            "kR": "e3ad6073f019e1b39f8930fadf87e5b4c53af3e83328871fb81a6833affebf96",
+            "public_key": "a2e78316599fb8893608a7c31a952e17b463a9f5818d18a20bcef4064b530082",
+            "message": "",
+            "signature": "16136f2c8ee3c74d8f8935265bd95dde8b96bcf6154b003110049d13dbc77bab383bdbdecf7a2baa7f336479f4f81d6251bc2789596368cd1d0e3c41c06b9107"
+        },
+        {
+            "shape": "below L",
+            "kL": "d8f272fb7934d9d69b37f61c9f69dc99e5d6e063b33e808f39dc2f8360f8f107",
+            "kR": "b9b5b7958bc37f71b84e1b74020a1b0d6b51ca589b07435571017fd7237d2221",
+            "public_key": "8c2eb9a07cbf7e3a6a449f923dabbdb694675f842e719fe2626baa16b511a8f2",
+            "message": "72",
+            "signature": "7a7eb6289ca95a195c92d998fae1e4baab63c0221723d668ddd964816cddf22fe7d1b9cfc226e22a2023e7aa1a793f4c97a34a77f0ab4ae050cc067b9aa6b803"
+        },
+        {
+            "shape": "any multiple of eight",
+            "kL": "e86e3a5ef84c0c97e5a12a257adb8c05198b229af824b9d9973bb9a7131b3d06",
+            "kR": "7d3ab8279633501716dcfa77ec792eba880132d49e3b2a5a37ab539be838aa4f",
+            "public_key": "fc5313ebf1c0d4f8fd6e489d8cabfa935ea4c2ad91631c68f169e4ab2910408d",
+            "message": "0000000000000000000000000000000000000000000000000000000000000000",
+            "signature": "ac85b3bd32ddd3e1d5189a1b7e32cb3e709d3776deb38eb102fbbca07b514870982659423b606ecc699e44def2756d67c77bd804cb45e411e984afb629170d01"
+        },
+        {
+            "shape": "any multiple of eight",
+            "kL": "08c86b067aaed1928a511211588675de6d0f39f7c696c6bd845c7610507e2127",
+            "kR": "465dfdcf720e0c2e169531090b292af498d6d36c1118ea85fe3470635def5973",
+            "public_key": "75bb9e98d940a3141643e1298dd4e7d721eb21d5b89128f233ee3a974d89900d",
+            "message": "95797efb96c46bc63e90dec21f63936621b34e9f72568832e28f784740cf42d4",
+            "signature": "046522532fe5a70539fb4b886792c45b374d97bc4d27320ce796afde542989613610ee5be3f533d68aaa48b3069c28964afda7a06723118fc01b438f80fb8202"
+        },
+        {
+            "shape": "any multiple of eight",
+            "kL": "50e96cc822cd0b3a210bc802a255786f348619eba0ae8396582b7d0daffa23ff",
+            "kR": "4e6eec37248732c09381b3dca3a2b7354cedef010fed04984023b70ce657a4ba",
+            "public_key": "8f634d0d889fe5c814a8fecf83632bb7f97619c48880f8152bd95ead4ae13f66",
+            "message": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+            "signature": "37d10438dbf9a842de7bb59307e3f3bb0bf8e5197d23f0e4a7b78dc48edb0c2300dba7063b0835d47d54cbf766bc9e023c5601a3f242a2b2fdd7c9cf16a6fa0b"
+        }
+    ]
+}

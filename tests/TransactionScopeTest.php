@@ -49,21 +49,29 @@ class TransactionScopeTest extends TestCase
     ];
 
     /**
-     * The only cryptographic calls the package is allowed to make, and the one file each may appear in.
+     * The only cryptographic calls the package is allowed to make, and the files each may appear in.
      *
      * The file is half the assertion. Signing spread across the package would mean key material spread across it too,
      * and the whole basis for saying a key lives for the length of one call is that there is exactly one place that
      * holds one.
      */
     private const IN_SCOPE = [
-        'sodium_crypto_generichash' => 'src/Hash/Blake2b.php',
-        'sodium_crypto_sign_detached' => 'src/Signing/SigningKey.php',
-        'sodium_crypto_sign_keypair' => 'src/Signing/SigningKey.php',
-        'sodium_crypto_sign_publickey' => 'src/Signing/SigningKey.php',
-        'sodium_crypto_sign_secretkey' => 'src/Signing/SigningKey.php',
-        'sodium_crypto_sign_seed_keypair' => 'src/Signing/SigningKey.php',
-        'sodium_crypto_sign_verify_detached' => 'src/Primitives/VkeyWitness.php',
-        'sodium_memzero' => 'src/Signing/SigningKey.php',
+        'sodium_crypto_core_ristretto255_scalar_add' => ['src/Signing/SigningKey.php'],
+        'sodium_crypto_core_ristretto255_scalar_mul' => ['src/Signing/SigningKey.php'],
+        'sodium_crypto_core_ristretto255_scalar_reduce' => ['src/Signing/SigningKey.php'],
+        'sodium_crypto_generichash' => ['src/Hash/Blake2b.php'],
+        'sodium_crypto_scalarmult_ristretto255_base' => ['src/Signing/SigningKey.php'],
+        'sodium_crypto_sign_detached' => ['src/Signing/SigningKey.php'],
+        // Asked only whether a public point is in the prime-order subgroup; the Curve25519 key it returns is dropped.
+        'sodium_crypto_sign_ed25519_pk_to_curve25519' => ['src/Signing/SigningKey.php'],
+        'sodium_crypto_sign_keypair' => ['src/Signing/SigningKey.php'],
+        'sodium_crypto_sign_publickey' => ['src/Signing/SigningKey.php'],
+        'sodium_crypto_sign_secretkey' => ['src/Signing/SigningKey.php'],
+        'sodium_crypto_sign_seed_keypair' => ['src/Signing/SigningKey.php'],
+        // An extended signature is checked before it is handed out, which is how its R is chosen.
+        'sodium_crypto_sign_verify_detached' => ['src/Primitives/VkeyWitness.php', 'src/Signing/SigningKey.php'],
+        'sodium_memcmp' => ['src/Signing/SigningKey.php'],
+        'sodium_memzero' => ['src/Signing/SigningKey.php'],
     ];
 
     /**
@@ -155,8 +163,11 @@ class TransactionScopeTest extends TestCase
 
         $this->assertSame(array_keys(self::IN_SCOPE), array_keys($calls));
 
-        foreach (self::IN_SCOPE as $call => $file) {
-            $this->assertSame([$file], array_unique($calls[$call]), $call.' has spread beyond '.$file);
+        foreach (self::IN_SCOPE as $call => $files) {
+            $found = array_values(array_unique($calls[$call]));
+            sort($found);
+
+            $this->assertSame($files, $found, $call.' has spread beyond '.implode(', ', $files));
         }
     }
 
