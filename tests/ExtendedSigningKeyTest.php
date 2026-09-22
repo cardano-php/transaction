@@ -244,6 +244,44 @@ class ExtendedSigningKeyTest extends TestCase
     }
 
     /**
+     * @return array<string, array{array<string, string>}>
+     */
+    public static function referenceVectors(): array
+    {
+        $cases = [];
+
+        foreach (JsonFixture::read('ed25519-bip32/vectors.json')['vectors'] as $i => $vector) {
+            $cases[$vector['shape'].' '.$i] = [$vector];
+        }
+
+        return $cases;
+    }
+
+    /**
+     * kL values no wallet key or libsodium seed produces, signed by an independent reference: at or above 2^255,
+     * below 2^254, below the group order, and any multiple of eight. The scalar is reduced before libsodium sees it,
+     * so each has to give the reference's key and signature byte for byte.
+     */
+    #[DataProvider('referenceVectors')]
+    public function test_unusual_kl_values_sign_as_the_reference_does(array $vector): void
+    {
+        $key = SigningKey::fromExtended(
+            (string) hex2bin($vector['kL']),
+            (string) hex2bin($vector['kR']),
+            (string) hex2bin($vector['public_key'])
+        );
+
+        $this->assertSame($vector['public_key'], $key->publicKeyHex());
+        $this->assertSame(
+            $vector['signature'],
+            bin2hex($key->sign($vector['message'] === '' ? '' : (string) hex2bin($vector['message']))),
+            $vector['shape'].': not the reference signature.'
+        );
+
+        $key->discard();
+    }
+
+    /**
      * A signature refuses every neighbour: another message, a flipped bit in either half, another key.
      */
     #[DataProvider('keys')]
@@ -298,6 +336,40 @@ class ExtendedSigningKeyTest extends TestCase
         $this->expectExceptionMessage('is not an extended signing key');
 
         SigningKey::fromExtendedTextEnvelope((string) json_encode($envelope));
+    }
+
+    /**
+     * The type of a file that is not an extended key is quoted in the refusal, cut to 64 characters, so a file
+     * whose type field holds something long, a pasted secret included, is not repeated in full into a log.
+     */
+    public function test_a_long_type_is_cut_short_in_the_refusal(): void
+    {
+        $envelope = json_decode(CardanoSignerVectors::file('payment.skey'), true);
+        $envelope['type'] = str_repeat('a', 64).str_repeat('b', 200);
+
+        try {
+            SigningKey::fromExtendedTextEnvelope((string) json_encode($envelope));
+            $this->fail('A key file of an unknown type was accepted.');
+        } catch (SigningException $e) {
+            $this->assertStringContainsString(str_repeat('a', 64), $e->getMessage());
+            $this->assertStringNotContainsString('b', str_replace('bip32', '', $e->getMessage()));
+        }
+    }
+
+    /**
+     * The signature is verified before it is returned, so a fault between computing S and returning it is a refusal
+     * rather than a published signature. Signing with the secret of one key under the verification key of another is
+     * the fault, reached through reflection because nothing public can produce it.
+     */
+    public function test_a_signature_that_does_not_verify_is_never_returned(): void
+    {
+        [$kL, $kR] = self::halves('payment');
+        $method = new \ReflectionMethod(SigningKey::class, 'signExtended');
+
+        $this->expectException(SigningException::class);
+        $this->expectExceptionMessage('did not verify');
+
+        $method->invoke(null, str_repeat("\x42", 32), $kL.$kR, CardanoSignerVectors::verificationKey('policy'));
     }
 
     /**

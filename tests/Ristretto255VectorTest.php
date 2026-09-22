@@ -55,9 +55,9 @@ class Ristretto255VectorTest extends TestCase
     #[DataProvider('multiples')]
     public function test_each_multiple_of_the_generator_decodes_to_that_multiple(int $k, string $encoding): void
     {
-        $expected = bin2hex(Edwards25519::multiplyBase($k));
+        $expected = bin2hex(EdwardsReference::multiplyBase($k));
 
-        $this->assertSame($expected, bin2hex(Edwards25519::primeOrderPoint((string) hex2bin($encoding))));
+        $this->assertSame($expected, bin2hex(EdwardsReference::primeOrderPoint((string) hex2bin($encoding))));
         $this->assertContains($expected, array_map('bin2hex', Edwards25519::candidates((string) hex2bin($encoding))));
     }
 
@@ -86,11 +86,11 @@ class Ristretto255VectorTest extends TestCase
     {
         $this->assertSame(
             '5866666666666666666666666666666666666666666666666666666666666666',
-            bin2hex(Edwards25519::multiplyBase(1))
+            bin2hex(EdwardsReference::multiplyBase(1))
         );
         $this->assertSame(
             '0100000000000000000000000000000000000000000000000000000000000000',
-            bin2hex(Edwards25519::multiplyBase(0))
+            bin2hex(EdwardsReference::multiplyBase(0))
         );
     }
 

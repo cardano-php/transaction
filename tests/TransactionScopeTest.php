@@ -62,12 +62,15 @@ class TransactionScopeTest extends TestCase
         'sodium_crypto_generichash' => ['src/Hash/Blake2b.php'],
         'sodium_crypto_scalarmult_ristretto255_base' => ['src/Signing/SigningKey.php'],
         'sodium_crypto_sign_detached' => ['src/Signing/SigningKey.php'],
+        // Asked only whether a public point is in the prime-order subgroup; the Curve25519 key it returns is dropped.
+        'sodium_crypto_sign_ed25519_pk_to_curve25519' => ['src/Signing/SigningKey.php'],
         'sodium_crypto_sign_keypair' => ['src/Signing/SigningKey.php'],
         'sodium_crypto_sign_publickey' => ['src/Signing/SigningKey.php'],
         'sodium_crypto_sign_secretkey' => ['src/Signing/SigningKey.php'],
         'sodium_crypto_sign_seed_keypair' => ['src/Signing/SigningKey.php'],
         // An extended signature is checked before it is handed out, which is how its R is chosen.
         'sodium_crypto_sign_verify_detached' => ['src/Primitives/VkeyWitness.php', 'src/Signing/SigningKey.php'],
+        'sodium_memcmp' => ['src/Signing/SigningKey.php'],
         'sodium_memzero' => ['src/Signing/SigningKey.php'],
     ];
 

@@ -32,12 +32,11 @@ use SensitiveParameter;
  * Libsodium signs with a seed key directly. For an extended key it has every piece but one: PHP's sodium extension
  * exposes no base point multiplication that leaves a scalar unclamped, and neither kL nor r may be clamped. The
  * ristretto255 functions fill the gap. Their base point multiplication does not clamp, and their scalar arithmetic
- * works modulo the same L, so every operation on kL, kR and r runs inside libsodium. What comes back is R in its
- * ristretto255 encoding, which stands for four Edwards points differing by a point of small order.
- * Edwards25519::candidates() lists the four, and the one kept is the one whose signature verifies, which is the
- * point r times the base point and no other. The verification key kL times the base point comes back the same
- * way and is settled by Edwards25519::primeOrderPoint(). Those two conversions are the only arithmetic done in PHP,
- * and they touch R and the verification key alone, both of which are published anyway.
+ * works modulo the same L, so every operation on kL, kR and r runs inside libsodium. What comes back is a point in
+ * its ristretto255 encoding, which stands for four Edwards points differing by a point of order dividing four.
+ * Edwards25519::candidates() lists the four, and primeOrderMember() keeps the one libsodium accepts as a member of
+ * the prime-order subgroup, which is the point itself and no other. Both steps see only the point, never a scalar:
+ * the point is R, which the signature publishes, or the verification key, which every witness publishes.
  *
  * **Nothing here persists a key.** There is no path from an instance of this class to a file, a column or a log
  * line, and at this point in the build there is nothing in the application that would call it: custody arrives
@@ -164,8 +163,8 @@ final class SigningKey
      * can spend from. When one is supplied, as the key file always supplies one, it must be the key kL computes, so
      * a file whose halves have been damaged or mismatched is refused here rather than at a node.
      *
-     * Computing it costs one scalar multiplication in PHP on a public point, about 190 milliseconds without GMP, once
-     * per key. Each signature afterwards costs about 20 milliseconds, most of it one modular exponentiation.
+     * Computing it costs about as much as one signature: roughly 20 milliseconds without GMP, most of it the one
+     * modular exponentiation in the ristretto255 decode.
      */
     public static function fromExtended(
         #[SensitiveParameter] string $kL,
@@ -202,15 +201,17 @@ final class SigningKey
             throw new SigningException('This is not an extended key: kL must be a multiple of eight.');
         }
 
-        $scalar = sodium_crypto_core_ristretto255_scalar_reduce(str_pad($kL, 64, "\0"));
+        $padded = str_pad($kL, 64, "\0");
+        $scalar = sodium_crypto_core_ristretto255_scalar_reduce($padded);
+        sodium_memzero($padded);
 
-        if ($scalar === str_repeat("\0", 32)) {
+        if (sodium_memcmp($scalar, str_repeat("\0", 32)) === 0) {
             sodium_memzero($scalar);
 
             throw new SigningException('This is not an extended key: kL is a multiple of the group order.');
         }
 
-        $derived = Edwards25519::primeOrderPoint(sodium_crypto_scalarmult_ristretto255_base($scalar));
+        $derived = self::primeOrderMember(sodium_crypto_scalarmult_ristretto255_base($scalar));
         sodium_memzero($scalar);
 
         if ($publicKey !== null && ! hash_equals($derived, $publicKey)) {
@@ -250,7 +251,7 @@ final class SigningKey
         if (! in_array($envelope['type'], self::EXTENDED_ENVELOPE_TYPES, true)) {
             throw new SigningException(sprintf(
                 'A key file of type %s is not an extended signing key; expected %s.',
-                json_encode($envelope['type']),
+                json_encode(substr($envelope['type'], 0, 64), JSON_INVALID_UTF8_SUBSTITUTE | JSON_UNESCAPED_SLASHES),
                 implode(' or ', self::EXTENDED_ENVELOPE_TYPES)
             ));
         }
@@ -267,13 +268,19 @@ final class SigningKey
             ));
         }
 
-        $bytes = (string) hex2bin(substr($cborHex, 4));
+        $hex = substr($cborHex, 4);
         sodium_memzero($cborHex);
+        $bytes = (string) hex2bin($hex);
+        sodium_memzero($hex);
+        $kL = substr($bytes, 0, 32);
+        $kR = substr($bytes, 32, 32);
 
         try {
-            return self::fromExtended(substr($bytes, 0, 32), substr($bytes, 32, 32), substr($bytes, 64, 32));
+            return self::fromExtended($kL, $kR, substr($bytes, 64, 32));
         } finally {
             sodium_memzero($bytes);
+            sodium_memzero($kL);
+            sodium_memzero($kR);
         }
     }
 
@@ -317,45 +324,89 @@ final class SigningKey
     }
 
     /**
-     * The extended signature, computed with the reference nonce and returned only once it verifies.
+     * The extended signature, computed with the reference nonce, checked before it is returned.
      *
-     * Of the four points the ristretto255 encoding of R stands for, exactly one makes the signature verify: a
-     * candidate R + T with T of small order would need S B = R + T + k A, and S B is R + k A. So the check that
-     * chooses R is also the check that the signature is right, and a signature that nothing verifies is never handed
-     * out. The three rejected S values are zeroed with everything else, because any two S values for the same r give
-     * kL away.
+     * R is chosen from public data alone, before any scalar that depends on kL exists: primeOrderMember() picks the
+     * one candidate in the prime-order subgroup, which is r times the base point. S is then computed once. Computing
+     * an S for each candidate and keeping the one that verifies would give the same signature, but it would hand
+     * each rejected S to libsodium's verifier, whose double-scalar multiplication does not run in constant time,
+     * and any one of those alongside the published S gives kL away. The single verification that remains checks the
+     * value that is about to be published anyway, so a fault in the arithmetic is refused rather than signed.
+     *
+     * Every intermediate this method holds in a PHP string is zeroed before it returns: the padded kL, kR, the hash
+     * input and output, the nonce, the product of the challenge and kL, and S. Two copies are out of its reach.
+     * hash() keeps its SHA-512 state in memory of its own and frees it without zeroing, and PHP may have copied any of
+     * these strings on the way through without saying so.
      */
     private static function signExtended(string $message, #[SensitiveParameter] string $secretKey, string $publicKey): string
     {
-        $scalar = sodium_crypto_core_ristretto255_scalar_reduce(str_pad(substr($secretKey, 0, 32), 64, "\0"));
-        $nonceHash = hash('sha512', substr($secretKey, 32, 32).$message, true);
+        $kL = substr($secretKey, 0, 32);
+        $padded = str_pad($kL, 64, "\0");
+        $scalar = sodium_crypto_core_ristretto255_scalar_reduce($padded);
+        sodium_memzero($padded);
+        sodium_memzero($kL);
+
+        $nonceInput = substr($secretKey, 32, 32).$message;
+        $nonceHash = hash('sha512', $nonceInput, true);
+        sodium_memzero($nonceInput);
         $nonce = sodium_crypto_core_ristretto255_scalar_reduce($nonceHash);
         sodium_memzero($nonceHash);
 
         try {
-            foreach (Edwards25519::candidates(sodium_crypto_scalarmult_ristretto255_base($nonce)) as $commitment) {
-                $challenge = sodium_crypto_core_ristretto255_scalar_reduce(
-                    hash('sha512', $commitment.$publicKey.$message, true)
-                );
-                $response = sodium_crypto_core_ristretto255_scalar_add(
-                    $nonce,
-                    sodium_crypto_core_ristretto255_scalar_mul($challenge, $scalar)
-                );
-                $signature = $commitment.$response;
-                sodium_memzero($response);
-
-                if (sodium_crypto_sign_verify_detached($signature, $message, $publicKey)) {
-                    return $signature;
-                }
-
-                sodium_memzero($signature);
-            }
+            $commitment = self::primeOrderMember(sodium_crypto_scalarmult_ristretto255_base($nonce));
+            $challenge = sodium_crypto_core_ristretto255_scalar_reduce(
+                hash('sha512', $commitment.$publicKey.$message, true)
+            );
+            $product = sodium_crypto_core_ristretto255_scalar_mul($challenge, $scalar);
+            $response = sodium_crypto_core_ristretto255_scalar_add($nonce, $product);
+            sodium_memzero($product);
+            $signature = $commitment.$response;
+            sodium_memzero($response);
         } finally {
             sodium_memzero($scalar);
             sodium_memzero($nonce);
         }
 
-        throw new SigningException('No signature from this extended key verified; the key or the arithmetic is wrong.');
+        if (! sodium_crypto_sign_verify_detached($signature, $message, $publicKey)) {
+            sodium_memzero($signature);
+
+            throw new SigningException('A signature from this extended key did not verify; the key or the arithmetic is wrong.');
+        }
+
+        return $signature;
+    }
+
+    /**
+     * The one Edwards point a ristretto255 encoding stands for that lies in the prime-order subgroup.
+     *
+     * libsodium's sodium_crypto_sign_ed25519_pk_to_curve25519() refuses a point of small order and a point outside
+     * the prime-order subgroup, and has done since 1.0.18, the version the ristretto255 functions arrived in. Of the
+     * four candidates, which differ by a point of order dividing four, exactly one passes. More or fewer than one
+     * means the encoding did not come from libsodium's base point multiplication, and signing stops.
+     *
+     * Only public points come through here, and every candidate is tested whichever one passes.
+     */
+    private static function primeOrderMember(string $ristretto): string
+    {
+        $members = [];
+
+        foreach (Edwards25519::candidates($ristretto) as $candidate) {
+            try {
+                sodium_crypto_sign_ed25519_pk_to_curve25519($candidate);
+                $members[] = $candidate;
+            } catch (\SodiumException) {
+                // A candidate with a small-order component: the expected answer for three of the four.
+            }
+        }
+
+        if (count($members) !== 1) {
+            throw new SigningException(sprintf(
+                'Expected exactly one candidate in the prime-order subgroup, found %d.',
+                count($members)
+            ));
+        }
+
+        return $members[0];
     }
 
     /**
