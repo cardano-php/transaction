@@ -28,6 +28,7 @@ use Cardano\Transaction\Script\NativeScript;
 use Cardano\Transaction\Signing\SigningKey;
 use Cardano\Transaction\Signing\TransactionSigner;
 use CBOR\ByteStringObject;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -40,7 +41,8 @@ use PHPUnit\Framework\TestCase;
  * zeroes is what breaks the circle, and the assertions here are about that swap being exact: the same number of
  * witnesses, the same number of bytes, the same body, and therefore the same hash.
  *
- * Every key in this file is generated inside the test that uses it and discarded before that test returns.
+ * Every seed key in this file is generated inside the test that uses it. The extended keys are the throwaway fixtures
+ * under tests/fixtures/cardano-signer, which have never held funds.
  */
 class WitnessAssemblyTest extends TestCase
 {
@@ -159,16 +161,32 @@ class WitnessAssemblyTest extends TestCase
     }
 
     /**
+     * @return array<string, array{string, string}>
+     */
+    public static function signerPairs(): array
+    {
+        return [
+            'two seed keys' => ['seed', 'seed'],
+            'a seed key then an extended key' => ['seed', 'payment'],
+            'an extended key then a seed key' => ['policy', 'seed'],
+            'two extended keys' => ['payment', 'policy'],
+        ];
+    }
+
+    /**
      * Two parties signing in turn end up with both signatures on the transaction.
      *
      * This is the whole of what a multi-signature branch needs, and it is the case that replacing the witness set
      * rather than adding to it got wrong: the second signer handed back a transaction carrying only their own
-     * witness, which a node refuses, and nothing said a signature had been dropped.
+     * witness, which a node refuses, and nothing said a signature had been dropped. A seed key and an extended key
+     * witness the same way, so every pairing of the two is run: a policy held as a CIP-1855 key beside a payment key
+     * generated on its own is the ordinary shape of a mint.
      */
-    public function test_a_second_signer_does_not_drop_the_first_signature(): void
+    #[DataProvider('signerPairs')]
+    public function test_a_second_signer_does_not_drop_the_first_signature(string $firstKind, string $secondKind): void
     {
-        $first = SigningKey::generate();
-        $second = SigningKey::generate();
+        $first = self::keyOfKind($firstKind);
+        $second = self::keyOfKind($secondKind);
         $body = $this->body();
 
         $unsigned = Transaction::assemble($body, WitnessSet::of(WitnessPlan::forSignatures(2)->dummyWitnesses()));
@@ -192,6 +210,21 @@ class WitnessAssemblyTest extends TestCase
             'A witness on the twice-signed transaction does not verify against its body.'
         );
         $this->assertSame($unsigned->hashHex(), $signedTwice->hashHex(), 'Signing moved the transaction hash.');
+
+        foreach ($signedTwice->witnessSet->vkeyWitnesses() as $witness) {
+            $this->assertTrue($witness->verifies($body->hash()), 'A witness does not verify against the body hash.');
+        }
+
+        $first->discard();
+        $second->discard();
+    }
+
+    /**
+     * A freshly generated seed key, or one of the two throwaway extended keys under tests/fixtures/cardano-signer.
+     */
+    private static function keyOfKind(string $kind): SigningKey
+    {
+        return $kind === 'seed' ? SigningKey::generate() : CardanoSignerVectors::key($kind);
     }
 
     /**

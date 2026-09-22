@@ -1,0 +1,96 @@
+{
+  "source": {
+    "generated_by": "generate.sh",
+    "cardano_signer": "cardano-signer 1.32.0",
+    "cardano_cli": "cardano-cli 10.7.0.0 - linux-x86_64 - ghc-9.6",
+    "note": "Every value here was produced by cardano-signer or cardano-cli from mnemonic.txt. Nothing was produced by this package. The keys are test fixtures and have never held funds."
+  },
+  "transaction": {
+    "fixture": "../cardano-tx/chain/plain-ada-payment.hex",
+    "body_hash": "917b34247b18b94ed80afba9aec55750a78de52bfc8e4ee4d8f53f549041a5ad"
+  },
+  "keys": {
+    "payment": {
+      "derivation_path": "1852H/1815H/0H/0/0",
+      "skey_file": "payment.skey",
+      "vkey_file": "payment.vkey",
+      "public_key": "90f53ded6aa85eda355d892b1d9b4a54aaa7a6f2050f2f6cc75e62810527a0fc",
+      "key_hash": "26a042bf8357c6e8fcc9cbf3b7188c1610db323f50d5e0d769ad1641",
+      "enterprise_address": "addr1vyn2qs4lsdtud68ue89l8dcc3stppkej8agdtcxhdxk3vsg9249g7",
+      "transaction_witness": "820082582090f53ded6aa85eda355d892b1d9b4a54aaa7a6f2050f2f6cc75e62810527a0fc5840d70974782a14687c0ce7edc6667d723e3cbf3efa17d8e4d670507cd6979a0d73df9f64e896e518e98b30b2c5bbef6097d69d9c93b76e9d1a72ae5da3eb4a530f",
+      "signatures": [
+        {
+          "message": "72",
+          "signature": "954b8b47a61770dd0a1819811e278f15bf0f033a1d07c0853cf467f68c9cd1d6a16be4601477bd4cbe3a9de9e45c71f62f4201f085f9b3e22638ebba69ff0306",
+          "cardano_signer_verify": true
+        },
+        {
+          "message": "0000000000000000000000000000000000000000000000000000000000000000",
+          "signature": "9dda2dec3951ba14f8e58ec2ccada0c438baee0dfdaff52ff9395ad90469d951ce9c91d11d492a360e1fd7fe5ebd4eb639111a543b348d619bdacf0a36db4906",
+          "cardano_signer_verify": true
+        },
+        {
+          "message": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "signature": "02d486063d182155928ad79e83c98755f58b19548fd9496cc9057fb085636ad5651dbbd4ab24791a23667c4e2da2ba7497c1493694cfc80f3f6427c093c44c0c",
+          "cardano_signer_verify": true
+        },
+        {
+          "message": "917b34247b18b94ed80afba9aec55750a78de52bfc8e4ee4d8f53f549041a5ad",
+          "signature": "d70974782a14687c0ce7edc6667d723e3cbf3efa17d8e4d670507cd6979a0d73df9f64e896e518e98b30b2c5bbef6097d69d9c93b76e9d1a72ae5da3eb4a530f",
+          "cardano_signer_verify": true
+        },
+        {
+          "message": "546573742066697874757265206f6e6c792e2054686973206b657920686173206e657665722068656c642066756e64732e",
+          "signature": "991b7cb23d2684c8e0822c6503ef61d6b570361af8ece5c5b95beaf0ff7fe0feb0389b34e1b072d93836d363ce54cb9ed2ce46e422f791b02455ee3a5132cd05",
+          "cardano_signer_verify": true
+        },
+        {
+          "message": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+          "signature": "cc8750fc82155d3a6c85025690f8f61f8d54fd05f04570c44031afb7558bcac3d6fdccaf3e6a8a7f4974cf6e56e848f89563162375a0546f5390f00ea85ef109",
+          "cardano_signer_verify": true
+        }
+      ]
+    },
+    "policy": {
+      "derivation_path": "1855H/1815H/0H",
+      "skey_file": "policy.skey",
+      "vkey_file": "policy.vkey",
+      "public_key": "1a1d343754226bba79af54f110d1dea6e65fff3ce1e16b0933fa1c89430d2106",
+      "key_hash": "524a1afb7831b8ce9ae86546bbedeb09af06d58b9f3db889045890af",
+      "enterprise_address": "addr1v9fy5xhm0qcm3n56apj5dwldavy67pk43w0nmwyfq3vfptcfvphxm",
+      "transaction_witness": "82008258201a1d343754226bba79af54f110d1dea6e65fff3ce1e16b0933fa1c89430d21065840846915c23f7ee3532f1a794a484b4ec17c24f2e385931203e1d2e0b98579b7354084d96d95aa8790f0d81ea02bf5bfae0ca29e1e86ff6575235c319a876e150f",
+      "signatures": [
+        {
+          "message": "72",
+          "signature": "0bcc5973b1001eb2bcbc389433d6ef81befb4618e8df1f9f89656fe89fa6f4857dcc337ffce4c4e62c42cf2136899c777660ee35b5f5aa33ba4454b4960d1b09",
+          "cardano_signer_verify": true
+        },
+        {
+          "message": "0000000000000000000000000000000000000000000000000000000000000000",
+          "signature": "2442049085ed3a950097fc299423483b42575ce234f384682ac8f6f1da3227cbda5ace0975ed64b13c5a31d4c785229738014929fb5f38379a84ad98cad7e20a",
+          "cardano_signer_verify": true
+        },
+        {
+          "message": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "signature": "b33bb105d82724cc96c11c0d7fdd9b786202847938a0f8f22001bcc8ba88e4cf001c2bd1215c92cdff70b6435157976d002dc9b1b0e92946163fa15b8f3a6505",
+          "cardano_signer_verify": true
+        },
+        {
+          "message": "917b34247b18b94ed80afba9aec55750a78de52bfc8e4ee4d8f53f549041a5ad",
+          "signature": "846915c23f7ee3532f1a794a484b4ec17c24f2e385931203e1d2e0b98579b7354084d96d95aa8790f0d81ea02bf5bfae0ca29e1e86ff6575235c319a876e150f",
+          "cardano_signer_verify": true
+        },
+        {
+          "message": "546573742066697874757265206f6e6c792e2054686973206b657920686173206e657665722068656c642066756e64732e",
+          "signature": "9a668f95466f069de252d587acbac21e88e7b8a1b04e6a170d6f4a2a5e09d611c285120f690cb74013532086227f0a0c199337e086d89fe2925c20e7503b2106",
+          "cardano_signer_verify": true
+        },
+        {
+          "message": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+          "signature": "07f0282a30f1dc4b2b972b11f187d6ab5199e9cbe30ac5f00d9729def356e833394fd47f62409aaf77bfcbde080a7f5bae17fa39c59cd53c5c9d67610b437905",
+          "cardano_signer_verify": true
+        }
+      ]
+    }
+  }
+}
